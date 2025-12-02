@@ -45,7 +45,7 @@
     .riddle {
         font-style: italic;
         text-align: center;
-        line-height: 1.4;
+        line-height: 1.6;
         margin-bottom: 15px;
         font-size: clamp(0.75rem, 2.5vw, 0.95rem);
         color: #b0b0b0;
@@ -62,6 +62,8 @@
         width: 100%;
         padding: 10px;
         background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 2px solid rgba(100, 255, 218, 0.3);
         border-radius: 10px;
         color: #e0e0e0;
@@ -101,6 +103,8 @@
     .submit-btn {
         background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
         color: #0a0a0a;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .submit-btn:hover {
@@ -110,6 +114,8 @@
 
     .giveup-btn {
         background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         color: #e0e0e0;
         border: 2px solid rgba(255, 255, 255, 0.2);
     }
@@ -137,6 +143,8 @@
         align-items: center;
         justify-content: center;
         font-size: 13px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .feedback.wrong {
@@ -171,7 +179,9 @@
     }
 
     .modal-content {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         padding: 40px;
         border-radius: 20px;
         max-width: 500px;
@@ -228,6 +238,9 @@
         padding: 10px 0;
         margin-top: 10px;
         border-top: 1px solid rgba(100, 255, 218, 0.2);
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .footer-content {
@@ -235,24 +248,6 @@
         flex-direction: column;
         gap: 8px;
         align-items: center;
-    }
-
-    .sponsor-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px;
-        margin: 6px 0;
-    }
-
-    .sponsor-links a img {
-        height: 24px;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-    }
-
-    .sponsor-links a:hover img {
-        opacity: 1;
     }
 
     .social-links {
@@ -293,12 +288,9 @@
             font-size: clamp(0.9rem, 4vw, 1.3rem);
         }
         .riddle {
-            line-height: 1.2;
-            margin-bottom: 6px;
-            font-size: clamp(0.6rem, 2vw, 0.75rem);
-        }
-        .riddle br {
-            display: none;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            font-size: clamp(0.65rem, 2vw, 0.85rem);
         }
         .input-section {
             gap: 5px;
@@ -328,13 +320,6 @@
         }
         .footer-content {
             gap: 4px;
-        }
-        .sponsor-links {
-            gap: 4px;
-            margin: 3px 0;
-        }
-        .sponsor-links a img {
-            height: 18px;
         }
         .social-links {
             gap: 5px;
@@ -394,31 +379,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="sponsor-links">
-                <a href="https://github.com/sponsors/statikfintechllc" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/git.sponsor.svg" alt="GitHub Sponsor">
-                </a>
-                <a href="https://ko-fi.com/statikfintech_llc" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/kofi.sponsor.svg" alt="Ko-fi">
-                </a>
-                <a href="https://patreon.com/StatikFinTech_LLC" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/patreon.sponsor.svg" alt="Patreon">
-                </a>
-                <a href="https://cash.app/$statikmoney8" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/cashapp.sponsor.svg" alt="Cash App">
-                </a>
-                <a href="https://paypal.me/statikmoney8" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/paypal.sponsor.svg" alt="PayPal">
-                </a>
-                <a href="https://www.blockchain.com/explorer/addresses/btc/bc1qarsr966ulmcs3mlcvae7p63v4j2y2vqrw74jl8" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/bitcoin.sponsor.svg" alt="Bitcoin">
-                </a>
-                <a href="https://etherscan.io/address/0xC2db50A0fc6c95f36Af7171D8C41F6998184103F" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/ethereum.sponsor.svg" alt="Ethereum">
-                </a>
-                <a href="https://app.chime.com/link/qr?u=StatikSmokTM" target="_blank" rel="noopener noreferrer">
-                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/chime.sponsor.svg" alt="Chime">
-                </a>
+            <div class="copyright">
+                © 2025 <a href="https://www.github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">StatikFinTech, LLC</a>
             </div>
             <div class="social-links">
                 <a href="https://github.com/statikfintechllc" target="_blank" rel="noopener noreferrer">
@@ -439,9 +401,6 @@
                 <a href="https://medium.com/@ascend.gremlin" target="_blank" rel="noopener noreferrer">
                     <img src="https://img.shields.io/badge/-000000?logo=medium&logoColor=white&style=flat-square" alt="Medium">
                 </a>
-            </div>
-            <div class="copyright">
-                © 2025 <a href="https://www.github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">StatikFinTech, LLC</a>
             </div>
         </div>
     </footer>
