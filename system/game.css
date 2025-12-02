@@ -79,9 +79,9 @@ body {
     color: #b0b0b0;
     font-size: clamp(0.9rem, 2.5vw, 1.05rem);
     margin: 0;
-    z-index: 99;
+    z-index: 99; /* Ensure subtitle appears above other elements but below modals */
     width: auto;
-    max-width: calc(100% - 140px);
+    max-width: calc(100% - 140px); /* Reserve space for help/hint buttons (50px each + 20px padding on each side) */
 }
 
 h1 {
@@ -370,7 +370,7 @@ button {
     .subtitle {
         font-size: clamp(0.75rem, 2vw, 0.9rem);
         top: 10px;
-        max-width: calc(100% - 110px);
+        max-width: calc(100% - 110px); /* Reserve space for smaller help/hint buttons (40px each + 10px padding on each side) */
     }
     h1 {
         margin-bottom: 10px;
