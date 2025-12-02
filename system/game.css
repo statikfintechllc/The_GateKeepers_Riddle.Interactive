@@ -22,7 +22,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
-    padding-bottom: 100px; /* Add padding for footer */
+    padding-bottom: 20px; /* Reduced padding for footer */
     overflow-x: hidden;
     position: relative;
 }
@@ -71,7 +71,7 @@ body {
 
 .subtitle {
     position: absolute;
-    top: 20px;
+    top: 35px; /* Align center of text with button centers at 45px (35px + ~10px text half-height) */
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -304,13 +304,11 @@ button {
 
 /* Footer Styles */
 .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     width: 100%;
     text-align: center;
     padding: 15px 0;
+    margin-top: 20px;
 }
 
 .footer-content {
@@ -350,7 +348,7 @@ button {
 @media (max-height: 700px) {
     body {
         padding: 8px;
-        padding-bottom: 80px;
+        padding-bottom: 15px;
         justify-content: flex-start;
     }
     .floating-btn {
@@ -369,7 +367,7 @@ button {
     }
     .subtitle {
         font-size: clamp(0.75rem, 2vw, 0.9rem);
-        top: 10px;
+        top: 23px; /* Align center of text with button centers at 30px (23px + ~7px text half-height) */
         max-width: calc(100% - 110px); /* Reserve space for smaller help/hint buttons (40px each + 10px padding on each side) */
     }
     h1 {
