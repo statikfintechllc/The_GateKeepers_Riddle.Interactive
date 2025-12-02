@@ -20,42 +20,47 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding: 20px;
+        justify-content: space-between;
+        padding: 10px;
+        overflow-x: hidden;
     }
 
     .container {
         max-width: 600px;
         width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     h1 {
         text-align: center;
         color: #64ffda;
-        margin-bottom: 40px;
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        margin-bottom: 15px;
+        font-size: clamp(1.2rem, 4vw, 2rem);
         text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
     }
 
     .riddle {
         font-style: italic;
         text-align: center;
-        line-height: 1.8;
-        margin-bottom: 40px;
-        font-size: clamp(1rem, 3vw, 1.2rem);
+        line-height: 1.4;
+        margin-bottom: 15px;
+        font-size: clamp(0.75rem, 2.5vw, 0.95rem);
         color: #b0b0b0;
     }
 
     .input-section {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-bottom: 20px;
+        gap: 10px;
+        margin-bottom: 10px;
     }
 
     input[type="text"] {
         width: 100%;
-        padding: 15px;
+        padding: 10px;
         background: rgba(255, 255, 255, 0.05);
         border: 2px solid rgba(100, 255, 218, 0.3);
         border-radius: 10px;
@@ -84,10 +89,10 @@
     button {
         flex: 1;
         min-width: 120px;
-        padding: 15px 25px;
+        padding: 10px 15px;
         border: none;
         border-radius: 10px;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -117,20 +122,21 @@
     .attempts {
         text-align: center;
         color: #888;
-        margin-top: 20px;
-        font-size: 14px;
+        margin-top: 8px;
+        font-size: 12px;
     }
 
     .feedback {
         text-align: center;
-        margin-top: 15px;
-        padding: 10px;
+        margin-top: 8px;
+        padding: 8px;
         border-radius: 8px;
         font-weight: 500;
-        min-height: 40px;
+        min-height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 13px;
     }
 
     .feedback.wrong {
@@ -213,6 +219,135 @@
         width: 100%;
         margin-top: 20px;
     }
+
+    /* Footer Styles */
+    .footer {
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 10px;
+        border-top: 1px solid rgba(100, 255, 218, 0.2);
+    }
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .sponsor-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        margin: 6px 0;
+    }
+
+    .sponsor-links a img {
+        height: 24px;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .sponsor-links a:hover img {
+        opacity: 1;
+    }
+
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 6px 0;
+    }
+
+    .social-links a img {
+        height: 20px;
+    }
+
+    .copyright {
+        font-size: 11px;
+        color: #888;
+        margin-top: 6px;
+    }
+
+    .copyright a {
+        color: #64ffda;
+        text-decoration: none;
+    }
+
+    .copyright a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-height: 700px) {
+        body {
+            padding: 5px;
+            justify-content: flex-start;
+        }
+        h1 {
+            margin-bottom: 5px;
+            margin-top: 5px;
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
+        }
+        .riddle {
+            line-height: 1.2;
+            margin-bottom: 6px;
+            font-size: clamp(0.6rem, 2vw, 0.75rem);
+        }
+        .riddle br {
+            display: none;
+        }
+        .input-section {
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            padding: 6px;
+            font-size: 13px;
+        }
+        button {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        .feedback {
+            margin-top: 4px;
+            padding: 4px;
+            min-height: 20px;
+            font-size: 11px;
+        }
+        .attempts {
+            margin-top: 4px;
+            font-size: 10px;
+        }
+        .footer {
+            padding: 4px 0;
+            margin-top: 5px;
+        }
+        .footer-content {
+            gap: 4px;
+        }
+        .sponsor-links {
+            gap: 4px;
+            margin: 3px 0;
+        }
+        .sponsor-links a img {
+            height: 18px;
+        }
+        .social-links {
+            gap: 5px;
+            margin: 3px 0;
+        }
+        .social-links a img {
+            height: 16px;
+        }
+        .copyright {
+            font-size: 9px;
+            margin-top: 3px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -255,6 +390,61 @@
         <div class="feedback" id="feedback"></div>
         <div class="attempts" id="attempts">Attempts: 0</div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="sponsor-links">
+                <a href="https://github.com/sponsors/statikfintechllc" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/git.sponsor.svg" alt="GitHub Sponsor">
+                </a>
+                <a href="https://ko-fi.com/statikfintech_llc" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/kofi.sponsor.svg" alt="Ko-fi">
+                </a>
+                <a href="https://patreon.com/StatikFinTech_LLC" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/patreon.sponsor.svg" alt="Patreon">
+                </a>
+                <a href="https://cash.app/$statikmoney8" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/cashapp.sponsor.svg" alt="Cash App">
+                </a>
+                <a href="https://paypal.me/statikmoney8" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/paypal.sponsor.svg" alt="PayPal">
+                </a>
+                <a href="https://www.blockchain.com/explorer/addresses/btc/bc1qarsr966ulmcs3mlcvae7p63v4j2y2vqrw74jl8" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/bitcoin.sponsor.svg" alt="Bitcoin">
+                </a>
+                <a href="https://etherscan.io/address/0xC2db50A0fc6c95f36Af7171D8C41F6998184103F" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/ethereum.sponsor.svg" alt="Ethereum">
+                </a>
+                <a href="https://app.chime.com/link/qr?u=StatikSmokTM" target="_blank" rel="noopener noreferrer">
+                    <img src="https://raw.githubusercontent.com/statikfintechllc/statikfintechllc/master/badges/chime.sponsor.svg" alt="Chime">
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/statikfintechllc" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/-000000?logo=github&logoColor=white&style=flat-square" alt="GitHub">
+                </a>
+                <a href="https://www.linkedin.com/in/daniel-morris-780804368" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/In-e11d48?logo=linkedin&logoColor=white&style=flat-square" alt="LinkedIn">
+                </a>
+                <a href="mailto:ascend.gremlin@gmail.com">
+                    <img src="https://img.shields.io/badge/-D14836?logo=gmail&logoColor=white&style=flat-square" alt="Email">
+                </a>
+                <a href="https://www.youtube.com/@Gremlins_Forge" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/-FF0000?logo=youtube&logoColor=white&style=flat-square" alt="YouTube">
+                </a>
+                <a href="https://x.com/GremlinsForge" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/-000000?logo=x&logoColor=white&style=flat-square" alt="X">
+                </a>
+                <a href="https://medium.com/@ascend.gremlin" target="_blank" rel="noopener noreferrer">
+                    <img src="https://img.shields.io/badge/-000000?logo=medium&logoColor=white&style=flat-square" alt="Medium">
+                </a>
+            </div>
+            <div class="copyright">
+                © 2025 <a href="https://www.github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">StatikFinTech, LLC</a>
+            </div>
+        </div>
+    </footer>
 
     <!-- Modal -->
 <div class="modal" id="modal">
