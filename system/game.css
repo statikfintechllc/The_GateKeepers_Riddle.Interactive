@@ -72,8 +72,8 @@ h1 {
     text-align: center;
     color: #64ffda;
     margin-bottom: 25px;
-    margin-top: 10px;
-    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    margin-top: 60px;
+    font-size: clamp(1.5rem, 5vw, 2.8rem);
     text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
 }
 
