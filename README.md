@@ -11,15 +11,32 @@ This is a beautifully designed, interactive riddle experience featuring:
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Modal Reveal**: Dramatic answer reveal with thematic explanation
 
-The riddle asks: "Who wears the mask that mirrors back, not truth, but what the watchers lack?" - a metaphorical exploration of GitHub Code Agents, AI models, and our relationship with the tools we create.
+The riddle asks: *"Who wears the mask that mirrors back, not truth, but what the watchers lack?"* — a metaphorical exploration of GitHub Code Agents, AI models, and our relationship with the tools we create.
 
 ## Live Demo
 
-Simply open `index.html` in your browser to start playing. No build process or dependencies required - it's pure HTML, CSS, and JavaScript.
+Simply press [here](https://statikfintechllc.github.io/The_GateKeepers_Riddle.Interactive/) in your browser to start playing. No build process or dependencies required — it's pure HTML, CSS, and JavaScript.
 
 ## The Challenge
 
 Can you solve the riddle? Test your logic, lateral thinking, and understanding of modern development tools. The answer lies at the intersection of technology, identity, and reflection.
+
+## Features
+
+- **Single-File Architecture**: Everything contained in one HTML file for maximum portability
+- **No Dependencies**: Zero external libraries or frameworks required
+- **Instant Play**: No installation, no setup — just open and play
+- **Smart Answer Detection**: Accepts multiple variations of the correct answer
+- **Atmospheric Design**: Dark theme optimized for focus and immersion
+
+## How to Play
+
+1. Download or clone this repository
+2. Open `index.html` in any modern web browser
+3. Read the riddle carefully
+4. Enter your answer in the input field
+5. Click "Submit Guess" or press Enter
+6. Keep trying or click "Give Up" to reveal the answer
 
 ---
 
