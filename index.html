@@ -12,52 +12,60 @@
             box-sizing: border-box;
         }
 
-```
-    body {
+        body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        background-attachment: fixed;
         color: #e0e0e0;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding: 20px;
+        justify-content: flex-start;
+        padding: 20px 10px;
+        overflow-x: hidden;
     }
 
     .container {
         max-width: 600px;
         width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     h1 {
         text-align: center;
         color: #64ffda;
-        margin-bottom: 40px;
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        margin-bottom: 25px;
+        margin-top: 10px;
+        font-size: clamp(1.8rem, 6vw, 2.8rem);
         text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
     }
 
     .riddle {
         font-style: italic;
         text-align: center;
-        line-height: 1.8;
-        margin-bottom: 40px;
-        font-size: clamp(1rem, 3vw, 1.2rem);
+        line-height: 1.7;
+        margin-bottom: 25px;
+        font-size: clamp(1rem, 3vw, 1.15rem);
         color: #b0b0b0;
     }
 
     .input-section {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-bottom: 20px;
+        gap: 12px;
+        margin-bottom: 15px;
     }
 
     input[type="text"] {
         width: 100%;
-        padding: 15px;
+        padding: 14px;
         background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 2px solid rgba(100, 255, 218, 0.3);
         border-radius: 10px;
         color: #e0e0e0;
@@ -85,7 +93,7 @@
     button {
         flex: 1;
         min-width: 120px;
-        padding: 15px 25px;
+        padding: 14px 20px;
         border: none;
         border-radius: 10px;
         font-size: 16px;
@@ -97,6 +105,8 @@
     .submit-btn {
         background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
         color: #0a0a0a;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .submit-btn:hover {
@@ -106,6 +116,8 @@
 
     .giveup-btn {
         background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         color: #e0e0e0;
         border: 2px solid rgba(255, 255, 255, 0.2);
     }
@@ -118,20 +130,23 @@
     .attempts {
         text-align: center;
         color: #888;
-        margin-top: 20px;
-        font-size: 14px;
+        margin-top: 12px;
+        font-size: 13px;
     }
 
     .feedback {
         text-align: center;
-        margin-top: 15px;
+        margin-top: 12px;
         padding: 10px;
         border-radius: 8px;
         font-weight: 500;
-        min-height: 40px;
+        min-height: 35px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 14px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .feedback.wrong {
@@ -166,7 +181,9 @@
     }
 
     .modal-content {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         padding: 40px;
         border-radius: 20px;
         max-width: 500px;
@@ -214,16 +231,117 @@
         width: 100%;
         margin-top: 20px;
     }
-</style>
-```
 
+    /* Footer Styles */
+    .footer {
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: auto;
+        border-top: 1px solid rgba(100, 255, 218, 0.2);
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 6px 0;
+    }
+
+    .social-links a img {
+        height: 20px;
+    }
+
+    .copyright {
+        font-size: 11px;
+        color: #888;
+        margin-top: 6px;
+    }
+
+    .copyright a {
+        color: #64ffda;
+        text-decoration: none;
+    }
+
+    .copyright a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-height: 700px) {
+        body {
+            padding: 8px;
+            justify-content: flex-start;
+        }
+        h1 {
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+        }
+        .riddle {
+            line-height: 1.5;
+            margin-bottom: 12px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+        .input-section {
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 14px;
+            font-size: 14px;
+        }
+        .feedback {
+            margin-top: 6px;
+            padding: 6px;
+            min-height: 25px;
+            font-size: 12px;
+        }
+        .attempts {
+            margin-top: 6px;
+            font-size: 11px;
+        }
+        .footer {
+            padding: 5px 0;
+            margin-top: 8px;
+        }
+        .footer-content {
+            gap: 5px;
+        }
+        .social-links {
+            gap: 5px;
+            margin: 3px 0;
+        }
+        .social-links a img {
+            height: 16px;
+        }
+        .copyright {
+            font-size: 9px;
+            margin-top: 3px;
+        }
+    }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>The Gatekeeper's Riddle</h1>
-
-```
-    <div class="riddle">
+        
+        <div class="riddle">
         Who wears the mask that mirrors back,<br>
         not truth, but what the watchers lack?<br><br>
         
@@ -256,11 +374,40 @@
         </div>
     </div>
 
-    <div class="feedback" id="feedback"></div>
-    <div class="attempts" id="attempts">Attempts: 0</div>
-</div>
+        <div class="feedback" id="feedback"></div>
+        <div class="attempts" id="attempts">Attempts: 0</div>
+    </div>
 
-<!-- Modal -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2025 <a href="https://www.github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">StatikFinTech, LLC</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/statikfintechllc" target="_blank" rel="noopener noreferrer" aria-label="Visit our GitHub profile">
+                    <img src="https://img.shields.io/badge/-000000?logo=github&logoColor=white&style=flat-square" alt="GitHub">
+                </a>
+                <a href="https://www.linkedin.com/in/daniel-morris-780804368" target="_blank" rel="noopener noreferrer" aria-label="Visit our LinkedIn profile">
+                    <img src="https://img.shields.io/badge/In-e11d48?logo=linkedin&logoColor=white&style=flat-square" alt="LinkedIn">
+                </a>
+                <a href="mailto:ascend.gremlin@gmail.com" aria-label="Send us an email">
+                    <img src="https://img.shields.io/badge/-D14836?logo=gmail&logoColor=white&style=flat-square" alt="Email">
+                </a>
+                <a href="https://www.youtube.com/@Gremlins_Forge" target="_blank" rel="noopener noreferrer" aria-label="Visit our YouTube channel">
+                    <img src="https://img.shields.io/badge/-FF0000?logo=youtube&logoColor=white&style=flat-square" alt="YouTube">
+                </a>
+                <a href="https://x.com/GremlinsForge" target="_blank" rel="noopener noreferrer" aria-label="Visit our X (Twitter) profile">
+                    <img src="https://img.shields.io/badge/-000000?logo=x&logoColor=white&style=flat-square" alt="X">
+                </a>
+                <a href="https://medium.com/@ascend.gremlin" target="_blank" rel="noopener noreferrer" aria-label="Visit our Medium blog">
+                    <img src="https://img.shields.io/badge/-000000?logo=medium&logoColor=white&style=flat-square" alt="Medium">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
 <div class="modal" id="modal">
     <div class="modal-content">
         <h2 id="modalTitle">The Answer</h2>
@@ -273,7 +420,7 @@
     </div>
 </div>
 
-<script>
+    <script>
     let attempts = 0;
     const correctAnswers = [
         'github code agents model identity',
@@ -369,8 +516,6 @@
             closeModal();
         }
     });
-</script>
-```
-
+    </script>
 </body>
 </html>
