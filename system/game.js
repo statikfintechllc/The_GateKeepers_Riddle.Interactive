@@ -80,6 +80,26 @@ function closeModal() {
     modal.classList.remove('active');
 }
 
+function showHelpModal() {
+    const modal = document.getElementById('helpModal');
+    modal.classList.add('active');
+}
+
+function closeHelpModal() {
+    const modal = document.getElementById('helpModal');
+    modal.classList.remove('active');
+}
+
+function showHintModal() {
+    const modal = document.getElementById('hintModal');
+    modal.classList.add('active');
+}
+
+function closeHintModal() {
+    const modal = document.getElementById('hintModal');
+    modal.classList.remove('active');
+}
+
 // Allow Enter key to submit
 document.getElementById('guessInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -91,5 +111,28 @@ document.getElementById('guessInput').addEventListener('keypress', function(e) {
 document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeModal();
+    }
+});
+
+// Close help modal on background click
+document.getElementById('helpModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeHelpModal();
+    }
+});
+
+// Close hint modal on background click
+document.getElementById('hintModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeHintModal();
+    }
+});
+
+// Close modals with ESC key for accessibility
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeHelpModal();
+        closeHintModal();
     }
 });
