@@ -70,12 +70,18 @@ body {
 }
 
 .subtitle {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     font-style: italic;
     color: #b0b0b0;
-    font-size: clamp(1rem, 3vw, 1.15rem);
-    margin-bottom: 10px;
-    margin-top: 0;
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    margin: 0;
+    z-index: 99;
+    width: auto;
+    max-width: calc(100% - 140px);
 }
 
 h1 {
@@ -310,7 +316,7 @@ button {
 .footer-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
     align-items: center;
 }
 
@@ -319,7 +325,7 @@ button {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin: 6px 0;
+    margin: 2px 0;
 }
 
 .social-links a img {
@@ -329,7 +335,7 @@ button {
 .copyright {
     font-size: 11px;
     color: #888;
-    margin-top: 6px;
+    margin-top: 2px;
 }
 
 .copyright a {
@@ -362,8 +368,9 @@ button {
         padding-top: 50px;
     }
     .subtitle {
-        font-size: clamp(0.8rem, 2.5vw, 1rem);
-        margin-bottom: 8px;
+        font-size: clamp(0.75rem, 2vw, 0.9rem);
+        top: 10px;
+        max-width: calc(100% - 110px);
     }
     h1 {
         margin-bottom: 10px;
@@ -401,17 +408,17 @@ button {
         padding: 8px 0;
     }
     .footer-content {
-        gap: 5px;
+        gap: 2px;
     }
     .social-links {
         gap: 5px;
-        margin: 3px 0;
+        margin: 2px 0;
     }
     .social-links a img {
         height: 16px;
     }
     .copyright {
         font-size: 9px;
-        margin-top: 3px;
+        margin-top: 2px;
     }
 }
