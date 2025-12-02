@@ -127,3 +127,12 @@ document.getElementById('hintModal').addEventListener('click', function(e) {
         closeHintModal();
     }
 });
+
+// Close modals with ESC key for accessibility
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeHelpModal();
+        closeHintModal();
+    }
+});
