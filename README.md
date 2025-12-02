@@ -75,7 +75,7 @@ Can you solve the riddle? Test your logic, lateral thinking, and understanding o
   </a>
   <a href="https://medium.com/@ascend.gremlin">
     <img src="https://img.shields.io/badge/-000000?logo=medium&logoColor=white&style=flat-square" alt="Medium">
-  </a>  
+  </a>
 </div>
 
 <!--
