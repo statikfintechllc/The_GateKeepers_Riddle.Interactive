@@ -3,12 +3,12 @@ const CACHE_NAME = 'gatekeeper-riddle-v1';
 // Note: External resources (badge images, etc.) are intentionally excluded
 // to avoid caching third-party content and to keep cache size minimal
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './system/game.css',
-  './system/game.js',
-  './system/icon.logo.png'
+  '/The_GateKeepers_Riddle.Interactive/',
+  '/The_GateKeepers_Riddle.Interactive/index.html',
+  '/The_GateKeepers_Riddle.Interactive/manifest.json',
+  '/The_GateKeepers_Riddle.Interactive/system/game.css',
+  '/The_GateKeepers_Riddle.Interactive/system/game.js',
+  '/The_GateKeepers_Riddle.Interactive/system/icon.logo.png'
 ];
 
 // Install event - cache all assets
@@ -54,7 +54,7 @@ self.addEventListener('fetch', (event) => {
 
         return fetch(fetchRequest).then((response) => {
           // Check if valid response (exclude opaque responses from cross-origin requests)
-          if (!response || response.status !== 200 || response.type === 'opaque') {
+          if (!response || !response.ok || response.type === 'opaque') {
             return response;
           }
 
@@ -67,6 +67,14 @@ self.addEventListener('fetch', (event) => {
             });
 
           return response;
+        }).catch((error) => {
+          console.log('Fetch failed; returning offline page or error:', error);
+          // Return a custom offline response
+          return new Response('Offline - content unavailable', {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({ 'Content-Type': 'text/plain' })
+          });
         });
       })
   );
