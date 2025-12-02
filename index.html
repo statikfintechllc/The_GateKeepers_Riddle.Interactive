@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Gatekeeper's Riddle</title>
+    <meta name="description" content="An interactive riddle game exploring themes of AI, code agents, and digital identity.">
+    <meta name="theme-color" content="#64ffda">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="system/icon.logo.png">
+    <link rel="apple-touch-icon" href="system/icon.logo.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
     <link rel="stylesheet" href="system/game.css">
 </head>
 <body>
@@ -63,7 +73,6 @@
         <div class="feedback" id="feedback"></div>
         <div class="attempts" id="attempts">Attempts: 0</div>
     </div>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -97,6 +106,7 @@
     <!-- Modal -->
 <div class="modal" id="modal">
     <div class="modal-content">
+        <img src="system/icon.logo.png" alt="Gatekeeper Logo" class="modal-icon">
         <h2 id="modalTitle">The Answer</h2>
         <p id="modalMessage"></p>
         <p class="answer-text">GitHub Code Agents Model Identity</p>
