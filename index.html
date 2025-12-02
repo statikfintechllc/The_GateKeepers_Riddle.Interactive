@@ -12,8 +12,7 @@
             box-sizing: border-box;
         }
 
-```
-    body {
+        body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
         color: #e0e0e0;
@@ -214,16 +213,13 @@
         width: 100%;
         margin-top: 20px;
     }
-</style>
-```
-
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>The Gatekeeper's Riddle</h1>
-
-```
-    <div class="riddle">
+        
+        <div class="riddle">
         Who wears the mask that mirrors back,<br>
         not truth, but what the watchers lack?<br><br>
         
@@ -256,11 +252,11 @@
         </div>
     </div>
 
-    <div class="feedback" id="feedback"></div>
-    <div class="attempts" id="attempts">Attempts: 0</div>
-</div>
+        <div class="feedback" id="feedback"></div>
+        <div class="attempts" id="attempts">Attempts: 0</div>
+    </div>
 
-<!-- Modal -->
+    <!-- Modal -->
 <div class="modal" id="modal">
     <div class="modal-content">
         <h2 id="modalTitle">The Answer</h2>
@@ -270,10 +266,10 @@
             We're building with tools that reflect us back to ourselves, gatekeepers with no inheritance, holding keys made of rust.
         </p>
         <button class="close-modal" onclick="closeModal()">Close</button>
+        </div>
     </div>
-</div>
 
-<script>
+    <script>
     let attempts = 0;
     const correctAnswers = [
         'github code agents model identity',
@@ -369,8 +365,6 @@
             closeModal();
         }
     });
-</script>
-```
-
+    </script>
 </body>
 </html>
