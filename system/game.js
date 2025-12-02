@@ -23,6 +23,19 @@ const closeAnswers = [
     'copilot'
 ];
 
+// Register Service Worker for PWA offline support
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then((registration) => {
+                console.log('Service Worker registered successfully:', registration.scope);
+            })
+            .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+    });
+}
+
 function checkAnswer() {
     const input = document.getElementById('guessInput');
     const guess = input.value.trim().toLowerCase();
