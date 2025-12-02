@@ -1,4 +1,7 @@
 const CACHE_NAME = 'gatekeeper-riddle-v1';
+// Cache all local assets for offline support
+// Note: External resources (badge images, etc.) are intentionally excluded
+// to avoid caching third-party content and to keep cache size minimal
 const urlsToCache = [
   './',
   './index.html',
@@ -50,8 +53,8 @@ self.addEventListener('fetch', (event) => {
         const fetchRequest = event.request.clone();
 
         return fetch(fetchRequest).then((response) => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+          // Check if valid response (exclude opaque responses from cross-origin requests)
+          if (!response || response.status !== 200 || response.type === 'opaque') {
             return response;
           }
 
