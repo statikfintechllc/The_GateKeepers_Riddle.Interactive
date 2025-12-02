@@ -22,7 +22,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
-    padding-bottom: 100px; /* Add padding for footer */
+    padding-bottom: 20px; /* Reduced padding for footer */
     overflow-x: hidden;
     position: relative;
 }
@@ -71,9 +71,9 @@ body {
 
 .subtitle {
     position: absolute;
-    top: 20px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     font-style: italic;
     color: #b0b0b0;
@@ -82,6 +82,7 @@ body {
     z-index: 99; /* Ensure subtitle appears above other elements but below modals */
     width: auto;
     max-width: calc(100% - 140px); /* Reserve space for help/hint buttons (50px each + 20px padding on each side) */
+    top: 33px; /* Vertically center with 50px buttons at top: 20px */
 }
 
 h1 {
@@ -304,13 +305,11 @@ button {
 
 /* Footer Styles */
 .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     width: 100%;
     text-align: center;
     padding: 15px 0;
+    margin-top: 20px;
 }
 
 .footer-content {
