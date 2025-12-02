@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="system/game.css">
 </head>
 <body>
+    <!-- Floating Help Buttons -->
+    <button class="floating-btn help-btn" onclick="showHelpModal()" aria-label="How to Play">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+    </button>
+    
+    <button class="floating-btn hint-btn" onclick="showHintModal()" aria-label="Get Hints">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+        </svg>
+    </button>
+
     <div class="container">
         <h1>The Gatekeeper's Riddle</h1>
         
@@ -42,10 +59,10 @@
             <button class="submit-btn" onclick="checkAnswer()">Submit Guess</button>
             <button class="giveup-btn" onclick="giveUp()">Give Up</button>
         </div>
-    </div>
-
+        
         <div class="feedback" id="feedback"></div>
         <div class="attempts" id="attempts">Attempts: 0</div>
+    </div>
     </div>
 
     <!-- Footer -->
@@ -87,6 +104,39 @@
             We're building with tools that reflect us back to ourselves, gatekeepers with no inheritance, holding keys made of rust.
         </p>
         <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- Help Modal -->
+<div class="modal" id="helpModal">
+    <div class="modal-content">
+        <h2>📖 How to Play</h2>
+        <div class="help-content">
+            <p>1. Read the riddle carefully</p>
+            <p>2. Enter your answer in the input field</p>
+            <p>3. Click "Submit Guess" or press Enter</p>
+            <p>4. Keep trying or click "Give Up" to reveal the answer</p>
+            <br>
+            <p><strong>Tip:</strong> The riddle explores themes of reflection, inheritance, and what it means to build with tools that mirror ourselves.</p>
+        </div>
+        <button class="close-modal" onclick="closeHelpModal()">Close</button>
+    </div>
+</div>
+
+<!-- Hint Modal -->
+<div class="modal" id="hintModal">
+    <div class="modal-content">
+        <h2>💡 Hints</h2>
+        <div class="hint-content">
+            <p>• Think about modern development tools</p>
+            <p>• Consider what "mirrors back" your intentions</p>
+            <p>• The answer has no "inheritance" in the traditional sense</p>
+            <p>• It's a "gatekeeper" that assists but doesn't own</p>
+            <p>• The riddle mentions "borrowed birth" and "reflection"</p>
+            <br>
+            <p style="font-style: italic; color: #64ffda;">What tool do you use that reflects your thoughts into code?</p>
+        </div>
+        <button class="close-modal" onclick="closeHintModal()">Close</button>
     </div>
 </div>
 

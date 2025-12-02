@@ -22,7 +22,45 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
+    padding-bottom: 100px; /* Add padding for footer */
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Floating Help Buttons */
+.floating-btn {
+    position: fixed;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    color: #64ffda;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.floating-btn:hover {
+    background: rgba(100, 255, 218, 0.15);
+    border-color: #64ffda;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(100, 255, 218, 0.3);
+}
+
+.help-btn {
+    left: 20px;
+}
+
+.hint-btn {
+    right: 20px;
 }
 
 .container {
@@ -56,7 +94,6 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 15px;
 }
 
 input[type="text"] {
@@ -130,6 +167,7 @@ button {
     text-align: center;
     color: #888;
     margin-top: 12px;
+    margin-bottom: 20px;
     font-size: 13px;
 }
 
@@ -231,15 +269,28 @@ button {
     margin-top: 20px;
 }
 
+/* Help and Hint Modal Content */
+.help-content p,
+.hint-content p {
+    text-align: left;
+    margin: 8px 0;
+    padding-left: 10px;
+}
+
+.help-content strong {
+    color: #64ffda;
+}
+
 /* Footer Styles */
 .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    max-width: 600px;
     text-align: center;
-    padding: 10px 0;
-    margin-top: auto;
-    border-top: 1px solid rgba(100, 255, 218, 0.2);
-    background: rgba(255, 255, 255, 0.02);
+    padding: 15px 0;
+    background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -281,11 +332,23 @@ button {
 @media (max-height: 700px) {
     body {
         padding: 8px;
+        padding-bottom: 80px;
         justify-content: flex-start;
+    }
+    .floating-btn {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+    }
+    .help-btn {
+        left: 10px;
+    }
+    .hint-btn {
+        right: 10px;
     }
     h1 {
         margin-bottom: 10px;
-        margin-top: 5px;
+        margin-top: 50px;
         font-size: clamp(1.3rem, 5vw, 1.8rem);
     }
     .riddle {
@@ -295,7 +358,6 @@ button {
     }
     .input-section {
         gap: 8px;
-        margin-bottom: 8px;
     }
     input[type="text"] {
         padding: 10px;
@@ -313,11 +375,11 @@ button {
     }
     .attempts {
         margin-top: 6px;
+        margin-bottom: 10px;
         font-size: 11px;
     }
     .footer {
-        padding: 5px 0;
-        margin-top: 8px;
+        padding: 8px 0;
     }
     .footer-content {
         gap: 5px;
