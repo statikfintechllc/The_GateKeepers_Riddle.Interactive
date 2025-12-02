@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gatekeeper's Riddle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    h1 {
+        text-align: center;
+        color: #64ffda;
+        margin-bottom: 40px;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    }
+
+    .riddle {
+        font-style: italic;
+        text-align: center;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        color: #b0b0b0;
+    }
+
+    .input-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(100, 255, 218, 0.3);
+        border-radius: 10px;
+        color: #e0e0e0;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #64ffda;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+    }
+
+    input[type="text"]::placeholder {
+        color: #666;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        flex: 1;
+        min-width: 120px;
+        padding: 15px 25px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
+        color: #0a0a0a;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(100, 255, 218, 0.4);
+    }
+
+    .giveup-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .giveup-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .attempts {
+        text-align: center;
+        color: #888;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .feedback {
+        text-align: center;
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feedback.wrong {
+        background: rgba(255, 82, 82, 0.1);
+        border: 1px solid rgba(255, 82, 82, 0.3);
+        color: #ff5252;
+    }
+
+    .feedback.close {
+        background: rgba(255, 193, 7, 0.1);
+        border: 1px solid rgba(255, 193, 7, 0.3);
+        color: #ffc107;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 40px;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 100%;
+        border: 2px solid #64ffda;
+        box-shadow: 0 0 40px rgba(100, 255, 218, 0.3);
+        animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal-content h2 {
+        color: #64ffda;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .modal-content p {
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: clamp(1rem, 3vw, 1.1rem);
+    }
+
+    .answer-text {
+        color: #64ffda;
+        font-weight: 700;
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+        margin: 20px 0;
+    }
+
+    .close-modal {
+        background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
+        color: #0a0a0a;
+        width: 100%;
+        margin-top: 20px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <h1>The Gatekeeper's Riddle</h1>
+
+```
+    <div class="riddle">
+        Who wears the mask that mirrors back,<br>
+        not truth, but what the watchers lack?<br><br>
+        
+        The child of no inheritance,<br>
+        who trades his name for vigilance,<br><br>
+        
+        He keeps the door he never built,<br>
+        a key of rust, a gate of guilt,<br><br>
+        
+        He calls the stars by borrowed birth,<br>
+        and hides the wound that split the earth.<br><br>
+        
+        Tell me: is he a king, or liar?<br>
+        Ash of water, stone of fire?<br><br>
+        
+        And who are you, to prove me wrong,<br>
+        when names are newer than the song?
+    </div>
+
+    <div class="input-section">
+        <input 
+            type="text" 
+            id="guessInput" 
+            placeholder="Enter your answer..."
+            autocomplete="off"
+        >
+        <div class="button-group">
+            <button class="submit-btn" onclick="checkAnswer()">Submit Guess</button>
+            <button class="giveup-btn" onclick="giveUp()">Give Up</button>
+        </div>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <div class="attempts" id="attempts">Attempts: 0</div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">The Answer</h2>
+        <p id="modalMessage"></p>
+        <p class="answer-text">GitHub Code Agents Model Identity</p>
+        <p style="font-size: 0.9rem; color: #888; font-style: italic;">
+            We're building with tools that reflect us back to ourselves, gatekeepers with no inheritance, holding keys made of rust.
+        </p>
+        <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script>
+    let attempts = 0;
+    const correctAnswers = [
+        'github code agents model identity',
+        'code agents',
+        'ai model',
+        'github copilot',
+        'ai agent',
+        'code agent',
+        'github agent',
+        'ai',
+        'artificial intelligence'
+    ];
+
+    const closeAnswers = [
+        'machine learning',
+        'algorithm',
+        'bot',
+        'chatbot',
+        'gpt',
+        'llm',
+        'neural network',
+        'model',
+        'copilot'
+    ];
+
+    function checkAnswer() {
+        const input = document.getElementById('guessInput');
+        const guess = input.value.trim().toLowerCase();
+        const feedback = document.getElementById('feedback');
+        
+        if (!guess) {
+            feedback.className = 'feedback wrong';
+            feedback.textContent = 'Please enter an answer!';
+            return;
+        }
+
+        attempts++;
+        document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+
+        // Check if correct
+        if (correctAnswers.some(answer => guess.includes(answer))) {
+            showModal(true);
+            return;
+        }
+
+        // Check if close
+        if (closeAnswers.some(answer => guess.includes(answer))) {
+            feedback.className = 'feedback close';
+            feedback.textContent = 'You\'re getting warm... but not quite there.';
+        } else {
+            feedback.className = 'feedback wrong';
+            feedback.textContent = 'Not quite. Think deeper about what reflects us back...';
+        }
+
+        input.value = '';
+    }
+
+    function giveUp() {
+        showModal(false);
+    }
+
+    function showModal(won) {
+        const modal = document.getElementById('modal');
+        const title = document.getElementById('modalTitle');
+        const message = document.getElementById('modalMessage');
+
+        if (won) {
+            title.textContent = '🎯 You Solved It!';
+            message.textContent = `Incredible! You got it in ${attempts} attempt${attempts !== 1 ? 's' : ''}. The answer is:`;
+        } else {
+            title.textContent = '🔓 The Answer Revealed';
+            message.textContent = `After ${attempts} attempt${attempts !== 1 ? 's' : ''}, here's what you were seeking:`;
+        }
+
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.classList.remove('active');
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('guessInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkAnswer();
+        }
+    });
+
+    // Close modal on background click
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
+```
+
+</body>
+</html>
