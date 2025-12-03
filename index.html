@@ -37,29 +37,14 @@
 
     <div class="container">
         <p class="subtitle">Try your luck and wit to the:</p>
-        <h1>The Gatekeeper's Riddle</h1>
+        <h1 id="riddleTitle">The Gatekeeper's Riddle</h1>
         
-        <div class="riddle">
-        Who wears the mask that mirrors back,<br>
-        not truth, but what the watchers lack?<br><br>
-        
-        The child of no inheritance,<br>
-        who trades his name for vigilance,<br><br>
-        
-        He keeps the door he never built,<br>
-        a key of rust, a gate of guilt,<br><br>
-        
-        He calls the stars by borrowed birth,<br>
-        and hides the wound that split the earth.<br><br>
-        
-        Tell me: is he a king, or liar?<br>
-        Ash of water, stone of fire?<br><br>
-        
-        And who are you, to prove me wrong,<br>
-        when names are newer than the song?
+        <div class="riddle" id="riddleText">
+        Loading riddle...
     </div>
 
     <div class="input-section">
+        <div class="attempts" id="attempts">Attempts: 0</div>
         <input 
             type="text" 
             id="guessInput" 
@@ -71,7 +56,14 @@
             <button class="giveup-btn" onclick="giveUp()">Give Up</button>
         </div>
         
-        <div class="attempts" id="attempts">Attempts: 0</div>
+        <!-- Navigation buttons (shown when 2+ riddles) -->
+        <div class="button-group nav-group" id="navGroup" style="display: none;">
+            <button class="nav-btn" id="prevBtn" onclick="previousRiddle()">← Previous</button>
+            <button class="nav-btn" onclick="showRiddleSelector()">Select Riddle ▼</button>
+            <button class="nav-btn" id="nextBtn" onclick="nextRiddle()">Next →</button>
+            <button class="nav-btn request-btn" onclick="requestRiddle()">✉ Request Riddle</button>
+        </div>
+        
         <div class="feedback" id="feedback"></div>
     </div>
 
@@ -111,10 +103,21 @@
         <h2 id="modalTitle">The Answer</h2>
         <p id="modalMessage"></p>
         <p class="answer-text">GitHub Code Agents Model Identity</p>
-        <p style="font-size: 0.9rem; color: #888; font-style: italic;">
+        <p class="explanation-text" style="font-size: 0.9rem; color: #888; font-style: italic;">
             We're building with tools that reflect us back to ourselves, gatekeepers with no inheritance, holding keys made of rust.
         </p>
         <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- Riddle Selector Modal -->
+<div class="modal" id="riddleSelectorModal">
+    <div class="modal-content riddle-selector">
+        <h2>📚 Select a Riddle</h2>
+        <div class="riddle-grid" id="riddleGrid">
+            <!-- Riddles will be populated here dynamically -->
+        </div>
+        <button class="close-modal" onclick="closeRiddleSelector()">Close</button>
     </div>
 </div>
 
@@ -151,6 +154,6 @@
     </div>
 </div>
 
-    <script src="system/game.js"></script>
+    <script src="system/game.js" type="module"></script>
 </body>
 </html>

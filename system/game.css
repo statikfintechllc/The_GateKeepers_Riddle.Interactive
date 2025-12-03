@@ -175,12 +175,50 @@ button {
     transform: translateY(-2px);
 }
 
+/* Navigation buttons */
+.nav-group {
+    margin-top: 12px;
+}
+
+.nav-btn {
+    background: rgba(100, 255, 218, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #64ffda;
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    font-size: 14px;
+    padding: 10px 16px;
+    min-width: auto;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: rgba(100, 255, 218, 0.2);
+    border-color: #64ffda;
+    transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.request-btn {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.request-btn:hover {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: #ffc107;
+}
+
 .attempts {
     text-align: center;
     color: #888;
-    margin-top: 12px;
     margin-bottom: 12px;
     font-size: 13px;
+    order: -1; /* Move above input */
 }
 
 .feedback {
@@ -302,6 +340,61 @@ button {
     color: #64ffda;
 }
 
+/* Riddle Selector Modal */
+.riddle-selector {
+    max-width: 600px;
+}
+
+.riddle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.riddle-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 255, 218, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.riddle-card:hover {
+    background: rgba(100, 255, 218, 0.1);
+    border-color: #64ffda;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(100, 255, 218, 0.3);
+}
+
+.riddle-card.active {
+    border-color: #64ffda;
+    background: rgba(100, 255, 218, 0.15);
+}
+
+.riddle-card-indicator {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.riddle-card-title {
+    color: #64ffda;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.riddle-card-stats {
+    color: #888;
+    font-size: 0.85rem;
+}
+
 /* Footer Styles */
 .footer {
     position: relative;
@@ -391,6 +484,10 @@ button {
         padding: 10px 14px;
         font-size: 14px;
     }
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
     .feedback {
         margin-top: 6px;
         padding: 6px;
@@ -398,7 +495,6 @@ button {
         font-size: 12px;
     }
     .attempts {
-        margin-top: 6px;
         margin-bottom: 10px;
         font-size: 11px;
     }
@@ -418,5 +514,9 @@ button {
     .copyright {
         font-size: 9px;
         margin-top: 2px;
+    }
+    .riddle-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 }
