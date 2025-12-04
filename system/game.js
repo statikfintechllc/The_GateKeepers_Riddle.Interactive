@@ -172,6 +172,36 @@ function toggleMoreMenu() {
     }
 }
 
+// Refresh PWA - clear cache and reload
+async function refreshApp() {
+    try {
+        // Clear all caches
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('All caches cleared');
+        }
+        
+        // Unregister all service workers
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+                registrations.map(registration => registration.unregister())
+            );
+            console.log('All service workers unregistered');
+        }
+        
+        // Force reload from server (bypass cache)
+        window.location.reload(true);
+    } catch (error) {
+        console.error('Error refreshing app:', error);
+        // Fallback to simple reload if cache clearing fails
+        window.location.reload(true);
+    }
+}
+
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -199,6 +229,7 @@ window.showRiddleSelector = showRiddleSelector;
 window.closeRiddleSelector = closeRiddleSelector;
 window.requestRiddle = requestRiddle;
 window.toggleMoreMenu = toggleMoreMenu;
+window.refreshApp = refreshApp;
 window.showModal = showModal;
 window.closeModal = closeModal;
 window.showHelpModal = showHelpModal;
