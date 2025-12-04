@@ -176,7 +176,7 @@ We welcome contributions! Here are some ways to help:
 
 ## Automated Riddle Submissions
 
-This repository includes a GitHub Actions workflow that automatically searches for interesting riddles online and submits them as pull requests daily. See `.github/workflows/daily-riddle-submission.yml` for details.
+This repository includes an intelligent agent system that automatically searches for interesting riddles online and submits them as pull requests daily. See `.github/agents/riddle-finder.md` for agent instructions and `.github/workflows/riddle-finder-agent.yml` for the workflow.
 
 ---
 
