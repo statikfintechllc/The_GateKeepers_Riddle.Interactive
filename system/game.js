@@ -196,7 +196,7 @@ Create a new riddle PR using the riddle finder agent with the following specific
 ### Requirements
 1. Use the riddle-finder-agent workflow to find/generate a challenging riddle
 2. Ensure the riddle follows the template schema in \`system/riddles/riddle.template.js\`
-3. Verify the riddle is high-class quality with:
+3. Verify the riddle is high-quality with:
    - Clear, engaging riddle text
    - Logical answer that fits the riddle
    - Progressive hints (6+)
@@ -207,7 +207,7 @@ Create a new riddle PR using the riddle finder agent with the following specific
 ### Preferences
 - **Riddle Type**: Mixed (logic, wordplay, philosophical, or technical)
 - **Difficulty**: Hard
-- **Quality**: High-class, thought-provoking riddles only
+- **Quality**: High-quality, thought-provoking riddles only
 
 ---
 *This request will be processed by GitHub Copilot working with the Riddle Finder Agent.*`);

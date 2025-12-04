@@ -325,17 +325,17 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = ${{ steps.pr.outputs.pull-request-number }};
+            const prNumber = '${{ steps.pr.outputs.pull-request-number }}';
             
             // Add comment explaining auto-merge
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: prNumber,
+              issue_number: parseInt(prNumber),
               body: `🤖 **Auto-Merge Process**\n\nThis riddle has passed automated quality checks:\n- ✅ Schema validation\n- ✅ Required fields present\n- ✅ No duplicates detected\n- ✅ High-quality content\n\nMerging automatically...`
             });
             
-            // Wait a moment for PR to be fully ready
+            // Wait for PR to be fully ready (GitHub API eventual consistency)
             await new Promise(resolve => setTimeout(resolve, 2000));
             
             try {
@@ -343,7 +343,7 @@ jobs:
               await github.rest.pulls.merge({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: prNumber,
+                pull_number: parseInt(prNumber),
                 commit_title: `🧩 Add riddle: ${{ steps.agent.outputs.riddle_title }}`,
                 commit_message: `Auto-merged by Riddle Finder Agent after quality validation.`,
                 merge_method: 'squash'
@@ -354,12 +354,13 @@ jobs:
               console.log(`⚠️ Auto-merge failed: ${error.message}`);
               console.log('PR will require manual review and merge.');
               
-              // Add comment about manual review needed
+              // Add comment about manual review needed (sanitize error message)
+              const sanitizedError = error.message ? error.message.substring(0, 200) : 'Unknown error';
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: prNumber,
-                body: `⚠️ Auto-merge could not be completed. Manual review required.\n\nError: ${error.message}`
+                issue_number: parseInt(prNumber),
+                body: `⚠️ Auto-merge could not be completed. Manual review required.\n\nReason: ${sanitizedError}`
               });
             }
       
