@@ -174,9 +174,11 @@ We welcome contributions! Here are some ways to help:
 - **Improve documentation** or add examples
 - **Enhance UI/UX** with design improvements
 
-## Automated Riddle Submissions
+## Automated Systems
 
-This repository includes an intelligent agent system that automatically searches for interesting riddles online and submits them as pull requests daily. See `.github/agents/riddle-finder.md` for agent instructions and `.github/workflows/riddle-finder-agent.yml` for the workflow.
+This repository includes two intelligent agent systems:
+- **Riddle Finder Agent**: Automatically searches for and submits new riddles daily. See [agent instructions](.github/agents/riddle-finder.md) and [workflow](.github/workflows/riddle-finder-agent.yml).
+- **Repository Mapper Agent**: Maintains comprehensive repository documentation and code maps. See [agent instructions](.github/agents/repo-mapper.md) and [workflow](.github/workflows/repo-mapper-agent.yml).
 
 ---
 
