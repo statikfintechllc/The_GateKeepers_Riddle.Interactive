@@ -279,17 +279,21 @@ button {
 
 .feedback {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 8px;
     padding: 10px;
     border-radius: 8px;
     font-weight: 500;
-    min-height: 35px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+.feedback.wrong,
+.feedback.close {
+    display: flex;
 }
 
 .feedback.wrong {
@@ -557,7 +561,6 @@ button {
     .feedback {
         margin-top: 6px;
         padding: 6px;
-        min-height: 25px;
         font-size: 12px;
     }
     .attempts {
