@@ -1,0 +1,104 @@
+name: AI Riddle Request Handler
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  handle-riddle-request:
+    # Only run when the issue has the 'riddle-request' label
+    if: contains(github.event.issue.labels.*.name, 'riddle-request') || contains(github.event.issue.title, 'AI Curated Riddle Request')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Add comment to issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '🤖 AI Riddle Request received! Starting the Riddle Finder Agent workflow...'
+            });
+      
+      - name: Trigger Riddle Finder Agent
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Trigger the riddle-finder-agent workflow
+            const response = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'riddle-finder-agent.yml',
+              ref: 'master',
+              inputs: {
+                source_type: 'mixed',
+                difficulty: 'hard'
+              }
+            });
+            
+            console.log('Workflow dispatch triggered successfully');
+      
+      - name: Wait for workflow to complete (polling)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Wait a bit for the workflow to start
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            
+            // Get recent workflow runs
+            const workflows = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'riddle-finder-agent.yml',
+              per_page: 5
+            });
+            
+            if (workflows.data.workflow_runs.length > 0) {
+              const latestRun = workflows.data.workflow_runs[0];
+              const runUrl = latestRun.html_url;
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `✅ Riddle Finder Agent workflow has been triggered!\n\n📋 [View workflow run](${runUrl})\n\n*The agent will create a Pull Request with a new riddle if one is found. This may take a few minutes.*`
+              });
+            }
+      
+      - name: Close issue with success message
+        uses: actions/github-script@v7
+        if: success()
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✨ This riddle request has been processed. Watch for a new Pull Request with the riddle!'
+            });
+      
+      - name: Handle failure
+        uses: actions/github-script@v7
+        if: failure()
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '❌ There was an error processing your riddle request. Please try again or contact the repository maintainers.'
+            });

@@ -186,30 +186,32 @@ Thank you!`);
 async function requestAICurated() {
     closeRequestRiddleModal();
     
-    // Show notification
+    // GitHub repository details
+    const repoOwner = 'statikfintechllc';
+    const repoName = 'The_GateKeepers_Riddle.Interactive';
+    
+    // Create GitHub issue URL with pre-filled template
+    const issueTitle = encodeURIComponent('🤖 AI Curated Riddle Request');
+    const issueTemplate = 'riddle_request.md';
+    
+    // Construct the GitHub new issue URL
+    const githubIssueUrl = `https://github.com/${repoOwner}/${repoName}/issues/new?template=${issueTemplate}&title=${issueTitle}`;
+    
+    // Open GitHub issue in a new tab
+    window.open(githubIssueUrl, '_blank');
+    
+    // Show helpful notification
     const feedback = document.querySelector('.feedback');
     if (feedback) {
-        feedback.textContent = '🤖 AI riddle request submitted! Use "Refresh App" in 2-5 minutes to see the new riddle.';
+        feedback.textContent = '🚀 Opening GitHub issue... Complete the issue submission to trigger the AI agent. No sign-in required if you have a GitHub account!';
         feedback.className = 'feedback';
         feedback.style.display = 'flex';
         feedback.style.color = '#64ffda';
         
-        // Hide after 8 seconds
+        // Hide after 10 seconds
         setTimeout(() => {
             feedback.style.display = 'none';
-        }, 8000);
-    }
-    
-    // Trigger the riddle finder agent workflow
-    try {
-        // In a real implementation, this would call a GitHub API endpoint
-        // For now, we'll just log and show the message
-        console.log('AI Curated Riddle Request: Triggering riddle-finder-agent workflow');
-        
-        // Note: The actual workflow trigger would require backend API or GitHub Actions API
-        // This is a placeholder for the frontend interaction
-    } catch (error) {
-        console.error('Error requesting AI curated riddle:', error);
+        }, 10000);
     }
 }
 
