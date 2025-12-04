@@ -194,11 +194,11 @@ async function refreshApp() {
         }
         
         // Force reload from server (bypass cache)
-        window.location.reload(true);
+        window.location.reload();
     } catch (error) {
         console.error('Error refreshing app:', error);
         // Fallback to simple reload if cache clearing fails
-        window.location.reload(true);
+        window.location.reload();
     }
 }
 
