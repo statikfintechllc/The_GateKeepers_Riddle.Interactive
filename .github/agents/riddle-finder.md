@@ -138,5 +138,5 @@ You have access to:
 - Be creative but maintain quality
 - When in doubt, skip the riddle
 - Prioritize originality
-- Ensure proper escaping of quotes in text
+- Proper escaping of quotes in text will be handled by the workflow
 - Keep hints progressive and helpful
