@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-12-04T18:22:33.003Z",
+    "version": "1.0.0",
+    "totalFiles": 12,
+    "totalLines": 792,
+    "scanType": "full"
+  },
+  "structure": {
+    "directories": [
+      ".",
+      "system",
+      "system/riddles"
+    ],
+    "entryPoints": [
+      "index.html",
+      "system/game.js"
+    ],
+    "dependencies": {}
+  },
+  "files": {
+    ".gitignore": {
+      "name": ".gitignore",
+      "type": "",
+      "purpose": "Supporting file",
+      "size": 246,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "LICENSE": {
+      "name": "LICENSE",
+      "type": "",
+      "purpose": "Supporting file",
+      "size": 1088,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "index.html": {
+      "name": "index.html",
+      "type": "html",
+      "purpose": "Main application entry point",
+      "size": 11508,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "manifest.json": {
+      "name": "manifest.json",
+      "type": "json",
+      "purpose": "PWA manifest configuration",
+      "size": 645,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "sw.js": {
+      "name": "sw.js",
+      "type": "js",
+      "purpose": "Service worker for PWA offline support",
+      "size": 3289,
+      "lines": 93,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/game.css": {
+      "name": "game.css",
+      "type": "css",
+      "purpose": "Main stylesheet and visual styling",
+      "size": 12987,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/game.js": {
+      "name": "game.js",
+      "type": "js",
+      "purpose": "Core game logic and UI interactions",
+      "size": 15297,
+      "lines": 484,
+      "imports": [
+        "./riddles/riddles.js"
+      ],
+      "exports": [],
+      "functions": [
+        "loadProgress",
+        "saveProgress",
+        "loadCurrentRiddleIndex",
+        "saveCurrentRiddleIndex",
+        "initGame",
+        "loadRiddle",
+        "previousRiddle",
+        "nextRiddle",
+        "updateNavigationButtons",
+        "showRiddleSelector",
+        "closeRiddleSelector",
+        "showRequestRiddleMenu",
+        "closeRequestRiddleModal",
+        "requestViaEmail",
+        "requestAICurated",
+        "toggleMoreMenu",
+        "refreshApp",
+        "checkAnswer",
+        "giveUp",
+        "showModal",
+        "closeModal",
+        "showHelpModal",
+        "closeHelpModal",
+        "showHintModal",
+        "closeHintModal"
+      ],
+      "classes": []
+    },
+    "system/icon.logo.png": {
+      "name": "icon.logo.png",
+      "type": "png",
+      "purpose": "Supporting file",
+      "size": 124761,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/riddles/gatekeeper.riddle.js": {
+      "name": "gatekeeper.riddle.js",
+      "type": "js",
+      "purpose": "Riddle data file",
+      "size": 1755,
+      "lines": 57,
+      "imports": [],
+      "exports": [
+        "riddle"
+      ],
+      "functions": [],
+      "classes": []
+    },
+    "system/riddles/mirror.riddle.js": {
+      "name": "mirror.riddle.js",
+      "type": "js",
+      "purpose": "Riddle data file",
+      "size": 1499,
+      "lines": 46,
+      "imports": [],
+      "exports": [
+        "riddle"
+      ],
+      "functions": [],
+      "classes": []
+    },
+    "system/riddles/riddle.template.js": {
+      "name": "riddle.template.js",
+      "type": "js",
+      "purpose": "Template for creating new riddles",
+      "size": 2586,
+      "lines": 76,
+      "imports": [],
+      "exports": [
+        "riddle"
+      ],
+      "functions": [],
+      "classes": []
+    },
+    "system/riddles/riddles.js": {
+      "name": "riddles.js",
+      "type": "js",
+      "purpose": "Riddle registry and loader",
+      "size": 843,
+      "lines": 36,
+      "imports": [
+        "./gatekeeper.riddle.js",
+        "./mirror.riddle.js"
+      ],
+      "exports": [
+        "riddles",
+        "getRiddleById",
+        "getRiddleByIndex",
+        "getRiddleCount",
+        "getRiddleIndex"
+      ],
+      "functions": [
+        "getRiddleById",
+        "getRiddleByIndex",
+        "getRiddleCount",
+        "getRiddleIndex"
+      ],
+      "classes": []
+    }
+  },
+  "components": {
+    "ui": [
+      "index.html",
+      "system/game.css"
+    ],
+    "logic": [
+      "sw.js",
+      "system/game.js"
+    ],
+    "data": [
+      "system/riddles/gatekeeper.riddle.js",
+      "system/riddles/mirror.riddle.js",
+      "system/riddles/riddle.template.js",
+      "system/riddles/riddles.js"
+    ],
+    "infrastructure": [],
+    "documentation": []
+  },
+  "relationships": {
+    "dependencies": [
+      {
+        "from": "system/game.js",
+        "to": "./riddles/riddles.js",
+        "type": "import"
+      },
+      {
+        "from": "system/riddles/riddles.js",
+        "to": "./gatekeeper.riddle.js",
+        "type": "import"
+      },
+      {
+        "from": "system/riddles/riddles.js",
+        "to": "./mirror.riddle.js",
+        "type": "import"
+      }
+    ],
+    "usedBy": {
+      "./riddles/riddles.js": [
+        "system/game.js"
+      ],
+      "./gatekeeper.riddle.js": [
+        "system/riddles/riddles.js"
+      ],
+      "./mirror.riddle.js": [
+        "system/riddles/riddles.js"
+      ]
+    }
+  }
+}
