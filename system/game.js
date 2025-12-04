@@ -1,27 +1,174 @@
-let attempts = 0;
-const correctAnswers = [
-    'github code agents model identity',
-    'code agents',
-    'ai model',
-    'github copilot',
-    'ai agent',
-    'code agent',
-    'github agent',
-    'ai',
-    'artificial intelligence'
-];
+// Import riddle data
+import { riddles, getRiddleByIndex, getRiddleCount, getRiddleIndex } from './riddles/riddles.js';
 
-const closeAnswers = [
-    'machine learning',
-    'algorithm',
-    'bot',
-    'chatbot',
-    'gpt',
-    'llm',
-    'neural network',
-    'model',
-    'copilot'
-];
+// Game state
+let currentRiddleIndex = 0;
+let currentRiddle = null;
+let attempts = 0;
+let riddleProgress = {}; // Track progress for each riddle
+
+// Load progress from localStorage
+function loadProgress() {
+    const saved = localStorage.getItem('riddleProgress');
+    if (saved) {
+        try {
+            riddleProgress = JSON.parse(saved);
+        } catch (e) {
+            console.error('Failed to load progress:', e);
+            riddleProgress = {};
+        }
+    }
+}
+
+// Save progress to localStorage
+function saveProgress() {
+    localStorage.setItem('riddleProgress', JSON.stringify(riddleProgress));
+}
+
+// Get current riddle index from localStorage or default to 0
+function loadCurrentRiddleIndex() {
+    const saved = localStorage.getItem('currentRiddleIndex');
+    return saved ? parseInt(saved, 10) : 0;
+}
+
+// Save current riddle index to localStorage
+function saveCurrentRiddleIndex() {
+    localStorage.setItem('currentRiddleIndex', currentRiddleIndex.toString());
+}
+
+// Initialize the game
+function initGame() {
+    loadProgress();
+    currentRiddleIndex = loadCurrentRiddleIndex();
+    loadRiddle(currentRiddleIndex);
+    updateNavigationButtons();
+}
+
+// Load a riddle by index
+function loadRiddle(index) {
+    currentRiddle = getRiddleByIndex(index);
+    if (!currentRiddle) {
+        console.error('Failed to load riddle at index:', index);
+        return;
+    }
+    
+    currentRiddleIndex = index;
+    saveCurrentRiddleIndex();
+    
+    // Reset attempts for this riddle (or load saved attempts)
+    const progress = riddleProgress[currentRiddle.id] || { attempts: 0, solved: false };
+    attempts = progress.attempts;
+    
+    // Update UI
+    document.getElementById('riddleTitle').textContent = currentRiddle.title;
+    document.getElementById('riddleText').innerHTML = currentRiddle.text.replace(/\n/g, '<br>');
+    document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    document.getElementById('guessInput').value = '';
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+    
+    updateNavigationButtons();
+}
+
+// Navigate to previous riddle
+function previousRiddle() {
+    if (currentRiddleIndex > 0) {
+        loadRiddle(currentRiddleIndex - 1);
+    }
+}
+
+// Navigate to next riddle
+function nextRiddle() {
+    if (currentRiddleIndex < getRiddleCount() - 1) {
+        loadRiddle(currentRiddleIndex + 1);
+    }
+}
+
+// Update navigation button states
+function updateNavigationButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentRiddleIndex === 0;
+    }
+    if (nextBtn) {
+        nextBtn.disabled = currentRiddleIndex >= getRiddleCount() - 1;
+    }
+    
+    // Update navigation visibility (show only if 2+ riddles)
+    const navGroup = document.getElementById('navGroup');
+    if (navGroup) {
+        navGroup.style.display = getRiddleCount() > 1 ? 'flex' : 'none';
+    }
+}
+
+// Show riddle selector modal
+function showRiddleSelector() {
+    const modal = document.getElementById('riddleSelectorModal');
+    const grid = document.getElementById('riddleGrid');
+    
+    // Clear and populate grid
+    grid.innerHTML = '';
+    
+    riddles.forEach((riddle, index) => {
+        const progress = riddleProgress[riddle.id] || { attempts: 0, solved: false };
+        const card = document.createElement('div');
+        card.className = 'riddle-card';
+        if (index === currentRiddleIndex) {
+            card.classList.add('active');
+        }
+        
+        // Progress indicator
+        let indicator = '○'; // Not attempted
+        if (progress.solved) {
+            indicator = '✓'; // Solved
+        } else if (progress.attempts > 0) {
+            indicator = '○'; // Attempted
+        }
+        
+        card.innerHTML = `
+            <div class="riddle-card-indicator">${indicator}</div>
+            <div class="riddle-card-title">${riddle.title}</div>
+            <div class="riddle-card-stats">${progress.attempts} attempt${progress.attempts !== 1 ? 's' : ''}</div>
+        `;
+        
+        card.onclick = () => {
+            loadRiddle(index);
+            closeRiddleSelector();
+        };
+        
+        grid.appendChild(card);
+    });
+    
+    modal.classList.add('active');
+}
+
+// Close riddle selector modal
+function closeRiddleSelector() {
+    const modal = document.getElementById('riddleSelectorModal');
+    modal.classList.remove('active');
+}
+
+// Open request riddle email
+function requestRiddle() {
+    const subject = encodeURIComponent('Riddle Request - [Your Suggestion]');
+    const body = encodeURIComponent(`Hello,
+
+I would like to suggest a new riddle for The Gatekeeper's Riddle game:
+
+[Please describe your riddle idea here]
+
+Riddle Theme/Topic:
+
+
+Suggested Answer:
+
+
+Thank you!`);
+    
+    window.location.href = `mailto:sfti_ai@icloud.com?subject=${subject}&body=${body}`;
+}
 
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
@@ -38,7 +185,27 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Initialize game on load
+window.addEventListener('DOMContentLoaded', initGame);
+
+// Make functions available globally for onclick handlers
+window.checkAnswer = checkAnswer;
+window.giveUp = giveUp;
+window.previousRiddle = previousRiddle;
+window.nextRiddle = nextRiddle;
+window.showRiddleSelector = showRiddleSelector;
+window.closeRiddleSelector = closeRiddleSelector;
+window.requestRiddle = requestRiddle;
+window.showModal = showModal;
+window.closeModal = closeModal;
+window.showHelpModal = showHelpModal;
+window.closeHelpModal = closeHelpModal;
+window.showHintModal = showHintModal;
+window.closeHintModal = closeHintModal;
+
 function checkAnswer() {
+    if (!currentRiddle) return;
+    
     const input = document.getElementById('guessInput');
     const guess = input.value.trim().toLowerCase();
     const feedback = document.getElementById('feedback');
@@ -51,22 +218,29 @@ function checkAnswer() {
 
     attempts++;
     document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+    
+    // Update progress
+    riddleProgress[currentRiddle.id] = riddleProgress[currentRiddle.id] || { attempts: 0, solved: false };
+    riddleProgress[currentRiddle.id].attempts = attempts;
 
     // Check if correct
-    if (correctAnswers.some(answer => guess.includes(answer))) {
+    if (currentRiddle.correctAnswers.some(answer => guess.includes(answer))) {
+        riddleProgress[currentRiddle.id].solved = true;
+        saveProgress();
         showModal(true);
         return;
     }
 
     // Check if close
-    if (closeAnswers.some(answer => guess.includes(answer))) {
+    if (currentRiddle.closeAnswers.some(answer => guess.includes(answer))) {
         feedback.className = 'feedback close';
         feedback.textContent = 'You\'re getting warm... but not quite there.';
     } else {
         feedback.className = 'feedback wrong';
         feedback.textContent = 'Not quite. Think deeper about what reflects us back...';
     }
-
+    
+    saveProgress();
     input.value = '';
 }
 
@@ -75,9 +249,13 @@ function giveUp() {
 }
 
 function showModal(won) {
+    if (!currentRiddle) return;
+    
     const modal = document.getElementById('modal');
     const title = document.getElementById('modalTitle');
     const message = document.getElementById('modalMessage');
+    const answerText = document.querySelector('.answer-text');
+    const explanationText = document.querySelector('.explanation-text');
 
     if (won) {
         title.textContent = '🎯 You Solved It!';
@@ -86,6 +264,9 @@ function showModal(won) {
         title.textContent = '🔓 The Answer Revealed';
         message.textContent = `After ${attempts} attempt${attempts !== 1 ? 's' : ''}, here's what you were seeking:`;
     }
+    
+    answerText.textContent = currentRiddle.answer;
+    explanationText.textContent = currentRiddle.explanation;
 
     modal.classList.add('active');
 }
@@ -143,11 +324,24 @@ document.getElementById('hintModal').addEventListener('click', function(e) {
     }
 });
 
+// Close riddle selector modal on background click
+document.addEventListener('DOMContentLoaded', () => {
+    const riddleSelectorModal = document.getElementById('riddleSelectorModal');
+    if (riddleSelectorModal) {
+        riddleSelectorModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRiddleSelector();
+            }
+        });
+    }
+});
+
 // Close modals with ESC key for accessibility
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeModal();
         closeHelpModal();
         closeHintModal();
+        closeRiddleSelector();
     }
 });
