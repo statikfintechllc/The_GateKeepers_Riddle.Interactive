@@ -140,12 +140,8 @@ On mobile devices, you can install this as a standalone app:
 Simply open `index.html` in a browser or use a local server:
 
 ```bash
-# Python 3
+# Python 3 (recommended)
 python3 -m http.server 8080
-
-# Python 2
-python -m SimpleHTTPServer 8080
-
 # Node.js
 npx http-server
 ```
