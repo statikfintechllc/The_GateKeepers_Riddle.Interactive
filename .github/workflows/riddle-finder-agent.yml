@@ -45,6 +45,9 @@ on:
       riddle_id:
         description: 'ID of created riddle'
         value: ${{ jobs.find-riddle.outputs.riddle_id }}
+      riddle_title:
+        description: 'Title of created riddle'
+        value: ${{ jobs.find-riddle.outputs.riddle_title }}
       pr_number:
         description: 'PR number if created'
         value: ${{ jobs.find-riddle.outputs.pr_number }}
@@ -59,6 +62,7 @@ jobs:
     outputs:
       riddle_created: ${{ steps.agent.outputs.riddle_created }}
       riddle_id: ${{ steps.agent.outputs.riddle_id }}
+      riddle_title: ${{ steps.agent.outputs.riddle_title }}
       pr_number: ${{ steps.pr.outputs.pull-request-number }}
     
     steps:
@@ -189,14 +193,14 @@ What am I, this tool of progress?`,
 export const riddle = {
     id: '${riddleId}',
     title: '${selectedRiddle.title}',
-    text: \`${selectedRiddle.text}\`,
-    correctAnswers: ${JSON.stringify(selectedRiddle.correctAnswers, null, 8)},
-    closeAnswers: ${JSON.stringify(selectedRiddle.closeAnswers, null, 8)},
-    hints: ${JSON.stringify(selectedRiddle.hints, null, 8)},
-    wrongAnswerFeedback: '${selectedRiddle.wrongAnswerFeedback}',
-    closeAnswerFeedback: '${selectedRiddle.closeAnswerFeedback}',
-    explanation: '${selectedRiddle.explanation}',
-    answer: '${selectedRiddle.answer}'
+    text: \`${selectedRiddle.text.replace(/`/g, '\\`')}\`,
+    correctAnswers: ${JSON.stringify(selectedRiddle.correctAnswers, null, 4)},
+    closeAnswers: ${JSON.stringify(selectedRiddle.closeAnswers, null, 4)},
+    hints: ${JSON.stringify(selectedRiddle.hints, null, 4)},
+    wrongAnswerFeedback: '${selectedRiddle.wrongAnswerFeedback.replace(/'/g, "\\'")}',
+    closeAnswerFeedback: '${selectedRiddle.closeAnswerFeedback.replace(/'/g, "\\'")}',
+    explanation: '${selectedRiddle.explanation.replace(/'/g, "\\'")}',
+    answer: '${selectedRiddle.answer.replace(/'/g, "\\'")}'
 };
 `;
           
@@ -215,6 +219,7 @@ export const riddle = {
           const lastImportEnd = content.indexOf(';', lastImportIndex) + 1;
           content = content.slice(0, lastImportEnd) + '\n' + importLine + content.slice(lastImportEnd);
           
+          const originalContent = content;
           content = content.replace(
             /export const riddles = \[([\s\S]*?)\];/,
             (match, inner) => {
@@ -223,6 +228,10 @@ export const riddle = {
               return `export const riddles = [${newInner}];`;
             }
           );
+          
+          if (content === originalContent) {
+            throw new Error('Failed to update riddles.js - array pattern not found');
+          }
           
           fs.writeFileSync(riddlesJs, content);
           console.log(`✅ Updated riddles.js`);

@@ -498,6 +498,52 @@ button {
     text-decoration: underline;
 }
 
+/* Request Riddle Modal Styles */
+.request-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.request-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.request-option-btn:hover {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0.05));
+    border-color: rgba(100, 255, 218, 0.4);
+    transform: translateY(-2px);
+}
+
+.request-option-btn svg {
+    margin-bottom: 10px;
+    stroke: #64ffda;
+}
+
+.request-option-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #64ffda;
+}
+
+.option-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
 @media (max-height: 700px) {
     body {
         padding: 8px;

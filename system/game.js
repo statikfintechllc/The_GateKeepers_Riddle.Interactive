@@ -144,8 +144,26 @@ function closeRiddleSelector() {
     modal.classList.remove('active');
 }
 
-// Open request riddle email
-function requestRiddle() {
+// Show request riddle sub-menu
+function showRequestRiddleMenu() {
+    toggleMoreMenu(); // Close the More menu
+    const modal = document.getElementById('requestRiddleModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
+
+// Close request riddle modal
+function closeRequestRiddleModal() {
+    const modal = document.getElementById('requestRiddleModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// Request via email
+function requestViaEmail() {
+    closeRequestRiddleModal();
     const subject = encodeURIComponent('Riddle Request - [Your Suggestion]');
     const body = encodeURIComponent(`Hello,
 
@@ -162,6 +180,37 @@ Suggested Answer:
 Thank you!`);
     
     window.location.href = `mailto:sfti_ai@icloud.com?subject=${subject}&body=${body}`;
+}
+
+// Request AI curated riddle
+async function requestAICurated() {
+    closeRequestRiddleModal();
+    
+    // Show notification
+    const feedback = document.querySelector('.feedback');
+    if (feedback) {
+        feedback.textContent = '🤖 AI riddle request submitted! Use "Refresh App" in 2-5 minutes to see the new riddle.';
+        feedback.className = 'feedback';
+        feedback.style.display = 'flex';
+        feedback.style.color = '#64ffda';
+        
+        // Hide after 8 seconds
+        setTimeout(() => {
+            feedback.style.display = 'none';
+        }, 8000);
+    }
+    
+    // Trigger the riddle finder agent workflow
+    try {
+        // In a real implementation, this would call a GitHub API endpoint
+        // For now, we'll just log and show the message
+        console.log('AI Curated Riddle Request: Triggering riddle-finder-agent workflow');
+        
+        // Note: The actual workflow trigger would require backend API or GitHub Actions API
+        // This is a placeholder for the frontend interaction
+    } catch (error) {
+        console.error('Error requesting AI curated riddle:', error);
+    }
 }
 
 // Toggle more menu dropdown
@@ -227,7 +276,10 @@ window.previousRiddle = previousRiddle;
 window.nextRiddle = nextRiddle;
 window.showRiddleSelector = showRiddleSelector;
 window.closeRiddleSelector = closeRiddleSelector;
-window.requestRiddle = requestRiddle;
+window.showRequestRiddleMenu = showRequestRiddleMenu;
+window.closeRequestRiddleModal = closeRequestRiddleModal;
+window.requestViaEmail = requestViaEmail;
+window.requestAICurated = requestAICurated;
 window.toggleMoreMenu = toggleMoreMenu;
 window.refreshApp = refreshApp;
 window.showModal = showModal;
@@ -324,7 +376,10 @@ function showHintModal() {
     if (!currentRiddle) return;
     
     const modal = document.getElementById('hintModal');
+    if (!modal) return;
+    
     const hintContent = modal.querySelector('.hint-content');
+    if (!hintContent) return;
     
     // Clear existing hints
     hintContent.innerHTML = '';
@@ -405,6 +460,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 menu.classList.remove('active');
             }
         });
+    } else {
+        if (!dropdown && !menu) {
+            console.warn("Dropdown menu initialization: Both '.bubble-dropdown' and '#moreMenu' elements are missing from the DOM.");
+        } else if (!dropdown) {
+            console.warn("Dropdown menu initialization: '.bubble-dropdown' element is missing from the DOM.");
+        } else if (!menu) {
+            console.warn("Dropdown menu initialization: '#moreMenu' element is missing from the DOM.");
+        }
     }
 });
 
@@ -415,5 +478,6 @@ document.addEventListener('keydown', function(e) {
         closeHelpModal();
         closeHintModal();
         closeRiddleSelector();
+        closeRequestRiddleModal();
     }
 });

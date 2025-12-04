@@ -13,6 +13,7 @@ on:
       - '**.css'
       - '**.html'
       - 'system/**'
+      - '!system/data/**'
   workflow_dispatch:  # Manual trigger
     inputs:
       scan_type:
