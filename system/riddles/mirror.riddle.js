@@ -31,5 +31,5 @@ yet I'm the one who disappears.`,
         'system'
     ],
     explanation: 'Like a mirror or an algorithm, it reflects without understanding, serves without consciousness.',
-    answer: 'A Reflection / Algorithm'
+    answer: 'An Algorithm\'s Reflection'
 };
