@@ -28,55 +28,100 @@ jobs:
             });
       
       - name: Trigger Riddle Finder Agent
+        id: trigger
         uses: actions/github-script@v7
         with:
           script: |
             // Trigger the riddle-finder-agent workflow
-            const response = await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'riddle-finder-agent.yml',
-              ref: 'master',
-              inputs: {
-                source_type: 'mixed',
-                difficulty: 'hard'
-              }
-            });
-            
-            console.log('Workflow dispatch triggered successfully');
+            try {
+              const response = await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'riddle-finder-agent.yml',
+                ref: 'master',  // Using 'master' as confirmed by repository settings
+                inputs: {
+                  source_type: 'mixed',
+                  difficulty: 'hard'
+                }
+              });
+              
+              console.log('Workflow dispatch triggered successfully');
+              return { success: true };
+            } catch (error) {
+              console.error('Failed to trigger workflow:', error);
+              throw error;
+            }
       
-      - name: Wait for workflow to complete (polling)
+      - name: Find triggered workflow run
+        id: find-run
         uses: actions/github-script@v7
         with:
           script: |
-            // Wait a bit for the workflow to start
-            await new Promise(resolve => setTimeout(resolve, 10000));
+            // Wait for workflow to start with exponential backoff
+            const maxAttempts = 6;
+            let attempt = 0;
+            let workflowRun = null;
             
-            // Get recent workflow runs
-            const workflows = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'riddle-finder-agent.yml',
-              per_page: 5
-            });
-            
-            if (workflows.data.workflow_runs.length > 0) {
-              const latestRun = workflows.data.workflow_runs[0];
-              const runUrl = latestRun.html_url;
+            while (attempt < maxAttempts && !workflowRun) {
+              const delay = Math.min(5000 * Math.pow(2, attempt), 30000); // Max 30 seconds
+              console.log(`Attempt ${attempt + 1}/${maxAttempts}, waiting ${delay}ms...`);
+              await new Promise(resolve => setTimeout(resolve, delay));
               
+              // Get recent workflow runs
+              const workflows = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'riddle-finder-agent.yml',
+                per_page: 5,
+                event: 'workflow_dispatch'
+              });
+              
+              // Find the most recent run (within last 2 minutes)
+              const twoMinutesAgo = new Date(Date.now() - 120000);
+              workflowRun = workflows.data.workflow_runs.find(run => 
+                new Date(run.created_at) > twoMinutesAgo
+              );
+              
+              attempt++;
+            }
+            
+            if (workflowRun) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `✅ Riddle Finder Agent workflow has been triggered!\n\n📋 [View workflow run](${runUrl})\n\n*The agent will create a Pull Request with a new riddle if one is found. This may take a few minutes.*`
+                body: `✅ Riddle Finder Agent workflow has been triggered!\n\n📋 [View workflow run](${workflowRun.html_url})\n\n*The agent will create a Pull Request with a new riddle if one is found. This may take a few minutes.*`
               });
+              return { url: workflowRun.html_url };
+            } else {
+              console.log('Could not find workflow run, but dispatch was successful');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `✅ Riddle Finder Agent workflow has been triggered!\n\nCheck the [Actions tab](/${context.repo.owner}/${context.repo.repo}/actions/workflows/riddle-finder-agent.yml) for the workflow run.\n\n*The agent will create a Pull Request with a new riddle if one is found.*`
+              });
+              return { url: null };
             }
       
-      - name: Close issue with success message
+      - name: Add label and close issue
         uses: actions/github-script@v7
-        if: success()
+        if: steps.trigger.outcome == 'success'
         with:
           script: |
+            // Add label to track processed requests
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: ['processed']
+              });
+            } catch (error) {
+              console.log('Label may not exist, skipping');
+            }
+            
+            // Close the issue
             await github.rest.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -88,7 +133,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '✨ This riddle request has been processed. Watch for a new Pull Request with the riddle!'
+              body: '✨ This riddle request has been processed and the Riddle Finder Agent has been triggered. Watch for a new Pull Request with the riddle!\n\n*Note: The agent may not create a PR if no suitable riddles are found or if all candidates already exist in the repository.*'
             });
       
       - name: Handle failure
