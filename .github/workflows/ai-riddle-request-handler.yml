@@ -12,7 +12,7 @@ permissions:
 jobs:
   handle-riddle-request:
     # Only run when the issue has the 'riddle-request' label
-    if: contains(github.event.issue.labels.*.name, 'riddle-request') || contains(github.event.issue.title, 'AI Curated Riddle Request')
+    if: contains(github.event.issue.labels.*.name, 'riddle-request')
     runs-on: ubuntu-latest
     
     steps:
@@ -99,7 +99,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `✅ Riddle Finder Agent workflow has been triggered!\n\nCheck the [Actions tab](/${context.repo.owner}/${context.repo.repo}/actions/workflows/riddle-finder-agent.yml) for the workflow run.\n\n*The agent will create a Pull Request with a new riddle if one is found.*`
+                body: `✅ Riddle Finder Agent workflow has been triggered!\n\nCheck the [Actions tab](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/riddle-finder-agent.yml) for the workflow run.\n\n*The agent will create a Pull Request with a new riddle if one is found.*`
               });
               return { url: null };
             }

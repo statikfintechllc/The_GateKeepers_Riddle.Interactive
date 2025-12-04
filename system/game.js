@@ -203,7 +203,7 @@ async function requestAICurated() {
     // Show helpful notification
     const feedback = document.querySelector('.feedback');
     if (feedback) {
-        feedback.textContent = '🚀 Opening GitHub issue... Complete the issue submission to trigger the AI agent. No sign-in required if you have a GitHub account!';
+        feedback.textContent = '🚀 Opening GitHub issue... GitHub account required to submit the issue and trigger the AI agent.';
         feedback.className = 'feedback';
         feedback.style.display = 'flex';
         feedback.style.color = '#64ffda';
