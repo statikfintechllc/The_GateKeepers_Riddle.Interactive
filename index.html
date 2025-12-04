@@ -348,7 +348,7 @@
 
         // Check if already authenticated
         if (isAuthenticated()) {
-            window.location.href = 'system/game.html';
+            window.location.replace('system/game.html');
         }
 
         const form = document.getElementById('loginForm');
@@ -387,7 +387,7 @@
                     
                     // Redirect to game
                     setTimeout(() => {
-                        window.location.href = 'system/game.html';
+                        window.location.replace('system/game.html');
                     }, 1000);
                 } else {
                     showError('Invalid token. Please check your token and try again.');

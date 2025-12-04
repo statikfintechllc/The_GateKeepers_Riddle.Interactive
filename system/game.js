@@ -10,7 +10,7 @@ let riddleProgress = {}; // Track progress for each riddle
 
 // Check authentication on load
 if (!isAuthenticated()) {
-    window.location.href = '../index.html';
+    window.location.replace('../index.html');
 }
 
 // Load progress from localStorage
@@ -242,7 +242,7 @@ function handleLogout() {
     const confirmed = confirm('Are you sure you want to logout?');
     if (confirmed) {
         logout();
-        window.location.href = '../index.html';
+        window.location.replace('../index.html');
     }
     toggleMoreMenu();
 }

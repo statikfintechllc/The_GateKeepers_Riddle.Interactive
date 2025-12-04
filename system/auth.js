@@ -47,7 +47,7 @@ export async function verifyToken(token) {
     try {
         const response = await fetch('https://api.github.com/user', {
             headers: {
-                'Authorization': `token ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
@@ -90,7 +90,7 @@ This request was generated from the PWA interface.`,
             {
                 method: 'POST',
                 headers: {
-                    'Authorization': `token ${token}`,
+                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/vnd.github.v3+json',
                     'Content-Type': 'application/json'
                 },
@@ -117,14 +117,14 @@ export function checkAuthAndRedirect() {
     if (isAuthenticated()) {
         // Already authenticated, go to game
         if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html')) {
-            window.location.href = 'system/game.html';
+            window.location.replace('system/game.html');
         }
     } else {
         // Not authenticated, go to login
         if (!window.location.pathname.endsWith('/index.html') && 
             !window.location.pathname.endsWith('/') &&
             window.location.pathname.includes('system/game.html')) {
-            window.location.href = '../index.html';
+            window.location.replace('../index.html');
         }
     }
 }
