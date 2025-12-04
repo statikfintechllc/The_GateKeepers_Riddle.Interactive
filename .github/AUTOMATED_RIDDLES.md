@@ -1,34 +1,56 @@
 # Automated Riddle Submission System
 
-This document explains how the automated riddle submission system works and how to configure it.
+This document explains how the automated riddle submission system works and how users and maintainers can request new riddles.
 
 ## Overview
 
-The Daily Riddle Submission workflow automatically:
+The Riddle Finder Agent workflow automatically:
 1. Runs every day at 2 AM UTC (configurable)
-2. Searches online sources for interesting, challenging riddles
-3. Validates riddles against the template schema
-4. Creates new riddle files following the established format
-5. Updates the riddles registry
-6. Opens a pull request for review
+2. Can be triggered by user requests via GitHub Issues
+3. Searches and generates interesting, challenging riddles
+4. Validates riddles against the template schema
+5. Creates new riddle files following the established format
+6. Updates the riddles registry
+7. Opens a pull request for review
+
+## User Riddle Requests
+
+### From the PWA/Game Interface
+
+Users can request AI-curated riddles directly from the game:
+
+1. Click the **More Options** button (three dots)
+2. Select **Request Riddle**
+3. Click **AI Curated**
+4. A GitHub issue creation page will open with a pre-filled template
+5. Submit the issue (no GitHub sign-in required for public repos)
+6. The Riddle Finder Agent will automatically process the request
+7. A new riddle will be added via pull request
+8. Use **Refresh App** after the PR is merged to see the new riddle
+
+### GitHub Issue Trigger
+
+The workflow is triggered when:
+- An issue is opened with the label `ai-riddle-request`
+- An existing issue is labeled with `ai-riddle-request`
+
+The issue will be automatically closed with a success comment once processed.
 
 ## Workflow Configuration
 
 ### Location
-`.github/workflows/daily-riddle-submission.yml`
+`.github/workflows/riddle-finder-agent.yml`
 
-### Trigger Schedule
-By default, runs daily at 2 AM UTC:
-```yaml
-schedule:
-  - cron: '0 2 * * *'
-```
-
-You can also trigger it manually from the Actions tab.
+### Trigger Methods
+1. **Schedule**: Runs daily at 2 AM UTC
+2. **Manual**: Via the Actions tab (workflow_dispatch)
+3. **Issue-based**: When issues with `ai-riddle-request` label are created
+4. **Workflow Call**: Can be called by other workflows
 
 ### Permissions Required
 - `contents: write` - To create commits
 - `pull-requests: write` - To create PRs
+- `issues: write` - To comment on and close issues
 
 ## How It Works
 
