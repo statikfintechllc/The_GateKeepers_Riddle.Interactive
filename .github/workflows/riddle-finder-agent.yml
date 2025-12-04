@@ -132,14 +132,14 @@ What am I?`,
             {
               title: 'The Paradox of Progress',
               text: `The more you use me, the less I remain,
-Yet I am infinite and impossible to drain.
-I can solve any problem, unlock any door,
-But the more you discover, you realize there's more.
-
-I built civilizations, I toppled them too,
-I am the oldest and the newest truth.
-Freely given yet priceless to possess,
-What am I, this tool of progress?`,
+              Yet I am infinite and impossible to drain.
+              I can solve any problem, unlock any door,
+              But the more you discover, you realize there's more.
+              
+              I built civilizations, I toppled them too,
+              I am the oldest and the newest truth.
+              Freely given yet priceless to possess,
+              What am I, this tool of progress?`,
               answer: 'Knowledge',
               correctAnswers: ['knowledge', 'information', 'wisdom', 'learning', 'understanding'],
               closeAnswers: ['education', 'science', 'intelligence', 'data', 'truth'],
