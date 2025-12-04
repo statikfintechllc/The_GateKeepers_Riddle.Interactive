@@ -307,11 +307,9 @@ function showHintModal() {
                 p.style.fontStyle = 'italic';
                 p.style.color = '#64ffda';
                 p.style.marginTop = '10px';
+                p.textContent = hint;
             } else {
                 p.textContent = '• ' + hint;
-            }
-            if (index === currentRiddle.hints.length - 1) {
-                p.textContent = hint;
             }
             hintContent.appendChild(p);
         });
