@@ -193,11 +193,11 @@ async function refreshApp() {
             console.log('All service workers unregistered');
         }
         
-        // Force reload from server (bypass cache)
+        // Reload the page after cache clearing
         window.location.reload();
     } catch (error) {
         console.error('Error refreshing app:', error);
-        // Fallback to simple reload if cache clearing fails
+        // Fallback to reload if cache clearing fails
         window.location.reload();
     }
 }
