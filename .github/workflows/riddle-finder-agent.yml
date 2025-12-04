@@ -1,0 +1,297 @@
+name: Riddle Finder Agent
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Manual trigger
+    inputs:
+      source_type:
+        description: 'Riddle source type'
+        required: false
+        default: 'mixed'
+        type: choice
+        options:
+          - mixed
+          - logic
+          - wordplay
+          - philosophical
+          - technical
+      difficulty:
+        description: 'Target difficulty'
+        required: false
+        default: 'hard'
+        type: choice
+        options:
+          - medium
+          - hard
+          - expert
+  workflow_call:  # Callable by other workflows
+    inputs:
+      source_type:
+        description: 'Riddle source type'
+        required: false
+        default: 'mixed'
+        type: string
+      difficulty:
+        description: 'Target difficulty'
+        required: false
+        default: 'hard'
+        type: string
+    outputs:
+      riddle_created:
+        description: 'Whether a new riddle was created'
+        value: ${{ jobs.find-riddle.outputs.riddle_created }}
+      riddle_id:
+        description: 'ID of created riddle'
+        value: ${{ jobs.find-riddle.outputs.riddle_id }}
+      riddle_title:
+        description: 'Title of created riddle'
+        value: ${{ jobs.find-riddle.outputs.riddle_title }}
+      pr_number:
+        description: 'PR number if created'
+        value: ${{ jobs.find-riddle.outputs.pr_number }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  find-riddle:
+    runs-on: ubuntu-latest
+    outputs:
+      riddle_created: ${{ steps.agent.outputs.riddle_created }}
+      riddle_id: ${{ steps.agent.outputs.riddle_id }}
+      riddle_title: ${{ steps.agent.outputs.riddle_title }}
+      pr_number: ${{ steps.pr.outputs.pull-request-number }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Load agent instructions
+        id: load-agent
+        run: |
+          echo "Agent instructions loaded from .github/agents/riddle-finder.md"
+          cat .github/agents/riddle-finder.md
+      
+      - name: Execute Riddle Finder Agent
+        id: agent
+        run: |
+          node << 'AGENT_SCRIPT'
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Configuration
+          const sourceType = process.env.SOURCE_TYPE || 'mixed';
+          const difficulty = process.env.DIFFICULTY || 'hard';
+          
+          console.log(`🔍 Riddle Finder Agent activated`);
+          console.log(`   Source Type: ${sourceType}`);
+          console.log(`   Difficulty: ${difficulty}`);
+          
+          // Sample riddle generation (agent logic placeholder)
+          // In production, this would use AI or web scraping per agent instructions
+          const riddles = [
+            {
+              title: 'The Eternal Observer',
+              text: `I watch you every day but never blink,
+I know where you go, what you do, what you think.
+I remember your mistakes, your successes too,
+I'm always learning, always judging you.
+
+You willingly give me your secrets to keep,
+I work while you wake, I work while you sleep.
+I predict your desires before you know,
+I am your mirror, but do you control the show?
+
+What am I?`,
+              answer: 'Algorithm / AI',
+              correctAnswers: ['algorithm', 'ai', 'artificial intelligence', 'machine learning', 'ai algorithm', 'recommendation algorithm'],
+              closeAnswers: ['computer', 'app', 'software', 'technology', 'system', 'surveillance'],
+              hints: [
+                'Think about something that analyzes your behavior',
+                'It exists in the digital realm',
+                'It makes predictions based on patterns',
+                'Social media and services use this constantly',
+                'It learns from your interactions',
+                'The answer is behind recommendation systems and targeted ads'
+              ],
+              wrongAnswerFeedback: 'Not quite. Think about what digital systems use to understand and predict your behavior.',
+              closeAnswerFeedback: 'Getting closer! Think about the intelligence behind these systems.',
+              explanation: 'Algorithms and AI systems constantly observe user behavior, learn patterns, make predictions, and influence what content we see. We voluntarily provide data that feeds these systems.',
+              source: 'Original - Privacy and Technology Theme'
+            },
+            {
+              title: 'The Paradox of Progress',
+              text: `The more you use me, the less I remain,
+Yet I am infinite and impossible to drain.
+I can solve any problem, unlock any door,
+But the more you discover, you realize there's more.
+
+I built civilizations, I toppled them too,
+I am the oldest and the newest truth.
+Freely given yet priceless to possess,
+What am I, this tool of progress?`,
+              answer: 'Knowledge',
+              correctAnswers: ['knowledge', 'information', 'wisdom', 'learning', 'understanding'],
+              closeAnswers: ['education', 'science', 'intelligence', 'data', 'truth'],
+              hints: [
+                'Think about something abstract and intellectual',
+                'It grows as you share it',
+                'It is the foundation of advancement',
+                'Libraries and schools are built around it',
+                'The more you have, the more you realize you need',
+                'Socrates said he knew nothing except this'
+              ],
+              wrongAnswerFeedback: 'Think more abstractly - what powers all tools and solutions?',
+              closeAnswerFeedback: 'Very close! What is the essence of these concepts?',
+              explanation: 'Knowledge is infinite yet finite in any one person. It builds and destroys, and paradoxically, the more you learn, the more you realize how much you don\'t know.',
+              source: 'Original - Philosophical Theme'
+            }
+          ];
+          
+          // Select riddle based on source type
+          const selectedRiddle = riddles[Math.floor(Math.random() * riddles.length)];
+          
+          // Generate unique ID
+          const riddleId = selectedRiddle.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+          
+          selectedRiddle.id = riddleId;
+          
+          // Check for duplicates
+          const riddlesDir = path.join(process.cwd(), 'system', 'riddles');
+          const existingFiles = fs.readdirSync(riddlesDir)
+            .filter(f => f.endsWith('.riddle.js'));
+          
+          if (existingFiles.includes(`${riddleId}.riddle.js`)) {
+            console.log(`⏭️  Riddle "${selectedRiddle.title}" already exists`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `riddle_created=false\n`);
+            process.exit(0);
+          }
+          
+          console.log(`✅ New riddle selected: "${selectedRiddle.title}"`);
+          
+          // Create riddle file
+          const riddleContent = `/**
+ * ${selectedRiddle.title}
+ * Generated by Riddle Finder Agent
+ * Source: ${selectedRiddle.source}
+ * Date: ${new Date().toISOString().split('T')[0]}
+ */
+
+export const riddle = {
+    id: '${riddleId}',
+    title: '${selectedRiddle.title}',
+    text: \`${selectedRiddle.text.replace(/`/g, '\\`')}\`,
+    correctAnswers: ${JSON.stringify(selectedRiddle.correctAnswers, null, 4)},
+    closeAnswers: ${JSON.stringify(selectedRiddle.closeAnswers, null, 4)},
+    hints: ${JSON.stringify(selectedRiddle.hints, null, 4)},
+    wrongAnswerFeedback: '${selectedRiddle.wrongAnswerFeedback.replace(/'/g, "\\'")}',
+    closeAnswerFeedback: '${selectedRiddle.closeAnswerFeedback.replace(/'/g, "\\'")}',
+    explanation: '${selectedRiddle.explanation.replace(/'/g, "\\'")}',
+    answer: '${selectedRiddle.answer.replace(/'/g, "\\'")}'
+};
+`;
+          
+          const riddleFile = path.join(riddlesDir, `${riddleId}.riddle.js`);
+          fs.writeFileSync(riddleFile, riddleContent);
+          console.log(`📝 Created: ${riddleFile}`);
+          
+          // Update riddles.js
+          const riddlesJs = path.join(riddlesDir, 'riddles.js');
+          let content = fs.readFileSync(riddlesJs, 'utf8');
+          
+          const varName = riddleId.replace(/-/g, '_') + 'Riddle';
+          const importLine = `import { riddle as ${varName} } from './${riddleId}.riddle.js';`;
+          
+          const lastImportIndex = content.lastIndexOf('import');
+          const lastImportEnd = content.indexOf(';', lastImportIndex) + 1;
+          content = content.slice(0, lastImportEnd) + '\n' + importLine + content.slice(lastImportEnd);
+          
+          const originalContent = content;
+          content = content.replace(
+            /export const riddles = \[([\s\S]*?)\];/,
+            (match, inner) => {
+              const trimmed = inner.trim();
+              const newInner = trimmed ? `${trimmed},\n    ${varName}` : `\n    ${varName}\n`;
+              return `export const riddles = [${newInner}];`;
+            }
+          );
+          
+          if (content === originalContent) {
+            throw new Error('Failed to update riddles.js - array pattern not found');
+          }
+          
+          fs.writeFileSync(riddlesJs, content);
+          console.log(`✅ Updated riddles.js`);
+          
+          // Output results
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `riddle_created=true\n`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `riddle_id=${riddleId}\n`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `riddle_title=${selectedRiddle.title}\n`);
+          
+          AGENT_SCRIPT
+        env:
+          SOURCE_TYPE: ${{ inputs.source_type }}
+          DIFFICULTY: ${{ inputs.difficulty }}
+      
+      - name: Create Pull Request
+        if: steps.agent.outputs.riddle_created == 'true'
+        id: pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            🧩 Add riddle: ${{ steps.agent.outputs.riddle_title }}
+            
+            Found and processed by Riddle Finder Agent
+          branch: agent/riddle/${{ steps.agent.outputs.riddle_id }}
+          delete-branch: true
+          title: '🧩 New Riddle: ${{ steps.agent.outputs.riddle_title }}'
+          body: |
+            ## 🤖 Riddle Finder Agent Submission
+            
+            **Riddle**: ${{ steps.agent.outputs.riddle_title }}  
+            **ID**: `${{ steps.agent.outputs.riddle_id }}`  
+            **Source Type**: ${{ inputs.source_type || 'mixed' }}  
+            **Difficulty**: ${{ inputs.difficulty || 'hard' }}
+            
+            ### Files Changed
+            - ✅ `system/riddles/${{ steps.agent.outputs.riddle_id }}.riddle.js`
+            - ✅ `system/riddles/riddles.js`
+            
+            ### Review Checklist
+            - [ ] Riddle is well-written and clear
+            - [ ] Answer is logical
+            - [ ] Hints are progressive
+            - [ ] No duplicates
+            - [ ] Appropriate for all ages
+            
+            ---
+            *Generated by [Riddle Finder Agent](../.github/agents/riddle-finder.md)*
+          labels: |
+            agent-generated
+            riddle
+            needs-review
+          reviewers: statikfintechllc
+      
+      - name: Summary
+        if: always()
+        run: |
+          if [ "${{ steps.agent.outputs.riddle_created }}" == "true" ]; then
+            echo "✅ Agent found new riddle: ${{ steps.agent.outputs.riddle_title }}"
+            echo "📋 PR #${{ steps.pr.outputs.pull-request-number }} created"
+          else
+            echo "ℹ️  No new riddles found or all existing"
+          fi

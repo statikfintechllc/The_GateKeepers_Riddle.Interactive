@@ -1,42 +1,180 @@
 # The Gatekeeper's Riddle - Interactive
 
-An interactive web-based riddle game that challenges players to solve a philosophical puzzle about AI, code agents, and digital identity. The riddle explores themes of reflection, inheritance, and what it means to build with tools that mirror ourselves.
+An interactive web-based riddle game that challenges players to solve philosophical puzzles about AI, code agents, digital identity, and more. Featuring multiple riddles with dynamic hints, custom feedback, and a sleek mobile-optimized interface.
 
 ## About
 
-This is a beautifully designed, interactive riddle experience featuring:
+This is a beautifully designed Progressive Web App (PWA) with:
+- **Multiple Riddles**: Collection of thought-provoking riddles including "The Gatekeeper's Riddle" and "The Mirror's Paradox"
 - **Elegant Dark Theme**: Modern UI with gradient backgrounds and smooth animations
-- **Progressive Hints**: Get feedback as you submit guesses (wrong, close, or correct)
-- **Attempt Tracking**: Keep track of how many tries it takes to solve the riddle
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Modal Reveal**: Dramatic answer reveal with thematic explanation
-
-The riddle asks: *"Who wears the mask that mirrors back, not truth, but what the watchers lack?"* — a metaphorical exploration of GitHub Code Agents, AI models, and our relationship with the tools we create.
+- **Dynamic Hints System**: Each riddle has its own progressive hints that update as you switch riddles
+- **Custom Feedback**: Riddle-specific messages for wrong and close answers
+- **Attempt Tracking**: Keep track of how many tries it takes to solve each riddle
+- **Responsive Design**: Optimized for mobile with compact bubble button bar
+- **PWA Support**: Works offline with service worker caching and manual refresh capability
+- **Modal Reveals**: Dramatic answer reveal with thematic explanations
 
 ## Live Demo
 
-Simply press [here](https://statikfintechllc.github.io/The_GateKeepers_Riddle.Interactive/) in your browser to start playing. No build process or dependencies required — it's pure HTML, CSS, and JavaScript.
+Visit [The Gatekeeper's Riddle](https://statikfintechllc.github.io/The_GateKeepers_Riddle.Interactive/) to start playing immediately!
 
 ## The Challenge
 
-Can you solve the riddle? Test your logic, lateral thinking, and understanding of modern development tools. The answer lies at the intersection of technology, identity, and reflection.
+Can you solve all the riddles? Test your logic, lateral thinking, and understanding of technology, philosophy, and digital identity. Each riddle explores different themes at the intersection of code, reflection, and consciousness.
 
 ## Features
 
-- **Single-File Architecture**: Everything contained in one HTML file for maximum portability
+### Core Gameplay
+- **Multiple Riddles**: Expandable riddle system with easy addition of new challenges
+- **Smart Answer Detection**: Accepts multiple variations of correct answers
+- **Close Answer Recognition**: Get hints when you're on the right track
+- **Progress Tracking**: Your attempts are saved per riddle
+
+### User Interface
+- **Compact Mobile UI**: Bubble button bar that fits under the input field
+- **Previous/Next Navigation**: Easily move between riddles
+- **Riddle Selection**: Choose any riddle from the selector modal
+- **Help & Hints**: Access game instructions and progressive hints
+- **Request New Riddles**: Built-in feedback system for suggesting riddles
+
+### Technical Features
+- **Modular Architecture**: Separate CSS, JavaScript, and riddle modules
+- **PWA Capabilities**: Installable, works offline, can be refreshed manually
+- **Service Worker**: Intelligent caching for optimal performance
 - **No Dependencies**: Zero external libraries or frameworks required
-- **Instant Play**: No installation, no setup — just open and play
-- **Smart Answer Detection**: Accepts multiple variations of the correct answer
-- **Atmospheric Design**: Dark theme optimized for focus and immersion
+- **ES6 Modules**: Clean, maintainable code structure
+
+## Project Structure
+
+```
+The_GateKeepers_Riddle.Interactive/
+├── index.html              # Main HTML file
+├── manifest.json           # PWA manifest
+├── sw.js                   # Service worker for offline support
+├── system/
+│   ├── game.css           # Main stylesheet
+│   ├── game.js            # Game logic and UI controls
+│   ├── icon.logo.png      # App icon
+│   └── riddles/
+│       ├── riddles.js             # Riddle registry and loader
+│       ├── gatekeeper.riddle.js   # The Gatekeeper's Riddle
+│       ├── mirror.riddle.js       # The Mirror's Paradox
+│       └── riddle.template.js     # Template for new riddles
+└── README.md
+```
 
 ## How to Play
 
-1. Download or clone this repository
-2. Open `index.html` in any modern web browser
-3. Read the riddle carefully
-4. Enter your answer in the input field
-5. Click "Submit Guess" or press Enter
-6. Keep trying or click "Give Up" to reveal the answer
+1. **Clone or Download** this repository
+2. **Open** `index.html` in any modern web browser (or host it on a web server)
+3. **Read** the riddle carefully
+4. **Enter** your answer in the input field
+5. **Submit** your guess and get feedback
+6. **Use hints** if you're stuck (click the hints button)
+7. **Switch riddles** using Previous/Next or the riddle selector
+8. **Give up** to reveal the answer if needed
+
+## Adding New Riddles
+
+Want to add your own riddle? It's easy!
+
+1. **Copy** the `riddle.template.js` file
+2. **Rename** it to `{your-riddle-name}.riddle.js`
+3. **Fill in** all the required fields:
+   - `id`: Unique identifier (lowercase, no spaces)
+   - `title`: Display title
+   - `text`: The riddle text (use backticks for multiline)
+   - `correctAnswers`: Array of valid answers (lowercase)
+   - `closeAnswers`: Array of near-miss answers (lowercase)
+   - `hints`: Array of 6+ progressive hints
+   - `wrongAnswerFeedback`: Message for incorrect answers
+   - `closeAnswerFeedback`: Message for close answers
+   - `explanation`: Why this is the answer
+   - `answer`: Official answer to display
+4. **Import** your riddle in `riddles.js`
+5. **Add** it to the riddles array
+6. **Test** your riddle in the game!
+
+### Example Riddle Structure
+
+```javascript
+export const riddle = {
+    id: 'my-riddle',
+    title: 'My Amazing Riddle',
+    text: `What walks on four legs in the morning,
+two legs at noon,
+and three legs in the evening?`,
+    correctAnswers: ['human', 'person', 'man'],
+    closeAnswers: ['animal', 'creature', 'being'],
+    hints: [
+        'Think about the stages of life',
+        'Morning, noon, and evening represent different times',
+        // ... more hints
+    ],
+    wrongAnswerFeedback: 'Not quite. Think metaphorically...',
+    closeAnswerFeedback: 'You\'re warm! Consider the riddle\'s metaphor.',
+    explanation: 'Humans crawl as babies, walk on two legs as adults, and use a cane in old age.',
+    answer: 'A Human'
+};
+```
+
+## PWA Features
+
+### Offline Support
+The app uses a service worker to cache all resources, allowing you to play even without an internet connection.
+
+### Manual Refresh
+If you need to force-update the app:
+1. Click the **More** button (three dots)
+2. Select **Refresh App**
+3. This clears all caches and reloads the latest version
+
+### Installation
+On mobile devices, you can install this as a standalone app:
+- **iOS**: Tap Share → Add to Home Screen
+- **Android**: Tap Menu → Install App
+
+## Development
+
+### Local Development
+Simply open `index.html` in a browser or use a local server:
+
+```bash
+# Python 3 (recommended)
+python3 -m http.server 8080
+# Node.js
+npx http-server
+```
+
+### Service Worker
+The service worker is configured to cache:
+- HTML, CSS, and JavaScript files
+- Riddle module files
+- App icons and manifest
+
+External resources (badges, CDN content) are intentionally not cached to keep cache size minimal.
+
+## Browser Support
+
+Works on all modern browsers:
+- Chrome/Edge (90+)
+- Firefox (88+)
+- Safari (14+)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Contributing
+
+We welcome contributions! Here are some ways to help:
+- **Submit new riddles** via pull request (use the template!)
+- **Report bugs** or suggest features via issues
+- **Improve documentation** or add examples
+- **Enhance UI/UX** with design improvements
+
+## Automated Systems
+
+This repository includes two intelligent agent systems:
+- **Riddle Finder Agent**: Automatically searches for and submits new riddles daily. See [agent instructions](.github/agents/riddle-finder.md) and [workflow](.github/workflows/riddle-finder-agent.yml).
+- **Repository Mapper Agent**: Maintains comprehensive repository documentation and code maps. See [agent instructions](.github/agents/repo-mapper.md) and [workflow](.github/workflows/repo-mapper-agent.yml).
 
 ---
 

@@ -95,12 +95,6 @@ function updateNavigationButtons() {
     if (nextBtn) {
         nextBtn.disabled = currentRiddleIndex >= getRiddleCount() - 1;
     }
-    
-    // Update navigation visibility (show only if 2+ riddles)
-    const navGroup = document.getElementById('navGroup');
-    if (navGroup) {
-        navGroup.style.display = getRiddleCount() > 1 ? 'flex' : 'none';
-    }
 }
 
 // Show riddle selector modal
@@ -150,8 +144,26 @@ function closeRiddleSelector() {
     modal.classList.remove('active');
 }
 
-// Open request riddle email
-function requestRiddle() {
+// Show request riddle sub-menu
+function showRequestRiddleMenu() {
+    toggleMoreMenu(); // Close the More menu
+    const modal = document.getElementById('requestRiddleModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
+
+// Close request riddle modal
+function closeRequestRiddleModal() {
+    const modal = document.getElementById('requestRiddleModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// Request via email
+function requestViaEmail() {
+    closeRequestRiddleModal();
     const subject = encodeURIComponent('Riddle Request - [Your Suggestion]');
     const body = encodeURIComponent(`Hello,
 
@@ -168,6 +180,75 @@ Suggested Answer:
 Thank you!`);
     
     window.location.href = `mailto:sfti_ai@icloud.com?subject=${subject}&body=${body}`;
+}
+
+// Request AI curated riddle
+async function requestAICurated() {
+    closeRequestRiddleModal();
+    
+    // Show notification
+    const feedback = document.querySelector('.feedback');
+    if (feedback) {
+        feedback.textContent = '🤖 AI riddle request submitted! Use "Refresh App" in 2-5 minutes to see the new riddle.';
+        feedback.className = 'feedback';
+        feedback.style.display = 'flex';
+        feedback.style.color = '#64ffda';
+        
+        // Hide after 8 seconds
+        setTimeout(() => {
+            feedback.style.display = 'none';
+        }, 8000);
+    }
+    
+    // Trigger the riddle finder agent workflow
+    try {
+        // In a real implementation, this would call a GitHub API endpoint
+        // For now, we'll just log and show the message
+        console.log('AI Curated Riddle Request: Triggering riddle-finder-agent workflow');
+        
+        // Note: The actual workflow trigger would require backend API or GitHub Actions API
+        // This is a placeholder for the frontend interaction
+    } catch (error) {
+        console.error('Error requesting AI curated riddle:', error);
+    }
+}
+
+// Toggle more menu dropdown
+function toggleMoreMenu() {
+    const menu = document.getElementById('moreMenu');
+    if (menu) {
+        menu.classList.toggle('active');
+    }
+}
+
+// Refresh PWA - clear cache and reload
+async function refreshApp() {
+    try {
+        // Clear all caches
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('All caches cleared');
+        }
+        
+        // Unregister all service workers
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+                registrations.map(registration => registration.unregister())
+            );
+            console.log('All service workers unregistered');
+        }
+        
+        // Reload the page after cache clearing
+        window.location.reload();
+    } catch (error) {
+        console.error('Error refreshing app:', error);
+        // Fallback to reload if cache clearing fails
+        window.location.reload();
+    }
 }
 
 // Register Service Worker for PWA offline support
@@ -195,7 +276,12 @@ window.previousRiddle = previousRiddle;
 window.nextRiddle = nextRiddle;
 window.showRiddleSelector = showRiddleSelector;
 window.closeRiddleSelector = closeRiddleSelector;
-window.requestRiddle = requestRiddle;
+window.showRequestRiddleMenu = showRequestRiddleMenu;
+window.closeRequestRiddleModal = closeRequestRiddleModal;
+window.requestViaEmail = requestViaEmail;
+window.requestAICurated = requestAICurated;
+window.toggleMoreMenu = toggleMoreMenu;
+window.refreshApp = refreshApp;
 window.showModal = showModal;
 window.closeModal = closeModal;
 window.showHelpModal = showHelpModal;
@@ -234,10 +320,10 @@ function checkAnswer() {
     // Check if close
     if (currentRiddle.closeAnswers.some(answer => guess.includes(answer))) {
         feedback.className = 'feedback close';
-        feedback.textContent = 'You\'re getting warm... but not quite there.';
+        feedback.textContent = currentRiddle.closeAnswerFeedback || 'You\'re getting warm... but not quite there.';
     } else {
         feedback.className = 'feedback wrong';
-        feedback.textContent = 'Not quite. Think deeper about what reflects us back...';
+        feedback.textContent = currentRiddle.wrongAnswerFeedback || 'Not quite. Think deeper about the riddle...';
     }
     
     saveProgress();
@@ -287,7 +373,37 @@ function closeHelpModal() {
 }
 
 function showHintModal() {
+    if (!currentRiddle) return;
+    
     const modal = document.getElementById('hintModal');
+    if (!modal) return;
+    
+    const hintContent = modal.querySelector('.hint-content');
+    if (!hintContent) return;
+    
+    // Clear existing hints
+    hintContent.innerHTML = '';
+    
+    // Add hints from current riddle
+    if (currentRiddle.hints && currentRiddle.hints.length > 0) {
+        currentRiddle.hints.forEach((hint, index) => {
+            const p = document.createElement('p');
+            // Last hint gets special styling
+            if (index === currentRiddle.hints.length - 1) {
+                p.style.fontStyle = 'italic';
+                p.style.color = '#64ffda';
+                p.style.marginTop = '10px';
+                p.textContent = hint;
+            } else {
+                p.textContent = '• ' + hint;
+            }
+            hintContent.appendChild(p);
+        });
+    } else {
+        // Fallback hints if riddle doesn't have any
+        hintContent.innerHTML = '<p>No hints available for this riddle yet.</p>';
+    }
+    
     modal.classList.add('active');
 }
 
@@ -334,6 +450,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    // Close more menu when clicking outside - set up once on DOM load
+    const dropdown = document.querySelector('.bubble-dropdown');
+    const menu = document.getElementById('moreMenu');
+    if (dropdown && menu) {
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    } else {
+        if (!dropdown && !menu) {
+            console.warn("Dropdown menu initialization: Both '.bubble-dropdown' and '#moreMenu' elements are missing from the DOM.");
+        } else if (!dropdown) {
+            console.warn("Dropdown menu initialization: '.bubble-dropdown' element is missing from the DOM.");
+        } else if (!menu) {
+            console.warn("Dropdown menu initialization: '#moreMenu' element is missing from the DOM.");
+        }
+    }
 });
 
 // Close modals with ESC key for accessibility
@@ -343,5 +478,6 @@ document.addEventListener('keydown', function(e) {
         closeHelpModal();
         closeHintModal();
         closeRiddleSelector();
+        closeRequestRiddleModal();
     }
 });

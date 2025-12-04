@@ -30,6 +30,16 @@ yet I'm the one who disappears.`,
         'method',
         'system'
     ],
+    hints: [
+        'Think about what follows rules without understanding them',
+        'Consider something that shows everything except itself',
+        'It gives answers but has no consciousness',
+        'It\'s something that reflects but doesn\'t exist physically',
+        'The answer relates to both literal mirrors and code',
+        'What serves you silently and disappears when not needed?'
+    ],
+    wrongAnswerFeedback: 'Not quite. Think about what reflects without thinking...',
+    closeAnswerFeedback: 'You\'re close! Consider the dual nature of reflection.',
     explanation: 'Like a mirror or an algorithm, it reflects without understanding, serves without consciousness.',
     answer: 'An Algorithm\'s Reflection'
 };

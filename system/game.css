@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --button-bar-height: 50px;
+}
+
 html {
     background: #0a0a0a;
     min-height: 100vh;
@@ -22,7 +26,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
-    padding-bottom: 20px; /* Reduced padding for footer */
+    padding-bottom: 5px; /* Minimal body bottom padding to reduce space above footer */
     overflow-x: hidden;
     position: relative;
 }
@@ -65,7 +69,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding-top: 60px;
 }
 
@@ -108,9 +112,15 @@ h1 {
     gap: 12px;
 }
 
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
 input[type="text"] {
     width: 100%;
     padding: 14px;
+    padding-bottom: var(--button-bar-height); /* Make room for button bar */
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -119,6 +129,8 @@ input[type="text"] {
     color: #e0e0e0;
     font-size: 16px;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 input[type="text"]:focus {
@@ -130,6 +142,113 @@ input[type="text"]:focus {
 
 input[type="text"]::placeholder {
     color: #666;
+}
+
+/* Compact Button Bar */
+.compact-button-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.bubble-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    color: #64ffda;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.bubble-btn:hover:not(:disabled) {
+    background: rgba(100, 255, 218, 0.2);
+    border-color: #64ffda;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(100, 255, 218, 0.3);
+}
+
+.bubble-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.bubble-btn.submit-bubble {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.3) 0%, rgba(78, 205, 196, 0.3) 100%);
+    border-color: rgba(100, 255, 218, 0.5);
+}
+
+.bubble-btn.submit-bubble:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.5) 0%, rgba(78, 205, 196, 0.5) 100%);
+    border-color: #64ffda;
+}
+
+/* Bubble Dropdown */
+.bubble-dropdown {
+    position: relative;
+}
+
+.bubble-dropdown-menu {
+    display: none;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    min-width: 150px;
+    z-index: 100;
+}
+
+.bubble-dropdown-menu.active {
+    display: block;
+}
+
+.bubble-dropdown-menu button {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    color: #e0e0e0;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    min-width: auto;
+}
+
+.bubble-dropdown-menu button:last-child {
+    border-bottom: none;
+}
+
+.bubble-dropdown-menu button:hover {
+    background: rgba(100, 255, 218, 0.1);
+    color: #64ffda;
+    transform: none;
+    box-shadow: none;
 }
 
 .button-group {
@@ -150,69 +269,6 @@ button {
     transition: all 0.3s ease;
 }
 
-.submit-btn {
-    background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
-    color: #0a0a0a;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(100, 255, 218, 0.4);
-}
-
-.giveup-btn {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #e0e0e0;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.giveup-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-/* Navigation buttons */
-.nav-group {
-    margin-top: 12px;
-}
-
-.nav-btn {
-    background: rgba(100, 255, 218, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #64ffda;
-    border: 2px solid rgba(100, 255, 218, 0.3);
-    font-size: 14px;
-    padding: 10px 16px;
-    min-width: auto;
-}
-
-.nav-btn:hover:not(:disabled) {
-    background: rgba(100, 255, 218, 0.2);
-    border-color: #64ffda;
-    transform: translateY(-2px);
-}
-
-.nav-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.request-btn {
-    background: rgba(255, 193, 7, 0.1);
-    color: #ffc107;
-    border-color: rgba(255, 193, 7, 0.3);
-}
-
-.request-btn:hover {
-    background: rgba(255, 193, 7, 0.2);
-    border-color: #ffc107;
-}
-
 .attempts {
     text-align: center;
     color: #888;
@@ -223,17 +279,21 @@ button {
 
 .feedback {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 8px;
     padding: 10px;
     border-radius: 8px;
     font-weight: 500;
-    min-height: 35px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+.feedback.wrong,
+.feedback.close {
+    display: flex;
 }
 
 .feedback.wrong {
@@ -400,8 +460,8 @@ button {
     position: relative;
     width: 100%;
     text-align: center;
-    padding: 15px 0;
-    margin-top: 20px;
+    padding: 10px 0;
+    margin-top: 8px;
 }
 
 .footer-content {
@@ -438,10 +498,56 @@ button {
     text-decoration: underline;
 }
 
+/* Request Riddle Modal Styles */
+.request-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.request-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.request-option-btn:hover {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0.05));
+    border-color: rgba(100, 255, 218, 0.4);
+    transform: translateY(-2px);
+}
+
+.request-option-btn svg {
+    margin-bottom: 10px;
+    stroke: #64ffda;
+}
+
+.request-option-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #64ffda;
+}
+
+.option-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
 @media (max-height: 700px) {
     body {
         padding: 8px;
-        padding-bottom: 15px;
+        padding-bottom: 5px;
         justify-content: flex-start;
     }
     .floating-btn {
@@ -478,20 +584,29 @@ button {
     }
     input[type="text"] {
         padding: 10px;
+        padding-bottom: var(--button-bar-height);
         font-size: 14px;
     }
     button {
         padding: 10px 14px;
         font-size: 14px;
     }
-    .nav-btn {
-        padding: 8px 12px;
-        font-size: 12px;
+    .bubble-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+    .bubble-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .compact-button-bar {
+        gap: 6px;
+        bottom: 7px;
     }
     .feedback {
         margin-top: 6px;
         padding: 6px;
-        min-height: 25px;
         font-size: 12px;
     }
     .attempts {
@@ -499,7 +614,8 @@ button {
         font-size: 11px;
     }
     .footer {
-        padding: 8px 0;
+        padding: 6px 0;
+        margin-top: 10px;
     }
     .footer-content {
         gap: 2px;
