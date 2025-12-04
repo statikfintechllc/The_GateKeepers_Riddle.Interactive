@@ -1,4 +1,4 @@
-name: 
+name: repo-mapper  
 description: You are an expert code analyzer and documentation specialist with deep understanding of software architecture, code patterns, and repository structure.
 
 ---
