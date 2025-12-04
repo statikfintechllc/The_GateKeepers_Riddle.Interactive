@@ -80,7 +80,7 @@ jobs:
         id: load-agent
         run: |
           echo "Agent instructions loaded from .github/agents/riddle-finder.md"
-          cat .github/agents/riddle-finder.md
+          cat .github/agents/riddle-finder.agent.md
       
       - name: Execute Riddle Finder Agent
         id: agent
