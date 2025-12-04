@@ -6,35 +6,60 @@ This document explains how the automated riddle submission system works and how 
 
 The Riddle Finder Agent workflow automatically:
 1. Runs every day at 2 AM UTC (configurable)
-2. Can be triggered by user requests via GitHub Issues
+2. Can be triggered by user requests via GitHub Issues with @copilot
 3. Searches and generates interesting, challenging riddles
 4. Validates riddles against the template schema
 5. Creates new riddle files following the established format
 6. Updates the riddles registry
-7. Opens a pull request for review
+7. Opens a pull request with quality validation
+8. **Auto-merges** if all quality checks pass
 
 ## User Riddle Requests
 
 ### From the PWA/Game Interface
 
-Users can request AI-curated riddles directly from the game:
+Users can request AI-curated riddles directly from the game with a streamlined one-click process:
 
 1. Click the **More Options** button (three dots)
 2. Select **Request Riddle**
 3. Click **AI Curated**
-4. A GitHub issue creation page will open with a pre-filled template
-5. Submit the issue (no GitHub sign-in required for public repos)
-6. The Riddle Finder Agent will automatically process the request
-7. A new riddle will be added via pull request
-8. Use **Refresh App** after the PR is merged to see the new riddle
+4. GitHub issue creation page opens with pre-filled template mentioning @copilot
+5. Click **Submit new issue** (one click - no sign-in required for public repos)
+6. **@copilot** and the Riddle Finder Agent automatically process the request
+7. A new riddle PR is created with quality validation
+8. PR is **auto-merged** if all checks pass
+9. Use **Refresh App** to see the new riddle immediately
+
+### Automated Pipeline
+
+```
+User clicks "AI Curated" 
+  → GitHub opens with pre-filled issue for @copilot
+  → User clicks "Submit new issue"
+  → @copilot + Riddle Finder Agent process request
+  → New riddle PR created with quality checks
+  → Auto-merge if validation passes
+  → Riddle available in game
+```
 
 ### GitHub Issue Trigger
 
 The workflow is triggered when:
-- An issue is opened with the label `ai-riddle-request`
+- An issue is opened with the label `ai-riddle-request` or `copilot`
 - An existing issue is labeled with `ai-riddle-request`
+- Issue mentions @copilot with riddle request
 
 The issue will be automatically closed with a success comment once processed.
+
+## Auto-Merge Feature
+
+PRs are automatically merged if:
+- ✅ Schema validation passes
+- ✅ Required fields present
+- ✅ No duplicate riddles detected
+- ✅ High-quality content verified
+
+If auto-merge fails, the PR will require manual review.
 
 ## Workflow Configuration
 
