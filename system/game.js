@@ -1,11 +1,17 @@
 // Import riddle data
 import { riddles, getRiddleByIndex, getRiddleCount, getRiddleIndex } from './riddles/riddles.js';
+import { isAuthenticated, createRiddleRequestIssue, logout } from './auth.js';
 
 // Game state
 let currentRiddleIndex = 0;
 let currentRiddle = null;
 let attempts = 0;
 let riddleProgress = {}; // Track progress for each riddle
+
+// Check authentication on load
+if (!isAuthenticated()) {
+    window.location.href = '../index.html';
+}
 
 // Load progress from localStorage
 function loadProgress() {
@@ -186,31 +192,59 @@ Thank you!`);
 async function requestAICurated() {
     closeRequestRiddleModal();
     
-    // Show notification
     const feedback = document.querySelector('.feedback');
-    if (feedback) {
-        feedback.textContent = '🤖 AI riddle request submitted! Use "Refresh App" in 2-5 minutes to see the new riddle.';
-        feedback.className = 'feedback';
-        feedback.style.display = 'flex';
-        feedback.style.color = '#64ffda';
-        
-        // Hide after 8 seconds
-        setTimeout(() => {
-            feedback.style.display = 'none';
-        }, 8000);
-    }
     
-    // Trigger the riddle finder agent workflow
     try {
-        // In a real implementation, this would call a GitHub API endpoint
-        // For now, we'll just log and show the message
-        console.log('AI Curated Riddle Request: Triggering riddle-finder-agent workflow');
+        // Show loading message
+        if (feedback) {
+            feedback.textContent = '🤖 Creating GitHub issue...';
+            feedback.className = 'feedback';
+            feedback.style.display = 'flex';
+            feedback.style.color = '#64ffda';
+        }
         
-        // Note: The actual workflow trigger would require backend API or GitHub Actions API
-        // This is a placeholder for the frontend interaction
+        // Create the GitHub issue using authenticated API
+        const issue = await createRiddleRequestIssue();
+        
+        // Show success message
+        if (feedback) {
+            feedback.textContent = `✅ AI riddle request created! Issue #${issue.number}. Check back in 2-5 minutes and use "Refresh App".`;
+            feedback.className = 'feedback';
+            feedback.style.display = 'flex';
+            feedback.style.color = '#64ffda';
+            
+            // Hide after 10 seconds
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 10000);
+        }
+        
+        console.log('AI Curated Riddle Request: Issue created:', issue.html_url);
     } catch (error) {
         console.error('Error requesting AI curated riddle:', error);
+        
+        // Show error message
+        if (feedback) {
+            feedback.textContent = `❌ Failed to create issue: ${error.message}. Please check your token permissions.`;
+            feedback.className = 'feedback wrong';
+            feedback.style.display = 'flex';
+            
+            // Hide after 10 seconds
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 10000);
+        }
     }
+}
+
+// Handle logout
+function handleLogout() {
+    const confirmed = confirm('Are you sure you want to logout?');
+    if (confirmed) {
+        logout();
+        window.location.href = '../index.html';
+    }
+    toggleMoreMenu();
 }
 
 // Toggle more menu dropdown
@@ -288,6 +322,7 @@ window.showHelpModal = showHelpModal;
 window.closeHelpModal = closeHelpModal;
 window.showHintModal = showHintModal;
 window.closeHintModal = closeHintModal;
+window.handleLogout = handleLogout;
 
 function checkAnswer() {
     if (!currentRiddle) return;
