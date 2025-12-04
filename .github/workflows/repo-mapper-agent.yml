@@ -65,7 +65,7 @@ jobs:
         id: load-agent
         run: |
           echo "Agent instructions loaded from .github/agents/repo-mapper.md"
-          cat .github/agents/repo-mapper.md
+          cat .github/agents/repo-mapper.agent.md
       
       - name: Execute Repository Mapper Agent
         id: mapper
