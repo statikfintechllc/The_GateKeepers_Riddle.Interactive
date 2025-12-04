@@ -237,10 +237,10 @@ function checkAnswer() {
     // Check if close
     if (currentRiddle.closeAnswers.some(answer => guess.includes(answer))) {
         feedback.className = 'feedback close';
-        feedback.textContent = 'You\'re getting warm... but not quite there.';
+        feedback.textContent = currentRiddle.closeAnswerFeedback || 'You\'re getting warm... but not quite there.';
     } else {
         feedback.className = 'feedback wrong';
-        feedback.textContent = 'Not quite. Think deeper about what reflects us back...';
+        feedback.textContent = currentRiddle.wrongAnswerFeedback || 'Not quite. Think deeper about the riddle...';
     }
     
     saveProgress();
@@ -290,7 +290,36 @@ function closeHelpModal() {
 }
 
 function showHintModal() {
+    if (!currentRiddle) return;
+    
     const modal = document.getElementById('hintModal');
+    const hintContent = modal.querySelector('.hint-content');
+    
+    // Clear existing hints
+    hintContent.innerHTML = '';
+    
+    // Add hints from current riddle
+    if (currentRiddle.hints && currentRiddle.hints.length > 0) {
+        currentRiddle.hints.forEach((hint, index) => {
+            const p = document.createElement('p');
+            // Last hint gets special styling
+            if (index === currentRiddle.hints.length - 1) {
+                p.style.fontStyle = 'italic';
+                p.style.color = '#64ffda';
+                p.style.marginTop = '10px';
+            } else {
+                p.textContent = '• ' + hint;
+            }
+            if (index === currentRiddle.hints.length - 1) {
+                p.textContent = hint;
+            }
+            hintContent.appendChild(p);
+        });
+    } else {
+        // Fallback hints if riddle doesn't have any
+        hintContent.innerHTML = '<p>No hints available for this riddle yet.</p>';
+    }
+    
     modal.classList.add('active');
 }
 
