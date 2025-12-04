@@ -26,6 +26,8 @@ on:
           - medium
           - hard
           - expert
+  issues:  # Trigger when issues are opened with specific label
+    types: [opened, labeled]
   workflow_call:  # Callable by other workflows
     inputs:
       source_type:
@@ -55,10 +57,15 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 jobs:
   find-riddle:
     runs-on: ubuntu-latest
+    # Only run if triggered by schedule/workflow_dispatch, or if issue has 'ai-riddle-request' label
+    if: |
+      github.event_name != 'issues' || 
+      contains(github.event.issue.labels.*.name, 'ai-riddle-request')
     outputs:
       riddle_created: ${{ steps.agent.outputs.riddle_created }}
       riddle_id: ${{ steps.agent.outputs.riddle_id }}
@@ -285,6 +292,25 @@ jobs:
             riddle
             needs-review
           reviewers: statikfintechllc
+      
+      - name: Close requesting issue
+        if: github.event_name == 'issues' && steps.agent.outputs.riddle_created == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ AI Riddle Request processed successfully!\n\n**New Riddle**: ${{ steps.agent.outputs.riddle_title }}\n**PR**: #${{ steps.pr.outputs.pull-request-number }}\n\nThe riddle will be available in the game once the PR is reviewed and merged. Use "Refresh App" after the merge to see it!`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              labels: ['ai-riddle-request', 'completed']
+            });
       
       - name: Summary
         if: always()
