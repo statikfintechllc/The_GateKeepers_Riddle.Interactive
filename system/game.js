@@ -88,6 +88,7 @@ function nextRiddle() {
 function updateNavigationButtons() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const compactButtonBar = document.getElementById('compactButtonBar');
     
     if (prevBtn) {
         prevBtn.disabled = currentRiddleIndex === 0;
@@ -96,10 +97,9 @@ function updateNavigationButtons() {
         nextBtn.disabled = currentRiddleIndex >= getRiddleCount() - 1;
     }
     
-    // Update navigation visibility (show only if 2+ riddles)
-    const navGroup = document.getElementById('navGroup');
-    if (navGroup) {
-        navGroup.style.display = getRiddleCount() > 1 ? 'flex' : 'none';
+    // Always show the compact button bar
+    if (compactButtonBar) {
+        compactButtonBar.style.display = 'flex';
     }
 }
 
@@ -170,6 +170,23 @@ Thank you!`);
     window.location.href = `mailto:sfti_ai@icloud.com?subject=${subject}&body=${body}`;
 }
 
+// Toggle more menu dropdown
+function toggleMoreMenu() {
+    const menu = document.getElementById('moreMenu');
+    if (menu) {
+        menu.classList.toggle('active');
+    }
+}
+
+// Close more menu when clicking outside
+document.addEventListener('click', function(e) {
+    const dropdown = document.querySelector('.bubble-dropdown');
+    const menu = document.getElementById('moreMenu');
+    if (menu && !dropdown.contains(e.target)) {
+        menu.classList.remove('active');
+    }
+});
+
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -196,6 +213,7 @@ window.nextRiddle = nextRiddle;
 window.showRiddleSelector = showRiddleSelector;
 window.closeRiddleSelector = closeRiddleSelector;
 window.requestRiddle = requestRiddle;
+window.toggleMoreMenu = toggleMoreMenu;
 window.showModal = showModal;
 window.closeModal = closeModal;
 window.showHelpModal = showHelpModal;

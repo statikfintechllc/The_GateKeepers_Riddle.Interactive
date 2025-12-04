@@ -45,23 +45,53 @@
 
     <div class="input-section">
         <div class="attempts" id="attempts">Attempts: 0</div>
-        <input 
-            type="text" 
-            id="guessInput" 
-            placeholder="Enter your answer..."
-            autocomplete="off"
-        >
-        <div class="button-group">
-            <button class="submit-btn" onclick="checkAnswer()">Submit Guess</button>
-            <button class="giveup-btn" onclick="giveUp()">Give Up</button>
-        </div>
-        
-        <!-- Navigation buttons (shown when 2+ riddles) -->
-        <div class="button-group nav-group" id="navGroup" style="display: none;">
-            <button class="nav-btn" id="prevBtn" onclick="previousRiddle()">← Previous</button>
-            <button class="nav-btn" onclick="showRiddleSelector()">Select Riddle ▼</button>
-            <button class="nav-btn" id="nextBtn" onclick="nextRiddle()">Next →</button>
-            <button class="nav-btn request-btn" onclick="requestRiddle()">✉ Request Riddle</button>
+        <div class="input-container">
+            <input 
+                type="text" 
+                id="guessInput" 
+                placeholder="Enter your answer..."
+                autocomplete="off"
+            >
+            <div class="compact-button-bar" id="compactButtonBar">
+                <button class="bubble-btn" id="prevBtn" onclick="previousRiddle()" title="Previous Riddle" aria-label="Previous Riddle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="bubble-btn submit-bubble" onclick="checkAnswer()" title="Submit Guess" aria-label="Submit Guess">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </button>
+                <button class="bubble-btn" onclick="showRiddleSelector()" title="Select Riddle" aria-label="Select Riddle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="bubble-dropdown">
+                    <button class="bubble-btn" onclick="toggleMoreMenu()" title="More Options" aria-label="More Options">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                        </svg>
+                    </button>
+                    <div class="bubble-dropdown-menu" id="moreMenu">
+                        <button onclick="giveUp(); toggleMoreMenu();">Give Up</button>
+                        <button onclick="requestRiddle(); toggleMoreMenu();">Request Riddle</button>
+                    </div>
+                </div>
+                <button class="bubble-btn" id="nextBtn" onclick="nextRiddle()" title="Next Riddle" aria-label="Next Riddle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
         </div>
         
         <div class="feedback" id="feedback"></div>

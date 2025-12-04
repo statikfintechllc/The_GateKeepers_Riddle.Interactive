@@ -22,7 +22,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
-    padding-bottom: 20px; /* Reduced padding for footer */
+    padding-bottom: 5px; /* Minimal padding for footer */
     overflow-x: hidden;
     position: relative;
 }
@@ -108,9 +108,15 @@ h1 {
     gap: 12px;
 }
 
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
 input[type="text"] {
     width: 100%;
     padding: 14px;
+    padding-bottom: 55px; /* Make room for button bar */
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -119,6 +125,8 @@ input[type="text"] {
     color: #e0e0e0;
     font-size: 16px;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 input[type="text"]:focus {
@@ -130,6 +138,113 @@ input[type="text"]:focus {
 
 input[type="text"]::placeholder {
     color: #666;
+}
+
+/* Compact Button Bar */
+.compact-button-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.bubble-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    color: #64ffda;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.bubble-btn:hover:not(:disabled) {
+    background: rgba(100, 255, 218, 0.2);
+    border-color: #64ffda;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(100, 255, 218, 0.3);
+}
+
+.bubble-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.bubble-btn.submit-bubble {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.3) 0%, rgba(78, 205, 196, 0.3) 100%);
+    border-color: rgba(100, 255, 218, 0.5);
+}
+
+.bubble-btn.submit-bubble:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.5) 0%, rgba(78, 205, 196, 0.5) 100%);
+    border-color: #64ffda;
+}
+
+/* Bubble Dropdown */
+.bubble-dropdown {
+    position: relative;
+}
+
+.bubble-dropdown-menu {
+    display: none;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(100, 255, 218, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    min-width: 150px;
+    z-index: 100;
+}
+
+.bubble-dropdown-menu.active {
+    display: block;
+}
+
+.bubble-dropdown-menu button {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+    color: #e0e0e0;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    min-width: auto;
+}
+
+.bubble-dropdown-menu button:last-child {
+    border-bottom: none;
+}
+
+.bubble-dropdown-menu button:hover {
+    background: rgba(100, 255, 218, 0.1);
+    color: #64ffda;
+    transform: none;
+    box-shadow: none;
 }
 
 .button-group {
@@ -148,69 +263,6 @@ button {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.submit-btn {
-    background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
-    color: #0a0a0a;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(100, 255, 218, 0.4);
-}
-
-.giveup-btn {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #e0e0e0;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.giveup-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-/* Navigation buttons */
-.nav-group {
-    margin-top: 12px;
-}
-
-.nav-btn {
-    background: rgba(100, 255, 218, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #64ffda;
-    border: 2px solid rgba(100, 255, 218, 0.3);
-    font-size: 14px;
-    padding: 10px 16px;
-    min-width: auto;
-}
-
-.nav-btn:hover:not(:disabled) {
-    background: rgba(100, 255, 218, 0.2);
-    border-color: #64ffda;
-    transform: translateY(-2px);
-}
-
-.nav-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.request-btn {
-    background: rgba(255, 193, 7, 0.1);
-    color: #ffc107;
-    border-color: rgba(255, 193, 7, 0.3);
-}
-
-.request-btn:hover {
-    background: rgba(255, 193, 7, 0.2);
-    border-color: #ffc107;
 }
 
 .attempts {
@@ -400,8 +452,8 @@ button {
     position: relative;
     width: 100%;
     text-align: center;
-    padding: 15px 0;
-    margin-top: 20px;
+    padding: 10px 0;
+    margin-top: 15px;
 }
 
 .footer-content {
@@ -441,7 +493,7 @@ button {
 @media (max-height: 700px) {
     body {
         padding: 8px;
-        padding-bottom: 15px;
+        padding-bottom: 5px;
         justify-content: flex-start;
     }
     .floating-btn {
@@ -478,15 +530,25 @@ button {
     }
     input[type="text"] {
         padding: 10px;
+        padding-bottom: 50px;
         font-size: 14px;
     }
     button {
         padding: 10px 14px;
         font-size: 14px;
     }
-    .nav-btn {
-        padding: 8px 12px;
-        font-size: 12px;
+    .bubble-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+    .bubble-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .compact-button-bar {
+        gap: 6px;
+        bottom: 7px;
     }
     .feedback {
         margin-top: 6px;
@@ -499,7 +561,8 @@ button {
         font-size: 11px;
     }
     .footer {
-        padding: 8px 0;
+        padding: 6px 0;
+        margin-top: 10px;
     }
     .footer-content {
         gap: 2px;
