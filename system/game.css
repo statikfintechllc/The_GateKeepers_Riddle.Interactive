@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --button-bar-height: 50px;
+}
+
 html {
     background: #0a0a0a;
     min-height: 100vh;
@@ -22,7 +26,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     padding: 20px 10px;
-    padding-bottom: 5px; /* Minimal padding for footer */
+    padding-bottom: 5px; /* Minimal body bottom padding to reduce space above footer */
     overflow-x: hidden;
     position: relative;
 }
@@ -116,7 +120,7 @@ h1 {
 input[type="text"] {
     width: 100%;
     padding: 14px;
-    padding-bottom: 55px; /* Make room for button bar */
+    padding-bottom: var(--button-bar-height); /* Make room for button bar */
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -530,7 +534,7 @@ button {
     }
     input[type="text"] {
         padding: 10px;
-        padding-bottom: 50px;
+        padding-bottom: var(--button-bar-height);
         font-size: 14px;
     }
     button {

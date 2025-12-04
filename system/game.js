@@ -88,18 +88,12 @@ function nextRiddle() {
 function updateNavigationButtons() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const compactButtonBar = document.getElementById('compactButtonBar');
     
     if (prevBtn) {
         prevBtn.disabled = currentRiddleIndex === 0;
     }
     if (nextBtn) {
         nextBtn.disabled = currentRiddleIndex >= getRiddleCount() - 1;
-    }
-    
-    // Always show the compact button bar
-    if (compactButtonBar) {
-        compactButtonBar.style.display = 'flex';
     }
 }
 
@@ -177,15 +171,6 @@ function toggleMoreMenu() {
         menu.classList.toggle('active');
     }
 }
-
-// Close more menu when clicking outside
-document.addEventListener('click', function(e) {
-    const dropdown = document.querySelector('.bubble-dropdown');
-    const menu = document.getElementById('moreMenu');
-    if (menu && !dropdown.contains(e.target)) {
-        menu.classList.remove('active');
-    }
-});
 
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
@@ -349,6 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
         riddleSelectorModal.addEventListener('click', function(e) {
             if (e.target === this) {
                 closeRiddleSelector();
+            }
+        });
+    }
+    
+    // Close more menu when clicking outside - set up once on DOM load
+    const dropdown = document.querySelector('.bubble-dropdown');
+    const menu = document.getElementById('moreMenu');
+    if (dropdown && menu) {
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                menu.classList.remove('active');
             }
         });
     }
