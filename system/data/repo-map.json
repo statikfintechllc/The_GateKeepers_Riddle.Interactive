@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "lastUpdated": "2025-12-05T02:10:22.882Z",
+    "lastUpdated": "2025-12-05T12:05:18.597Z",
     "version": "1.0.0",
-    "totalFiles": 16,
-    "totalLines": 792,
+    "totalFiles": 17,
+    "totalLines": 839,
     "scanType": "full"
   },
   "structure": {
@@ -93,7 +93,7 @@
       "name": "repo-map.json",
       "type": "json",
       "purpose": "Supporting file",
-      "size": 6764,
+      "size": 6765,
       "lines": 0,
       "imports": [],
       "exports": [],
@@ -193,11 +193,12 @@
       "name": "riddles.js",
       "type": "js",
       "purpose": "Riddle registry and loader",
-      "size": 843,
+      "size": 967,
       "lines": 36,
       "imports": [
         "./gatekeeper.riddle.js",
-        "./mirror.riddle.js"
+        "./mirror.riddle.js",
+        "./the-paradox-of-progress.riddle.js"
       ],
       "exports": [
         "riddles",
@@ -212,6 +213,19 @@
         "getRiddleCount",
         "getRiddleIndex"
       ],
+      "classes": []
+    },
+    "system/riddles/the-paradox-of-progress.riddle.js": {
+      "name": "the-paradox-of-progress.riddle.js",
+      "type": "js",
+      "purpose": "Riddle data file",
+      "size": 1495,
+      "lines": 47,
+      "imports": [],
+      "exports": [
+        "riddle"
+      ],
+      "functions": [],
       "classes": []
     },
     "system/scripts/l.h.s.script": {
@@ -261,7 +275,8 @@
       "system/riddles/gatekeeper.riddle.js",
       "system/riddles/mirror.riddle.js",
       "system/riddles/riddle.template.js",
-      "system/riddles/riddles.js"
+      "system/riddles/riddles.js",
+      "system/riddles/the-paradox-of-progress.riddle.js"
     ],
     "infrastructure": [],
     "documentation": [
@@ -284,6 +299,11 @@
         "from": "system/riddles/riddles.js",
         "to": "./mirror.riddle.js",
         "type": "import"
+      },
+      {
+        "from": "system/riddles/riddles.js",
+        "to": "./the-paradox-of-progress.riddle.js",
+        "type": "import"
       }
     ],
     "usedBy": {
@@ -294,6 +314,9 @@
         "system/riddles/riddles.js"
       ],
       "./mirror.riddle.js": [
+        "system/riddles/riddles.js"
+      ],
+      "./the-paradox-of-progress.riddle.js": [
         "system/riddles/riddles.js"
       ]
     }
