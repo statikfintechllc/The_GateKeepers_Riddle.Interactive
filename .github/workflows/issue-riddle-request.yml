@@ -72,10 +72,15 @@ jobs:
             let message = '';
             
             if (riddleCreated === 'true' && prNumber) {
+              // Use default values if outputs are empty
+              const title = riddleTitle || 'New Riddle';
+              const pr = prNumber || 'N/A';
+              
               message = '✅ **Riddle Successfully Created!**\n\n' +
-                       `**Riddle**: ${riddleTitle}\n` +
-                       `**Pull Request**: #${prNumber}\n\n` +
-                       'The riddle has been automatically merged and is now live! 🎉';
+                       `**Riddle**: ${title}\n` +
+                       `**Pull Request**: #${pr}\n\n` +
+                       'The riddle has been created and submitted for auto-merge. ' +
+                       'Please check the pull request to confirm the merge status.';
             } else if (riddleCreated === 'false') {
               message = 'ℹ️ **No New Riddle Created**\n\n' +
                        'The selected riddle may already exist in the system.\n' +
