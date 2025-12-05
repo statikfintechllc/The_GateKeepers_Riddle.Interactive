@@ -54,73 +54,76 @@
         .login-container {
             width: 90%;
             max-width: 500px;
-            padding: 40px 30px;
+            max-height: 95vh;
+            padding: 20px 25px;
             background: rgba(26, 26, 46, 0.8);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 0 8px 32px rgba(100, 255, 218, 0.1);
             border: 1px solid rgba(100, 255, 218, 0.1);
             text-align: center;
+            overflow-y: auto;
         }
 
         .logo-container {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
 
         .logo {
-            width: 150px;
+            width: 100px;
             height: auto;
-            filter: drop-shadow(0 0 20px rgba(100, 255, 218, 0.3));
+            filter: drop-shadow(0 0 15px rgba(100, 255, 218, 0.3));
         }
 
         h1 {
             color: #64ffda;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            font-size: clamp(1.5rem, 4.5vw, 2rem);
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
         }
 
         .subtitle {
             color: #b0b0b0;
             font-style: italic;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            margin-bottom: 40px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            margin-bottom: 20px;
         }
 
         .info-box {
             background: rgba(100, 255, 218, 0.05);
-            border-left: 4px solid #64ffda;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-left: 3px solid #64ffda;
+            padding: 12px 15px;
+            margin-bottom: 20px;
             text-align: left;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .info-box h3 {
             color: #64ffda;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .info-box ol {
-            margin-left: 20px;
+            margin-left: 18px;
             color: #e0e0e0;
-            line-height: 1.8;
+            line-height: 1.5;
+            font-size: 0.85rem;
         }
 
         .info-box li {
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .info-box code {
             background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 1px 4px;
+            border-radius: 3px;
             color: #64ffda;
-            font-size: 0.9em;
+            font-size: 0.8em;
         }
 
         .info-box a {
@@ -134,9 +137,14 @@
             color: #fff;
             border-bottom-color: #fff;
         }
+        
+        .info-box p {
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         label {
@@ -144,19 +152,19 @@
             text-align: left;
             color: #64ffda;
             font-weight: 500;
-            margin-bottom: 10px;
-            font-size: 1rem;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
         input[type="password"],
         input[type="text"] {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(100, 255, 218, 0.2);
-            border-radius: 10px;
+            border-radius: 8px;
             color: #e0e0e0;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-family: 'Courier New', monospace;
             transition: all 0.3s ease;
         }
@@ -180,17 +188,17 @@
 
         button {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: #64ffda;
             color: #0a0a0a;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         button:hover {
@@ -209,8 +217,8 @@
         }
 
         .skip-link {
-            margin-top: 20px;
-            font-size: 0.9rem;
+            margin-top: 15px;
+            font-size: 0.85rem;
             color: #888;
         }
 
@@ -230,27 +238,29 @@
             background: rgba(255, 77, 77, 0.1);
             border: 1px solid #ff4d4d;
             color: #ff4d4d;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             display: none;
+            font-size: 0.85rem;
         }
 
         .success-message {
             background: rgba(100, 255, 218, 0.1);
             border: 1px solid #64ffda;
             color: #64ffda;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             display: none;
+            font-size: 0.85rem;
         }
 
         .privacy-note {
-            margin-top: 25px;
-            font-size: 0.85rem;
+            margin-top: 15px;
+            font-size: 0.75rem;
             color: #888;
-            line-height: 1.6;
+            line-height: 1.4;
         }
 
         .privacy-note a {
@@ -264,16 +274,29 @@
 
         @media (max-height: 700px) {
             .login-container {
-                padding: 20px;
-                margin: 20px 0;
+                padding: 15px 20px;
+                margin: 10px 0;
             }
 
             .logo {
-                width: 100px;
+                width: 80px;
             }
 
             .info-box {
-                padding: 15px;
+                padding: 10px 12px;
+            }
+            
+            .logo-container {
+                margin-bottom: 10px;
+            }
+            
+            h1 {
+                font-size: clamp(1.3rem, 4vw, 1.8rem);
+                margin-bottom: 3px;
+            }
+            
+            .subtitle {
+                margin-bottom: 15px;
             }
         }
     </style>
