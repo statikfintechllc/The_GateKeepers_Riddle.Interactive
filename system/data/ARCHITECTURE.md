@@ -1,10 +1,10 @@
 # Repository Architecture
 
-Generated: 2025-12-05T12:05:18.600Z
+Generated: 2025-12-05T15:16:41.865Z
 
 ## Overview
 
-17 files | 839 lines of code
+17 files | 831 lines of code
 
 ## Structure
 
@@ -25,8 +25,8 @@ Generated: 2025-12-05T12:05:18.600Z
 - system/css/game.css
 
 ### Logic Components (2)
+- sw.js
 - system/js/game.js
-- system/js/sw.js
 
 ### Data Components (5)
 - system/riddles/gatekeeper.riddle.js

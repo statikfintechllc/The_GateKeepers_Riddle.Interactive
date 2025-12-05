@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "lastUpdated": "2025-12-05T12:05:18.597Z",
+    "lastUpdated": "2025-12-05T15:16:41.863Z",
     "version": "1.0.0",
     "totalFiles": 17,
-    "totalLines": 839,
+    "totalLines": 831,
     "scanType": "full"
   },
   "structure": {
@@ -56,6 +56,17 @@
       "functions": [],
       "classes": []
     },
+    "sw.js": {
+      "name": "sw.js",
+      "type": "js",
+      "purpose": "Service worker for PWA offline support",
+      "size": 2609,
+      "lines": 85,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
     "system/css/game.css": {
       "name": "game.css",
       "type": "css",
@@ -71,7 +82,7 @@
       "name": "ARCHITECTURE.md",
       "type": "md",
       "purpose": "Documentation",
-      "size": 1090,
+      "size": 1141,
       "lines": 0,
       "imports": [],
       "exports": [],
@@ -82,7 +93,7 @@
       "name": "code-index.json",
       "type": "json",
       "purpose": "Supporting file",
-      "size": 3344,
+      "size": 3359,
       "lines": 0,
       "imports": [],
       "exports": [],
@@ -93,7 +104,7 @@
       "name": "repo-map.json",
       "type": "json",
       "purpose": "Supporting file",
-      "size": 6765,
+      "size": 7423,
       "lines": 0,
       "imports": [],
       "exports": [],
@@ -104,10 +115,10 @@
       "name": "game.js",
       "type": "js",
       "purpose": "Core game logic and UI interactions",
-      "size": 15297,
+      "size": 15230,
       "lines": 484,
       "imports": [
-        "./riddles/riddles.js"
+        "../riddles/riddles.js"
       ],
       "exports": [],
       "functions": [
@@ -137,17 +148,6 @@
         "showHintModal",
         "closeHintModal"
       ],
-      "classes": []
-    },
-    "system/js/sw.js": {
-      "name": "sw.js",
-      "type": "js",
-      "purpose": "Service worker for PWA offline support",
-      "size": 3289,
-      "lines": 93,
-      "imports": [],
-      "exports": [],
-      "functions": [],
       "classes": []
     },
     "system/riddles/gatekeeper.riddle.js": {
@@ -254,7 +254,7 @@
       "name": "manifest.json",
       "type": "json",
       "purpose": "PWA manifest configuration",
-      "size": 653,
+      "size": 551,
       "lines": 0,
       "imports": [],
       "exports": [],
@@ -268,8 +268,8 @@
       "system/css/game.css"
     ],
     "logic": [
-      "system/js/game.js",
-      "system/js/sw.js"
+      "sw.js",
+      "system/js/game.js"
     ],
     "data": [
       "system/riddles/gatekeeper.riddle.js",
@@ -287,7 +287,7 @@
     "dependencies": [
       {
         "from": "system/js/game.js",
-        "to": "./riddles/riddles.js",
+        "to": "../riddles/riddles.js",
         "type": "import"
       },
       {
@@ -307,7 +307,7 @@
       }
     ],
     "usedBy": {
-      "./riddles/riddles.js": [
+      "../riddles/riddles.js": [
         "system/js/game.js"
       ],
       "./gatekeeper.riddle.js": [
