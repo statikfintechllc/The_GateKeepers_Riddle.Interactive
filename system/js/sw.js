@@ -1,19 +1,31 @@
-const CACHE_NAME = 'gatekeeper-riddle-v5';
+const CACHE_NAME = 'gatekeeper-riddle-v6';
+
+// Get the base path for the application
+// This handles both root deployment and GitHub Pages project deployment
+const getBasePath = () => {
+  const path = self.location.pathname;
+  // Match /system/js/sw.js and extract everything before it
+  const match = path.match(/^(.*)\/system\/js\/sw\.js$/);
+  return match ? match[1] : '';
+};
+
+const BASE_PATH = getBasePath();
+
 // Cache all local assets for offline support
 // Note: External resources (badge images, etc.) are intentionally excluded
 // to avoid caching third-party content and to keep cache size minimal
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/system/riddle.html',
-  '/system/js/auth.js',
-  '/system/storage/manifest.json',
-  '/system/css/game.css',
-  '/system/js/game.js',
-  '/system/storage/icon.logo.png',
-  '/system/riddles/riddles.js',
-  '/system/riddles/gatekeeper.riddle.js',
-  '/system/riddles/mirror.riddle.js'
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/system/riddle.html`,
+  `${BASE_PATH}/system/js/auth.js`,
+  `${BASE_PATH}/system/storage/manifest.json`,
+  `${BASE_PATH}/system/css/game.css`,
+  `${BASE_PATH}/system/js/game.js`,
+  `${BASE_PATH}/system/storage/icon.logo.png`,
+  `${BASE_PATH}/system/riddles/riddles.js`,
+  `${BASE_PATH}/system/riddles/gatekeeper.riddle.js`,
+  `${BASE_PATH}/system/riddles/mirror.riddle.js`
 ];
 
 // Install event - cache all assets

@@ -453,8 +453,18 @@
         // Register Service Worker for PWA support
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/system/js/sw.js', { 
-                    scope: '/'
+                // Get the base path for proper service worker registration
+                // Extract base path by removing the HTML filename from current path
+                const currentPath = window.location.pathname;
+                let basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                
+                // If we're at root (basePath would be empty), use empty string
+                // Otherwise basePath will be like '/The_GateKeepers_Riddle.Interactive' or ''
+                const swPath = basePath ? `${basePath}/system/js/sw.js` : '/system/js/sw.js';
+                const scope = basePath ? `${basePath}/` : '/';
+                
+                navigator.serviceWorker.register(swPath, { 
+                    scope: scope
                 })
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);
