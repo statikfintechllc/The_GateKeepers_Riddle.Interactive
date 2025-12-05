@@ -289,10 +289,20 @@ async function refreshApp() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // Get the base path for proper service worker registration
-        // When in /system/riddle.html, we need to go up one level
-        const basePath = window.location.pathname.replace(/\/system\/.*$/, '').replace(/\/$/, '');
-        const swPath = `${basePath}/system/js/sw.js`;
-        const scope = `${basePath}/`;
+        // When in /system/riddle.html, we need to find the project root
+        const currentPath = window.location.pathname;
+        
+        // Extract base path - remove /system/riddle.html part
+        let basePath = '';
+        if (currentPath.includes('/system/')) {
+            basePath = currentPath.substring(0, currentPath.indexOf('/system/'));
+        } else {
+            // Fallback: remove filename from path
+            basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+        }
+        
+        const swPath = basePath ? `${basePath}/system/js/sw.js` : '/system/js/sw.js';
+        const scope = basePath ? `${basePath}/` : '/';
         
         navigator.serviceWorker.register(swPath, { 
             scope: scope

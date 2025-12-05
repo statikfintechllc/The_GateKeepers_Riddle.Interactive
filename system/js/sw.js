@@ -4,9 +4,9 @@ const CACHE_NAME = 'gatekeeper-riddle-v6';
 // This handles both root deployment and GitHub Pages project deployment
 const getBasePath = () => {
   const path = self.location.pathname;
-  // If in /system/js/sw.js, go up two levels to get base
-  const match = path.match(/^(.*?)(?:\/system\/js\/sw\.js)?$/);
-  return match ? match[1] || '' : '';
+  // Match /system/js/sw.js and extract everything before it
+  const match = path.match(/^(.*)\/system\/js\/sw\.js$/);
+  return match ? match[1] : '';
 };
 
 const BASE_PATH = getBasePath();
