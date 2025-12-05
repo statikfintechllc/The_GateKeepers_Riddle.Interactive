@@ -1,28 +1,32 @@
 # Repository Architecture
 
-Generated: 2025-12-04T18:22:33.005Z
+Generated: 2025-12-05T01:48:17.862Z
 
 ## Overview
 
-12 files | 792 lines of code
+16 files | 792 lines of code
 
 ## Structure
 
 ```
 ├── .
-├── system
+├── system/css
+├── system/data
+├── system/js
 ├── system/riddles
+├── system/scripts
+├── system/storage
 ```
 
 ## Components
 
 ### UI Components (2)
 - index.html
-- system/game.css
+- system/css/game.css
 
 ### Logic Components (2)
-- sw.js
-- system/game.js
+- system/js/game.js
+- system/js/sw.js
 
 ### Data Components (4)
 - system/riddles/gatekeeper.riddle.js
@@ -36,7 +40,7 @@ Generated: 2025-12-04T18:22:33.005Z
 ## Entry Points
 
 - **index.html**: Main application entry point
-- **system/game.js**: Core game logic and UI interactions
+- **system/game.js**: Entry point
 
 ## Dependencies
 
@@ -44,7 +48,7 @@ Total imports tracked: 3
 
 ## Key Files
 
-### system/game.js
+### system/js/game.js
 - **Purpose**: Core game logic and UI interactions
 - **Functions**: 25
 - **Exports**: 0

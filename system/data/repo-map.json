@@ -1,16 +1,20 @@
 {
   "metadata": {
-    "lastUpdated": "2025-12-04T18:22:33.003Z",
+    "lastUpdated": "2025-12-05T01:48:17.860Z",
     "version": "1.0.0",
-    "totalFiles": 12,
+    "totalFiles": 16,
     "totalLines": 792,
     "scanType": "full"
   },
   "structure": {
     "directories": [
       ".",
-      "system",
-      "system/riddles"
+      "system/css",
+      "system/data",
+      "system/js",
+      "system/riddles",
+      "system/scripts",
+      "system/storage"
     ],
     "entryPoints": [
       "index.html",
@@ -52,29 +56,7 @@
       "functions": [],
       "classes": []
     },
-    "manifest.json": {
-      "name": "manifest.json",
-      "type": "json",
-      "purpose": "PWA manifest configuration",
-      "size": 645,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "sw.js": {
-      "name": "sw.js",
-      "type": "js",
-      "purpose": "Service worker for PWA offline support",
-      "size": 3289,
-      "lines": 93,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/game.css": {
+    "system/css/game.css": {
       "name": "game.css",
       "type": "css",
       "purpose": "Main stylesheet and visual styling",
@@ -85,7 +67,40 @@
       "functions": [],
       "classes": []
     },
-    "system/game.js": {
+    "system/data/ARCHITECTURE.md": {
+      "name": "ARCHITECTURE.md",
+      "type": "md",
+      "purpose": "Documentation",
+      "size": 998,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/data/code-index.json": {
+      "name": "code-index.json",
+      "type": "json",
+      "purpose": "Supporting file",
+      "size": 3269,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/data/repo-map.json": {
+      "name": "repo-map.json",
+      "type": "json",
+      "purpose": "Supporting file",
+      "size": 5549,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/js/game.js": {
       "name": "game.js",
       "type": "js",
       "purpose": "Core game logic and UI interactions",
@@ -124,12 +139,12 @@
       ],
       "classes": []
     },
-    "system/icon.logo.png": {
-      "name": "icon.logo.png",
-      "type": "png",
-      "purpose": "Supporting file",
-      "size": 124761,
-      "lines": 0,
+    "system/js/sw.js": {
+      "name": "sw.js",
+      "type": "js",
+      "purpose": "Service worker for PWA offline support",
+      "size": 3289,
+      "lines": 93,
       "imports": [],
       "exports": [],
       "functions": [],
@@ -198,16 +213,49 @@
         "getRiddleIndex"
       ],
       "classes": []
+    },
+    "system/scripts/l.h.s.script": {
+      "name": "l.h.s.script",
+      "type": "script",
+      "purpose": "Supporting file",
+      "size": 0,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/storage/icon.logo.png": {
+      "name": "icon.logo.png",
+      "type": "png",
+      "purpose": "Supporting file",
+      "size": 124761,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
+    },
+    "system/storage/manifest.json": {
+      "name": "manifest.json",
+      "type": "json",
+      "purpose": "PWA manifest configuration",
+      "size": 645,
+      "lines": 0,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "classes": []
     }
   },
   "components": {
     "ui": [
       "index.html",
-      "system/game.css"
+      "system/css/game.css"
     ],
     "logic": [
-      "sw.js",
-      "system/game.js"
+      "system/js/game.js",
+      "system/js/sw.js"
     ],
     "data": [
       "system/riddles/gatekeeper.riddle.js",
@@ -216,12 +264,14 @@
       "system/riddles/riddles.js"
     ],
     "infrastructure": [],
-    "documentation": []
+    "documentation": [
+      "system/data/ARCHITECTURE.md"
+    ]
   },
   "relationships": {
     "dependencies": [
       {
-        "from": "system/game.js",
+        "from": "system/js/game.js",
         "to": "./riddles/riddles.js",
         "type": "import"
       },
@@ -238,7 +288,7 @@
     ],
     "usedBy": {
       "./riddles/riddles.js": [
-        "system/game.js"
+        "system/js/game.js"
       ],
       "./gatekeeper.riddle.js": [
         "system/riddles/riddles.js"

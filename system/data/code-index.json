@@ -1,103 +1,103 @@
 {
   "functions": {
     "loadProgress": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "saveProgress": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "loadCurrentRiddleIndex": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "saveCurrentRiddleIndex": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "initGame": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "loadRiddle": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "previousRiddle": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "nextRiddle": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "updateNavigationButtons": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "showRiddleSelector": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "closeRiddleSelector": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "showRequestRiddleMenu": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "closeRequestRiddleModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "requestViaEmail": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "requestAICurated": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "toggleMoreMenu": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "refreshApp": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "checkAnswer": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "giveUp": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "showModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "closeModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "showHelpModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "closeHelpModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "showHintModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "closeHintModal": {
-      "file": "system/game.js",
+      "file": "system/js/game.js",
       "type": "function"
     },
     "getRiddleById": {
@@ -143,5 +143,5 @@
       "type": "export"
     }
   },
-  "lastUpdated": "2025-12-04T18:22:33.005Z"
+  "lastUpdated": "2025-12-05T01:48:17.862Z"
 }
