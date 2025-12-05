@@ -1,5 +1,5 @@
 // Import riddle data
-import { riddles, getRiddleByIndex, getRiddleCount, getRiddleIndex } from './riddles/riddles.js';
+import { riddles, getRiddleByIndex, getRiddleCount, getRiddleIndex } from '../riddles/riddles.js';
 
 // Game state
 let currentRiddleIndex = 0;
@@ -254,8 +254,8 @@ async function refreshApp() {
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/The_GateKeepers_Riddle.Interactive/sw.js', { 
-            scope: '/The_GateKeepers_Riddle.Interactive/' 
+        navigator.serviceWorker.register('./sw.js', { 
+            scope: './' 
         })
             .then((registration) => {
                 console.log('Service Worker registered successfully:', registration.scope);
