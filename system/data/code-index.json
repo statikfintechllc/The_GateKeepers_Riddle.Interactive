@@ -1,227 +1,585 @@
 {
+  "metadata": {
+    "lastUpdated": "2025-12-05T20:52:00.000Z",
+    "version": "2.0.0",
+    "totalFunctions": 38,
+    "totalExports": 23,
+    "totalClasses": 0,
+    "totalConstants": 3
+  },
   "functions": {
-    "isAuthenticated": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "getGitHubToken": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "saveGitHubToken": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "clearGitHubToken": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "isValidTokenFormat": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "verifyToken": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "createRiddleRequestIssue": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "openGitHubIssueTemplate": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "redirectToLogin": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
-    "redirectToApp": {
-      "file": "system/js/auth.js",
-      "type": "function"
-    },
     "loadProgress": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 12,
+      "purpose": "Load riddle progress from localStorage",
+      "returns": "void",
+      "usedBy": ["initGame"]
     },
     "saveProgress": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 25,
+      "purpose": "Save riddle progress to localStorage",
+      "returns": "void",
+      "usedBy": ["checkAnswer", "showModal"]
     },
     "loadCurrentRiddleIndex": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 30,
+      "purpose": "Get current riddle index from localStorage",
+      "returns": "number",
+      "usedBy": ["initGame"]
     },
     "saveCurrentRiddleIndex": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 36,
+      "purpose": "Save current riddle index to localStorage",
+      "returns": "void",
+      "usedBy": ["loadRiddle"]
     },
     "initGame": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 41,
+      "purpose": "Initialize game state and load riddle",
+      "returns": "void",
+      "calledOn": "DOMContentLoaded"
     },
     "loadRiddle": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 50,
+      "params": ["index"],
+      "purpose": "Load and display a riddle by index",
+      "returns": "void",
+      "usedBy": ["initGame", "previousRiddle", "nextRiddle", "riddleSelector"]
     },
     "previousRiddle": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 76,
+      "purpose": "Navigate to previous riddle",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "nextRiddle": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 83,
+      "purpose": "Navigate to next riddle",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "updateNavigationButtons": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 90,
+      "purpose": "Update enabled/disabled state of navigation buttons",
+      "returns": "void",
+      "usedBy": ["loadRiddle", "initGame"]
     },
     "showRiddleSelector": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 103,
+      "purpose": "Display modal with all riddles for selection",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "closeRiddleSelector": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 144,
+      "purpose": "Close riddle selector modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "showRequestRiddleMenu": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 150,
+      "purpose": "Show submenu for requesting new riddles",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "closeRequestRiddleModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 159,
+      "purpose": "Close request riddle modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "requestViaEmail": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 167,
+      "purpose": "Open email client to request riddle",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "requestAICurated": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 188,
+      "purpose": "Create GitHub issue for AI-curated riddle request",
+      "returns": "Promise<void>",
+      "async": true,
+      "exposedGlobally": true,
+      "requiresAuth": true
     },
     "toggleMoreMenu": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 251,
+      "purpose": "Toggle dropdown menu visibility",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "refreshApp": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 259,
+      "purpose": "Clear caches and reload app",
+      "returns": "Promise<void>",
+      "async": true,
+      "exposedGlobally": true
     },
     "checkAnswer": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 326,
+      "purpose": "Validate user's answer against riddle",
+      "returns": "void",
+      "exposedGlobally": true,
+      "usesLocalStorage": true
     },
     "giveUp": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 367,
+      "purpose": "Reveal answer modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "showModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 371,
+      "params": ["won"],
+      "purpose": "Display answer reveal modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "closeModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 394,
+      "purpose": "Close answer reveal modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "showHelpModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 399,
+      "purpose": "Display help/instructions modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "closeHelpModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 404,
+      "purpose": "Close help modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "showHintModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 409,
+      "purpose": "Display hints modal with riddle-specific hints",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "closeHintModal": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 444,
+      "purpose": "Close hints modal",
+      "returns": "void",
+      "exposedGlobally": true
     },
     "updateAuthButton": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 520,
+      "purpose": "Update login/logout button text based on auth state",
+      "returns": "void",
+      "usedBy": ["initGame"]
     },
     "handleAuthAction": {
       "file": "system/js/game.js",
-      "type": "function"
+      "line": 533,
+      "purpose": "Handle login/logout button click",
+      "returns": "void",
+      "exposedGlobally": true
     },
-    "getRiddleById": {
-      "file": "system/riddles/riddles.js",
-      "type": "function"
-    },
-    "getRiddleByIndex": {
-      "file": "system/riddles/riddles.js",
-      "type": "function"
-    },
-    "getRiddleCount": {
-      "file": "system/riddles/riddles.js",
-      "type": "function"
-    },
-    "getRiddleIndex": {
-      "file": "system/riddles/riddles.js",
-      "type": "function"
-    }
-  },
-  "exports": {
     "isAuthenticated": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 9,
+      "purpose": "Check if GitHub token exists in localStorage",
+      "returns": "boolean",
+      "exported": true,
+      "usedBy": ["game.js", "index.html"]
     },
     "getGitHubToken": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 15,
+      "purpose": "Retrieve GitHub token from localStorage",
+      "returns": "string | null",
+      "exported": true
     },
     "saveGitHubToken": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 20,
+      "params": ["token"],
+      "purpose": "Save GitHub token to localStorage",
+      "returns": "void",
+      "exported": true,
+      "throws": "Error if token is empty"
     },
     "clearGitHubToken": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 28,
+      "purpose": "Remove GitHub token from localStorage",
+      "returns": "void",
+      "exported": true,
+      "usedBy": ["handleAuthAction"]
     },
     "isValidTokenFormat": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 34,
+      "params": ["token"],
+      "purpose": "Validate GitHub token format",
+      "returns": "boolean",
+      "exported": true,
+      "validates": ["ghp_", "github_pat_", "gho_", "ghs_"]
+    },
+    "verifyToken": {
+      "file": "system/js/auth.js",
+      "line": 49,
+      "params": ["token"],
+      "purpose": "Verify token with GitHub API",
+      "returns": "Promise<boolean>",
+      "async": true,
+      "exported": true,
+      "apiCall": "GET /user"
+    },
+    "createRiddleRequestIssue": {
+      "file": "system/js/auth.js",
+      "line": 66,
+      "purpose": "Create GitHub issue for riddle request",
+      "returns": "Promise<object>",
+      "async": true,
+      "exported": true,
+      "apiCall": "POST /repos/{owner}/{repo}/issues",
+      "requiresAuth": true
     },
     "openGitHubIssueTemplate": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 116,
+      "purpose": "Open GitHub issue creation page (fallback)",
+      "returns": "void",
+      "exported": true
     },
     "redirectToLogin": {
       "file": "system/js/auth.js",
-      "type": "export"
+      "line": 122,
+      "purpose": "Navigate to login page",
+      "returns": "void",
+      "exported": true
     },
     "redirectToApp": {
       "file": "system/js/auth.js",
-      "type": "export"
-    },
-    "riddle": {
-      "file": "system/riddles/the-paradox-of-progress.riddle.js",
-      "type": "export"
-    },
-    "riddles": {
-      "file": "system/riddles/riddles.js",
-      "type": "export"
+      "line": 135,
+      "purpose": "Navigate to game page",
+      "returns": "void",
+      "exported": true
     },
     "getRiddleById": {
       "file": "system/riddles/riddles.js",
-      "type": "export"
+      "line": 15,
+      "params": ["id"],
+      "purpose": "Find riddle by unique ID",
+      "returns": "object | undefined",
+      "exported": true
     },
     "getRiddleByIndex": {
       "file": "system/riddles/riddles.js",
-      "type": "export"
+      "line": 20,
+      "params": ["index"],
+      "purpose": "Get riddle by array index",
+      "returns": "object | null",
+      "exported": true,
+      "usedBy": ["game.js:loadRiddle"]
     },
     "getRiddleCount": {
       "file": "system/riddles/riddles.js",
-      "type": "export"
+      "line": 28,
+      "purpose": "Get total number of riddles",
+      "returns": "number",
+      "exported": true,
+      "usedBy": ["game.js:updateNavigationButtons"]
     },
     "getRiddleIndex": {
       "file": "system/riddles/riddles.js",
-      "type": "export"
+      "line": 33,
+      "params": ["id"],
+      "purpose": "Find index of riddle by ID",
+      "returns": "number",
+      "exported": true
     }
   },
-  "lastUpdated": "2025-12-05T19:46:33.620Z"
+  "exports": {
+    "riddles": {
+      "file": "system/riddles/riddles.js",
+      "type": "array",
+      "purpose": "Registry of all riddle objects",
+      "exported": true,
+      "contains": "riddle objects"
+    },
+    "riddle": {
+      "files": [
+        "system/riddles/gatekeeper.riddle.js",
+        "system/riddles/mirror.riddle.js",
+        "system/riddles/the-paradox-of-progress.riddle.js",
+        "system/riddles/riddle.template.js"
+      ],
+      "type": "object",
+      "purpose": "Individual riddle data structure"
+    },
+    "isAuthenticated": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["index.html", "system/js/game.js"]
+    },
+    "getGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["system/js/auth.js (internal)"]
+    },
+    "saveGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["index.html"]
+    },
+    "clearGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "isValidTokenFormat": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["index.html"]
+    },
+    "verifyToken": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["index.html"]
+    },
+    "createRiddleRequestIssue": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "openGitHubIssueTemplate": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "redirectToLogin": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "redirectToApp": {
+      "file": "system/js/auth.js",
+      "type": "function",
+      "importedBy": ["index.html"]
+    },
+    "getRiddleById": {
+      "file": "system/riddles/riddles.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "getRiddleByIndex": {
+      "file": "system/riddles/riddles.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "getRiddleCount": {
+      "file": "system/riddles/riddles.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    },
+    "getRiddleIndex": {
+      "file": "system/riddles/riddles.js",
+      "type": "function",
+      "importedBy": ["system/js/game.js"]
+    }
+  },
+  "constants": {
+    "GITHUB_TOKEN_KEY": {
+      "file": "system/js/auth.js",
+      "line": 4,
+      "value": "'github_token'",
+      "purpose": "localStorage key for GitHub token"
+    },
+    "GITHUB_REPO_OWNER": {
+      "file": "system/js/auth.js",
+      "line": 5,
+      "value": "'statikfintechllc'",
+      "purpose": "Repository owner for API calls"
+    },
+    "GITHUB_REPO_NAME": {
+      "file": "system/js/auth.js",
+      "line": 6,
+      "value": "'The_GateKeepers_Riddle.Interactive'",
+      "purpose": "Repository name for API calls"
+    },
+    "CACHE_NAME": {
+      "file": "system/js/sw.js",
+      "line": 1,
+      "value": "'gatekeeper-riddle-v5'",
+      "purpose": "Service worker cache identifier"
+    },
+    "urlsToCache": {
+      "file": "system/js/sw.js",
+      "line": 5,
+      "type": "array",
+      "purpose": "List of URLs to cache for offline support"
+    }
+  },
+  "classes": {},
+  "imports": {
+    "system/js/game.js": [
+      {
+        "from": "../riddles/riddles.js",
+        "imports": ["riddles", "getRiddleByIndex", "getRiddleCount", "getRiddleIndex"]
+      },
+      {
+        "from": "./auth.js",
+        "imports": ["isAuthenticated", "createRiddleRequestIssue", "openGitHubIssueTemplate", "redirectToLogin", "clearGitHubToken"]
+      }
+    ],
+    "system/riddles/riddles.js": [
+      {
+        "from": "./gatekeeper.riddle.js",
+        "imports": ["riddle as gatekeeperRiddle"]
+      },
+      {
+        "from": "./mirror.riddle.js",
+        "imports": ["riddle as mirrorRiddle"]
+      },
+      {
+        "from": "./the-paradox-of-progress.riddle.js",
+        "imports": ["riddle as the_paradox_of_progressRiddle"]
+      }
+    ],
+    "index.html": [
+      {
+        "from": "./system/js/auth.js",
+        "imports": ["saveGitHubToken", "isValidTokenFormat", "verifyToken", "redirectToApp", "isAuthenticated"]
+      }
+    ]
+  },
+  "eventHandlers": {
+    "DOMContentLoaded": {
+      "files": ["system/js/game.js"],
+      "handlers": ["initGame", "dropdown menu setup", "modal click handlers"]
+    },
+    "submit": {
+      "files": ["index.html"],
+      "handlers": ["login form submission"]
+    },
+    "click": {
+      "files": ["system/js/game.js"],
+      "handlers": ["modal backgrounds", "dropdown menu outside click"]
+    },
+    "keypress": {
+      "files": ["system/js/game.js"],
+      "handlers": ["Enter key on input field"]
+    },
+    "keydown": {
+      "files": ["system/js/game.js"],
+      "handlers": ["Escape key for closing modals"]
+    },
+    "install": {
+      "files": ["system/js/sw.js"],
+      "purpose": "Service worker installation and caching"
+    },
+    "activate": {
+      "files": ["system/js/sw.js"],
+      "purpose": "Service worker activation and cache cleanup"
+    },
+    "fetch": {
+      "files": ["system/js/sw.js"],
+      "purpose": "Service worker fetch interception"
+    }
+  },
+  "riddleStructure": {
+    "template": "system/riddles/riddle.template.js",
+    "requiredFields": [
+      "id",
+      "title",
+      "text",
+      "correctAnswers",
+      "closeAnswers",
+      "hints",
+      "wrongAnswerFeedback",
+      "closeAnswerFeedback",
+      "explanation",
+      "answer"
+    ],
+    "riddles": [
+      {
+        "id": "gatekeeper",
+        "file": "system/riddles/gatekeeper.riddle.js",
+        "title": "The Gatekeeper's Riddle"
+      },
+      {
+        "id": "mirror",
+        "file": "system/riddles/mirror.riddle.js",
+        "title": "The Mirror's Paradox"
+      },
+      {
+        "id": "the-paradox-of-progress",
+        "file": "system/riddles/the-paradox-of-progress.riddle.js",
+        "title": "The Paradox of Progress"
+      }
+    ]
+  },
+  "apiIntegration": {
+    "githubAPI": {
+      "baseUrl": "https://api.github.com",
+      "endpoints": [
+        {
+          "path": "/user",
+          "method": "GET",
+          "purpose": "Verify GitHub token",
+          "usedBy": "verifyToken"
+        },
+        {
+          "path": "/repos/{owner}/{repo}/issues",
+          "method": "POST",
+          "purpose": "Create riddle request issue",
+          "usedBy": "createRiddleRequestIssue",
+          "requiresAuth": true
+        }
+      ],
+      "authentication": "Bearer token in Authorization header"
+    }
+  },
+  "localStorage": {
+    "keys": [
+      {
+        "name": "github_token",
+        "purpose": "Store GitHub Personal Access Token",
+        "type": "string",
+        "managedBy": "auth.js"
+      },
+      {
+        "name": "riddleProgress",
+        "purpose": "Track riddle attempts and solved status",
+        "type": "JSON object",
+        "managedBy": "game.js"
+      },
+      {
+        "name": "currentRiddleIndex",
+        "purpose": "Remember last viewed riddle",
+        "type": "number",
+        "managedBy": "game.js"
+      }
+    ]
+  }
 }

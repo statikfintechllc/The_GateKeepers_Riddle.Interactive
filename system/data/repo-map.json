@@ -1,14 +1,35 @@
 {
   "metadata": {
-    "lastUpdated": "2025-12-05T19:46:33.618Z",
-    "version": "1.0.0",
-    "totalFiles": 20,
-    "totalLines": 1043,
-    "scanType": "full"
+    "lastUpdated": "2025-12-05T20:52:00.000Z",
+    "version": "2.0.0",
+    "totalFiles": 27,
+    "totalLines": 5352,
+    "totalSize": 299815,
+    "languages": {
+      "JavaScript": 8,
+      "CSS": 1,
+      "HTML": 2,
+      "Markdown": 6,
+      "JSON": 3,
+      "YAML": 4,
+      "Image": 1,
+      "Other": 2
+    },
+    "scanType": "full-comprehensive",
+    "repository": {
+      "name": "The_GateKeepers_Riddle.Interactive",
+      "owner": "statikfintechllc",
+      "type": "Progressive Web App",
+      "description": "Interactive riddle game with GitHub integration and automated riddle discovery"
+    }
   },
   "structure": {
     "directories": [
-      ".",
+      "root",
+      ".github",
+      ".github/ISSUE_TEMPLATE",
+      ".github/agents",
+      ".github/workflows",
       "system",
       "system/css",
       "system/data",
@@ -19,373 +40,441 @@
     ],
     "entryPoints": [
       "index.html",
-      "system/game.js"
+      "system/riddle.html"
     ],
-    "dependencies": {}
+    "mainComponents": {
+      "frontend": ["index.html", "system/riddle.html", "system/css/game.css"],
+      "gameLogic": ["system/js/game.js", "system/js/auth.js"],
+      "riddleSystem": ["system/riddles/riddles.js", "system/riddles/*.riddle.js"],
+      "infrastructure": ["system/js/sw.js", "system/storage/manifest.json"],
+      "automation": [".github/workflows/*.yml", ".github/agents/*.md"]
+    }
   },
   "files": {
-    ".gitignore": {
-      "name": ".gitignore",
-      "type": "",
-      "purpose": "Supporting file",
-      "size": 246,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "LICENSE": {
-      "name": "LICENSE",
-      "type": "",
-      "purpose": "Supporting file",
-      "size": 1088,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "_config.yml": {
-      "name": "_config.yml",
-      "type": "yml",
-      "purpose": "Supporting file",
-      "size": 745,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
     "index.html": {
       "name": "index.html",
       "type": "html",
-      "purpose": "Main application entry point",
+      "purpose": "Main application entry point - login page with GitHub authentication",
       "size": 14320,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/css/game.css": {
-      "name": "game.css",
-      "type": "css",
-      "purpose": "Main stylesheet and visual styling",
-      "size": 12987,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/data/ARCHITECTURE.md": {
-      "name": "ARCHITECTURE.md",
-      "type": "md",
-      "purpose": "Documentation",
-      "size": 1308,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/data/code-index.json": {
-      "name": "code-index.json",
-      "type": "json",
-      "purpose": "Supporting file",
-      "size": 5208,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/data/repo-map.json": {
-      "name": "repo-map.json",
-      "type": "json",
-      "purpose": "Supporting file",
-      "size": 8982,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/js/auth.js": {
-      "name": "auth.js",
-      "type": "js",
-      "purpose": "Supporting file",
-      "size": 5103,
-      "lines": 146,
-      "imports": [],
-      "exports": [
-        "isAuthenticated",
-        "getGitHubToken",
-        "saveGitHubToken",
-        "clearGitHubToken",
-        "isValidTokenFormat",
-        "openGitHubIssueTemplate",
-        "redirectToLogin",
-        "redirectToApp"
-      ],
-      "functions": [
-        "isAuthenticated",
-        "getGitHubToken",
-        "saveGitHubToken",
-        "clearGitHubToken",
-        "isValidTokenFormat",
-        "verifyToken",
-        "createRiddleRequestIssue",
-        "openGitHubIssueTemplate",
-        "redirectToLogin",
-        "redirectToApp"
-      ],
-      "classes": []
-    },
-    "system/js/game.js": {
-      "name": "game.js",
-      "type": "js",
-      "purpose": "Core game logic and UI interactions",
-      "size": 17314,
-      "lines": 548,
-      "imports": [
-        "../riddles/riddles.js",
-        "./auth.js"
-      ],
-      "exports": [],
-      "functions": [
-        "loadProgress",
-        "saveProgress",
-        "loadCurrentRiddleIndex",
-        "saveCurrentRiddleIndex",
-        "initGame",
-        "loadRiddle",
-        "previousRiddle",
-        "nextRiddle",
-        "updateNavigationButtons",
-        "showRiddleSelector",
-        "closeRiddleSelector",
-        "showRequestRiddleMenu",
-        "closeRequestRiddleModal",
-        "requestViaEmail",
-        "requestAICurated",
-        "toggleMoreMenu",
-        "refreshApp",
-        "checkAnswer",
-        "giveUp",
-        "showModal",
-        "closeModal",
-        "showHelpModal",
-        "closeHelpModal",
-        "showHintModal",
-        "closeHintModal",
-        "updateAuthButton",
-        "handleAuthAction"
-      ],
-      "classes": []
-    },
-    "system/js/sw.js": {
-      "name": "sw.js",
-      "type": "js",
-      "purpose": "Service worker for PWA offline support",
-      "size": 2649,
-      "lines": 87,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
+      "lines": 470,
+      "category": "UI",
+      "sections": ["login-container", "info-box", "form"],
+      "scripts": ["system/js/auth.js"],
+      "stylesheets": ["inline"],
+      "features": ["GitHub token authentication", "PWA service worker registration", "Form validation"]
     },
     "system/riddle.html": {
       "name": "riddle.html",
       "type": "html",
-      "purpose": "Supporting file",
+      "purpose": "Game interface - main riddle gameplay page",
       "size": 11680,
-      "lines": 0,
-      "imports": [],
+      "lines": 210,
+      "category": "UI",
+      "sections": ["container", "riddle", "input-section", "modal", "helpModal", "hintModal"],
+      "scripts": ["js/game.js", "js/auth.js"],
+      "stylesheets": ["css/game.css"],
+      "features": ["Riddle display", "Answer input", "Navigation", "Hint system", "Modal reveals"]
+    },
+    "system/css/game.css": {
+      "name": "game.css",
+      "type": "css",
+      "purpose": "Main stylesheet - complete visual styling for game interface",
+      "size": 12987,
+      "lines": 638,
+      "category": "UI",
+      "customProperties": ["--button-bar-height"],
+      "mediaQueries": ["max-height: 700px", "max-width: 600px"],
+      "keyComponents": ["floating buttons", "riddle container", "modal system", "button bar", "animations"]
+    },
+    "system/js/game.js": {
+      "name": "game.js",
+      "type": "js",
+      "purpose": "Core game logic - handles riddle loading, answer checking, UI interactions",
+      "size": 17314,
+      "lines": 547,
+      "category": "Logic",
+      "imports": [
+        {"from": "../riddles/riddles.js", "items": ["riddles", "getRiddleByIndex", "getRiddleCount", "getRiddleIndex"]},
+        {"from": "./auth.js", "items": ["isAuthenticated", "createRiddleRequestIssue", "openGitHubIssueTemplate", "redirectToLogin", "clearGitHubToken"]}
+      ],
       "exports": [],
-      "functions": [],
-      "classes": []
+      "functions": [
+        "loadProgress", "saveProgress", "loadCurrentRiddleIndex", "saveCurrentRiddleIndex",
+        "initGame", "loadRiddle", "previousRiddle", "nextRiddle", "updateNavigationButtons",
+        "showRiddleSelector", "closeRiddleSelector", "showRequestRiddleMenu", "closeRequestRiddleModal",
+        "requestViaEmail", "requestAICurated", "toggleMoreMenu", "refreshApp",
+        "checkAnswer", "giveUp", "showModal", "closeModal",
+        "showHelpModal", "closeHelpModal", "showHintModal", "closeHintModal",
+        "updateAuthButton", "handleAuthAction"
+      ],
+      "eventListeners": ["DOMContentLoaded", "click", "keypress", "keydown"],
+      "localStorage": ["riddleProgress", "currentRiddleIndex"],
+      "features": ["Progress tracking", "Answer validation", "Modal management", "PWA refresh", "GitHub integration"]
     },
-    "system/riddles/gatekeeper.riddle.js": {
-      "name": "gatekeeper.riddle.js",
+    "system/js/auth.js": {
+      "name": "auth.js",
       "type": "js",
-      "purpose": "Riddle data file",
-      "size": 1755,
-      "lines": 57,
+      "purpose": "Authentication module - GitHub token management and API integration",
+      "size": 5103,
+      "lines": 145,
+      "category": "Logic",
       "imports": [],
       "exports": [
-        "riddle"
+        "isAuthenticated", "getGitHubToken", "saveGitHubToken", "clearGitHubToken",
+        "isValidTokenFormat", "verifyToken", "createRiddleRequestIssue",
+        "openGitHubIssueTemplate", "redirectToLogin", "redirectToApp"
       ],
-      "functions": [],
-      "classes": []
+      "functions": [
+        "isAuthenticated", "getGitHubToken", "saveGitHubToken", "clearGitHubToken",
+        "isValidTokenFormat", "verifyToken", "createRiddleRequestIssue",
+        "openGitHubIssueTemplate", "redirectToLogin", "redirectToApp"
+      ],
+      "constants": ["GITHUB_TOKEN_KEY", "GITHUB_REPO_OWNER", "GITHUB_REPO_NAME"],
+      "apiEndpoints": ["https://api.github.com/user", "https://api.github.com/repos/{owner}/{repo}/issues"],
+      "features": ["Token validation", "GitHub API integration", "Issue creation", "Navigation helpers"]
     },
-    "system/riddles/mirror.riddle.js": {
-      "name": "mirror.riddle.js",
+    "system/js/sw.js": {
+      "name": "sw.js",
       "type": "js",
-      "purpose": "Riddle data file",
-      "size": 1499,
-      "lines": 46,
-      "imports": [],
-      "exports": [
-        "riddle"
-      ],
-      "functions": [],
-      "classes": []
-    },
-    "system/riddles/riddle.template.js": {
-      "name": "riddle.template.js",
-      "type": "js",
-      "purpose": "Template for creating new riddles",
-      "size": 2586,
-      "lines": 76,
-      "imports": [],
-      "exports": [
-        "riddle"
-      ],
-      "functions": [],
-      "classes": []
+      "purpose": "Service worker - PWA offline support and caching strategy",
+      "size": 2649,
+      "lines": 87,
+      "category": "Infrastructure",
+      "constants": ["CACHE_NAME", "urlsToCache"],
+      "eventListeners": ["install", "activate", "fetch"],
+      "cachingStrategy": "Cache-first with network fallback",
+      "cachedResources": ["/", "/index.html", "/system/riddle.html", "/system/js/auth.js", "/system/css/game.css", "/system/js/game.js", "/system/riddles/*.js"],
+      "features": ["Offline support", "Cache management", "Resource caching"]
     },
     "system/riddles/riddles.js": {
       "name": "riddles.js",
       "type": "js",
-      "purpose": "Riddle registry and loader",
+      "purpose": "Riddle registry - central riddle management and loader",
       "size": 967,
-      "lines": 36,
+      "lines": 35,
+      "category": "Data",
       "imports": [
-        "./gatekeeper.riddle.js",
-        "./mirror.riddle.js",
-        "./the-paradox-of-progress.riddle.js"
+        {"from": "./gatekeeper.riddle.js", "items": ["riddle"]},
+        {"from": "./mirror.riddle.js", "items": ["riddle"]},
+        {"from": "./the-paradox-of-progress.riddle.js", "items": ["riddle"]}
       ],
-      "exports": [
-        "riddles",
-        "getRiddleById",
-        "getRiddleByIndex",
-        "getRiddleCount",
-        "getRiddleIndex"
-      ],
-      "functions": [
-        "getRiddleById",
-        "getRiddleByIndex",
-        "getRiddleCount",
-        "getRiddleIndex"
-      ],
-      "classes": []
+      "exports": ["riddles", "getRiddleById", "getRiddleByIndex", "getRiddleCount", "getRiddleIndex"],
+      "functions": ["getRiddleById", "getRiddleByIndex", "getRiddleCount", "getRiddleIndex"],
+      "features": ["Riddle registry", "Riddle lookup functions", "Centralized riddle management"]
+    },
+    "system/riddles/gatekeeper.riddle.js": {
+      "name": "gatekeeper.riddle.js",
+      "type": "js",
+      "purpose": "Riddle data - The Gatekeeper's Riddle about AI identity",
+      "size": 1755,
+      "lines": 56,
+      "category": "Data",
+      "riddleId": "gatekeeper",
+      "theme": "AI and code agents",
+      "correctAnswers": 9,
+      "closeAnswers": 9,
+      "hints": 6,
+      "exports": ["riddle"]
+    },
+    "system/riddles/mirror.riddle.js": {
+      "name": "mirror.riddle.js",
+      "type": "js",
+      "purpose": "Riddle data - The Mirror's Paradox about algorithms",
+      "size": 1499,
+      "lines": 45,
+      "category": "Data",
+      "riddleId": "mirror",
+      "theme": "Algorithms and reflection",
+      "correctAnswers": 8,
+      "closeAnswers": 7,
+      "hints": 6,
+      "exports": ["riddle"]
     },
     "system/riddles/the-paradox-of-progress.riddle.js": {
       "name": "the-paradox-of-progress.riddle.js",
       "type": "js",
-      "purpose": "Riddle data file",
+      "purpose": "Riddle data - The Paradox of Progress about knowledge",
       "size": 1495,
-      "lines": 47,
-      "imports": [],
-      "exports": [
-        "riddle"
-      ],
-      "functions": [],
-      "classes": []
+      "lines": 46,
+      "category": "Data",
+      "riddleId": "the-paradox-of-progress",
+      "theme": "Knowledge and learning",
+      "correctAnswers": 5,
+      "closeAnswers": 5,
+      "hints": 6,
+      "exports": ["riddle"]
     },
-    "system/scripts/l.h.s.script": {
-      "name": "l.h.s.script",
-      "type": "script",
-      "purpose": "Supporting file",
-      "size": 0,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
-    },
-    "system/storage/icon.logo.png": {
-      "name": "icon.logo.png",
-      "type": "png",
-      "purpose": "Supporting file",
-      "size": 124761,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
+    "system/riddles/riddle.template.js": {
+      "name": "riddle.template.js",
+      "type": "js",
+      "purpose": "Template - standardized structure for creating new riddles",
+      "size": 2586,
+      "lines": 75,
+      "category": "Data",
+      "exports": ["riddle"],
+      "templateFields": ["id", "title", "text", "correctAnswers", "closeAnswers", "hints", "wrongAnswerFeedback", "closeAnswerFeedback", "explanation", "answer"]
     },
     "system/storage/manifest.json": {
       "name": "manifest.json",
       "type": "json",
-      "purpose": "PWA manifest configuration",
+      "purpose": "PWA manifest - app metadata and installation configuration",
       "size": 558,
-      "lines": 0,
-      "imports": [],
-      "exports": [],
-      "functions": [],
-      "classes": []
+      "lines": 19,
+      "category": "Infrastructure",
+      "features": ["PWA configuration", "App metadata", "Icon configuration", "Display mode settings"]
+    },
+    "system/storage/icon.logo.png": {
+      "name": "icon.logo.png",
+      "type": "png",
+      "purpose": "App icon - visual identity for PWA",
+      "size": 124761,
+      "category": "Assets",
+      "dimensions": "860x844"
+    },
+    "system/data/ARCHITECTURE.md": {
+      "name": "ARCHITECTURE.md",
+      "type": "md",
+      "purpose": "Architecture documentation - system design and structure",
+      "size": 1308,
+      "lines": 76,
+      "category": "Documentation"
+    },
+    "system/data/code-index.json": {
+      "name": "code-index.json",
+      "type": "json",
+      "purpose": "Code index - searchable function and export registry",
+      "size": 5208,
+      "lines": 227,
+      "category": "Documentation"
+    },
+    "system/data/repo-map.json": {
+      "name": "repo-map.json",
+      "type": "json",
+      "purpose": "Repository map - comprehensive file metadata and relationships",
+      "size": 8982,
+      "category": "Documentation"
+    },
+    "_config.yml": {
+      "name": "_config.yml",
+      "type": "yml",
+      "purpose": "Jekyll configuration - GitHub Pages settings",
+      "size": 745,
+      "lines": 21,
+      "category": "Configuration"
+    },
+    "LICENSE": {
+      "name": "LICENSE",
+      "type": "txt",
+      "purpose": "MIT License - terms of use",
+      "size": 1088,
+      "lines": 21,
+      "category": "Legal"
+    },
+    ".github/README.md": {
+      "name": "README.md",
+      "type": "md",
+      "purpose": "Project documentation - overview, features, and usage guide",
+      "size": 12500,
+      "lines": 242,
+      "category": "Documentation"
+    },
+    ".github/AUTOMATED_RIDDLES.md": {
+      "name": "AUTOMATED_RIDDLES.md",
+      "type": "md",
+      "purpose": "Documentation - automated riddle discovery system",
+      "category": "Documentation"
+    },
+    ".github/BreakDown.md": {
+      "name": "BreakDown.md",
+      "type": "md",
+      "purpose": "Documentation - project breakdown and structure",
+      "category": "Documentation"
+    },
+    ".github/ISSUE_RIDDLE_REQUESTS.md": {
+      "name": "ISSUE_RIDDLE_REQUESTS.md",
+      "type": "md",
+      "purpose": "Documentation - riddle request handling system",
+      "category": "Documentation"
+    },
+    ".github/ISSUE_TEMPLATE/riddle_request.md": {
+      "name": "riddle_request.md",
+      "type": "md",
+      "purpose": "GitHub issue template - standardized riddle requests",
+      "category": "Template"
+    },
+    ".github/workflows/repo-mapper-agent.yml": {
+      "name": "repo-mapper-agent.yml",
+      "type": "yml",
+      "purpose": "GitHub Actions workflow - automated repository mapping",
+      "size": 12800,
+      "lines": 386,
+      "category": "Infrastructure",
+      "triggers": ["schedule (weekly)", "push (code changes)", "workflow_dispatch", "workflow_call"],
+      "features": ["File scanning", "Dependency analysis", "Documentation generation", "Automated commits"]
+    },
+    ".github/workflows/riddle-finder-agent.yml": {
+      "name": "riddle-finder-agent.yml",
+      "type": "yml",
+      "purpose": "GitHub Actions workflow - automated riddle discovery",
+      "category": "Infrastructure",
+      "triggers": ["schedule (daily)", "workflow_dispatch"],
+      "features": ["AI riddle generation", "Automated PR creation"]
+    },
+    ".github/workflows/issue-riddle-request.yml": {
+      "name": "issue-riddle-request.yml",
+      "type": "yml",
+      "purpose": "GitHub Actions workflow - riddle request handling from issues",
+      "category": "Infrastructure",
+      "triggers": ["issues (opened, labeled)"],
+      "features": ["Issue detection", "Agent triggering"]
     }
   },
   "components": {
-    "ui": [
-      "index.html",
-      "system/css/game.css",
-      "system/riddle.html"
-    ],
-    "logic": [
-      "system/js/auth.js",
-      "system/js/game.js",
-      "system/js/sw.js"
-    ],
-    "data": [
-      "system/riddles/gatekeeper.riddle.js",
-      "system/riddles/mirror.riddle.js",
-      "system/riddles/riddle.template.js",
-      "system/riddles/riddles.js",
-      "system/riddles/the-paradox-of-progress.riddle.js"
-    ],
-    "infrastructure": [],
-    "documentation": [
-      "system/data/ARCHITECTURE.md"
-    ]
+    "ui": {
+      "description": "User interface components",
+      "files": ["index.html", "system/riddle.html", "system/css/game.css"],
+      "responsibilities": ["Visual presentation", "User interaction", "Responsive design"]
+    },
+    "logic": {
+      "description": "Application business logic",
+      "files": ["system/js/game.js", "system/js/auth.js"],
+      "responsibilities": ["Game mechanics", "Authentication", "State management", "API integration"]
+    },
+    "data": {
+      "description": "Riddle data and management",
+      "files": ["system/riddles/riddles.js", "system/riddles/gatekeeper.riddle.js", "system/riddles/mirror.riddle.js", "system/riddles/the-paradox-of-progress.riddle.js", "system/riddles/riddle.template.js"],
+      "responsibilities": ["Riddle storage", "Riddle registry", "Template provision"]
+    },
+    "infrastructure": {
+      "description": "PWA and automation infrastructure",
+      "files": ["system/js/sw.js", "system/storage/manifest.json", ".github/workflows/*.yml"],
+      "responsibilities": ["Offline support", "Caching", "Automated workflows", "CI/CD"]
+    },
+    "documentation": {
+      "description": "Project documentation",
+      "files": [".github/README.md", "system/data/ARCHITECTURE.md", ".github/*.md", "system/data/code-index.json", "system/data/repo-map.json"],
+      "responsibilities": ["Usage guides", "Architecture docs", "Code maps", "Templates"]
+    }
   },
   "relationships": {
     "dependencies": [
-      {
-        "from": "system/js/game.js",
-        "to": "../riddles/riddles.js",
-        "type": "import"
-      },
-      {
-        "from": "system/js/game.js",
-        "to": "./auth.js",
-        "type": "import"
-      },
-      {
-        "from": "system/riddles/riddles.js",
-        "to": "./gatekeeper.riddle.js",
-        "type": "import"
-      },
-      {
-        "from": "system/riddles/riddles.js",
-        "to": "./mirror.riddle.js",
-        "type": "import"
-      },
-      {
-        "from": "system/riddles/riddles.js",
-        "to": "./the-paradox-of-progress.riddle.js",
-        "type": "import"
-      }
+      {"from": "index.html", "to": "system/js/auth.js", "type": "import", "purpose": "Authentication functions"},
+      {"from": "system/riddle.html", "to": "system/js/game.js", "type": "import", "purpose": "Game logic"},
+      {"from": "system/riddle.html", "to": "system/css/game.css", "type": "stylesheet", "purpose": "Visual styling"},
+      {"from": "system/js/game.js", "to": "system/riddles/riddles.js", "type": "import", "purpose": "Riddle data access"},
+      {"from": "system/js/game.js", "to": "system/js/auth.js", "type": "import", "purpose": "Authentication integration"},
+      {"from": "system/riddles/riddles.js", "to": "system/riddles/gatekeeper.riddle.js", "type": "import", "purpose": "Riddle data"},
+      {"from": "system/riddles/riddles.js", "to": "system/riddles/mirror.riddle.js", "type": "import", "purpose": "Riddle data"},
+      {"from": "system/riddles/riddles.js", "to": "system/riddles/the-paradox-of-progress.riddle.js", "type": "import", "purpose": "Riddle data"}
     ],
     "usedBy": {
-      "../riddles/riddles.js": [
-        "system/js/game.js"
-      ],
-      "./auth.js": [
-        "system/js/game.js"
-      ],
-      "./gatekeeper.riddle.js": [
-        "system/riddles/riddles.js"
-      ],
-      "./mirror.riddle.js": [
-        "system/riddles/riddles.js"
-      ],
-      "./the-paradox-of-progress.riddle.js": [
-        "system/riddles/riddles.js"
-      ]
+      "system/js/auth.js": ["index.html", "system/js/game.js"],
+      "system/js/game.js": ["system/riddle.html"],
+      "system/riddles/riddles.js": ["system/js/game.js"],
+      "system/riddles/gatekeeper.riddle.js": ["system/riddles/riddles.js"],
+      "system/riddles/mirror.riddle.js": ["system/riddles/riddles.js"],
+      "system/riddles/the-paradox-of-progress.riddle.js": ["system/riddles/riddles.js"],
+      "system/css/game.css": ["system/riddle.html"]
+    },
+    "dataFlow": {
+      "authentication": "index.html → auth.js → localStorage → game.js",
+      "riddleLoading": "game.js → riddles.js → [riddle files] → UI",
+      "answerValidation": "UI → game.js → riddle data → feedback",
+      "progressTracking": "game.js → localStorage → UI",
+      "riddleRequest": "UI → game.js → auth.js → GitHub API → issues"
+    }
+  },
+  "insights": {
+    "entryPoints": [
+      {
+        "file": "index.html",
+        "purpose": "Login page with GitHub authentication",
+        "loads": ["system/js/auth.js"],
+        "redirectsTo": "system/riddle.html",
+        "features": ["Token validation", "Service worker registration"]
+      },
+      {
+        "file": "system/riddle.html",
+        "purpose": "Main game interface",
+        "loads": ["system/css/game.css", "system/js/game.js", "system/js/auth.js"],
+        "features": ["Riddle display", "Answer checking", "Navigation", "Hint system"]
+      }
+    ],
+    "sharedUtilities": [
+      {
+        "file": "system/js/auth.js",
+        "usedBy": ["index.html", "system/js/game.js"],
+        "purpose": "Authentication and GitHub API integration",
+        "exports": 10,
+        "keyFunctions": ["isAuthenticated", "verifyToken", "createRiddleRequestIssue"]
+      },
+      {
+        "file": "system/riddles/riddles.js",
+        "usedBy": ["system/js/game.js"],
+        "purpose": "Central riddle registry",
+        "exports": 5,
+        "manages": 3,
+        "keyFunctions": ["getRiddleByIndex", "getRiddleCount"]
+      }
+    ],
+    "riddleFiles": [
+      {
+        "file": "system/riddles/gatekeeper.riddle.js",
+        "id": "gatekeeper",
+        "title": "The Gatekeeper's Riddle",
+        "theme": "AI and code agents identity"
+      },
+      {
+        "file": "system/riddles/mirror.riddle.js",
+        "id": "mirror",
+        "title": "The Mirror's Paradox",
+        "theme": "Algorithms and reflection"
+      },
+      {
+        "file": "system/riddles/the-paradox-of-progress.riddle.js",
+        "id": "the-paradox-of-progress",
+        "title": "The Paradox of Progress",
+        "theme": "Knowledge and learning"
+      }
+    ],
+    "automationSystems": [
+      {
+        "name": "Repository Mapper Agent",
+        "workflow": ".github/workflows/repo-mapper-agent.yml",
+        "purpose": "Automated repository documentation",
+        "schedule": "Weekly (Sunday midnight)",
+        "outputs": ["repo-map.json", "code-index.json", "ARCHITECTURE.md"]
+      },
+      {
+        "name": "Riddle Finder Agent",
+        "workflow": ".github/workflows/riddle-finder-agent.yml",
+        "purpose": "Automated riddle discovery and addition",
+        "schedule": "Daily",
+        "outputs": ["New riddle files", "Pull requests"]
+      },
+      {
+        "name": "Issue Riddle Request Handler",
+        "workflow": ".github/workflows/issue-riddle-request.yml",
+        "purpose": "Process riddle requests from GitHub issues",
+        "trigger": "Issue created or labeled",
+        "outputs": ["Triggers Riddle Finder Agent"]
+      }
+    ],
+    "architecture": {
+      "pattern": "Modular Single Page Application with PWA capabilities",
+      "storageStrategy": "LocalStorage for progress and authentication",
+      "cachingStrategy": "Service Worker with cache-first approach",
+      "authentication": "GitHub Personal Access Token (optional)",
+      "extensibility": "Template-based riddle system for easy additions"
+    },
+    "metrics": {
+      "totalFunctions": 38,
+      "totalExports": 23,
+      "totalRiddles": 3,
+      "totalEventListeners": 15,
+      "cssSelectors": "~150",
+      "apiEndpoints": 2,
+      "automatedWorkflows": 3
     }
   }
 }
