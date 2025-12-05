@@ -1,17 +1,17 @@
-const CACHE_NAME = 'gatekeeper-riddle-v2';
+const CACHE_NAME = 'gatekeeper-riddle-v3';
 // Cache all local assets for offline support
 // Note: External resources (badge images, etc.) are intentionally excluded
 // to avoid caching third-party content and to keep cache size minimal
 const urlsToCache = [
-  '/The_GateKeepers_Riddle.Interactive/',
-  '/The_GateKeepers_Riddle.Interactive/index.html',
-  '/The_GateKeepers_Riddle.Interactive/manifest.json',
-  '/The_GateKeepers_Riddle.Interactive/system/game.css',
-  '/The_GateKeepers_Riddle.Interactive/system/game.js',
-  '/The_GateKeepers_Riddle.Interactive/system/icon.logo.png',
-  '/The_GateKeepers_Riddle.Interactive/system/riddles/riddles.js',
-  '/The_GateKeepers_Riddle.Interactive/system/riddles/gatekeeper.riddle.js',
-  '/The_GateKeepers_Riddle.Interactive/system/riddles/mirror.riddle.js'
+  './',
+  './index.html',
+  './system/storage/manifest.json',
+  './system/css/game.css',
+  './system/js/game.js',
+  './system/storage/icon.logo.png',
+  './system/riddles/riddles.js',
+  './system/riddles/gatekeeper.riddle.js',
+  './system/riddles/mirror.riddle.js'
 ];
 
 // Install event - cache all assets
