@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Gatekeeper's Riddle</title>
-    <meta name="description" content="An interactive riddle game exploring themes of AI, code agents, and digital identity.">
+    <title>The Gatekeeper's Riddle - Login</title>
+    <meta name="description" content="Enter to unlock the mysteries within">
     <meta name="theme-color" content="#64ffda">
     
     <!-- Favicon -->
@@ -15,195 +14,414 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="system/storage/manifest.json">
     
-    <link rel="stylesheet" href="system/css/game.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        /* Full screen black background that covers everything including browser chrome */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -100px;
+            left: 0;
+            right: 0;
+            bottom: -100px;
+            background: #000000;
+            z-index: -1;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(100, 255, 218, 0.3));
+        }
+
+        h1 {
+            color: #64ffda;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-style: italic;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 40px;
+        }
+
+        .info-box {
+            background: rgba(100, 255, 218, 0.05);
+            border-left: 4px solid #64ffda;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: #64ffda;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box ol {
+            margin-left: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .info-box code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #64ffda;
+            font-size: 0.9em;
+        }
+
+        .info-box a {
+            color: #64ffda;
+            text-decoration: none;
+            border-bottom: 1px dotted #64ffda;
+            transition: all 0.3s ease;
+        }
+
+        .info-box a:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            color: #64ffda;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #64ffda;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .skip-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .skip-link a {
+            color: #64ffda;
+            text-decoration: none;
+            border-bottom: 1px dotted #64ffda;
+            transition: all 0.3s ease;
+        }
+
+        .skip-link a:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .error-message {
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .privacy-note {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .privacy-note a {
+            color: #64ffda;
+            text-decoration: none;
+        }
+
+        .privacy-note a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-height: 700px) {
+            .login-container {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .logo {
+                width: 100px;
+            }
+
+            .info-box {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Floating Help Buttons -->
-    <button class="floating-btn help-btn" onclick="showHelpModal()" aria-label="How to Play">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-    </button>
-    
-    <button class="floating-btn hint-btn" onclick="showHintModal()" aria-label="Get Hints">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18h6"></path>
-            <path d="M10 22h4"></path>
-            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
-        </svg>
-    </button>
-
-    <div class="container">
-        <p class="subtitle">Try your luck and wit to the:</p>
-        <h1 id="riddleTitle">The Gatekeeper's Riddle</h1>
-        
-        <div class="riddle" id="riddleText">
-        Loading riddle...
-    </div>
-
-    <div class="input-section">
-        <div class="attempts" id="attempts">Attempts: 0</div>
-        <div class="input-container">
-            <input 
-                type="text" 
-                id="guessInput" 
-                placeholder="Enter your answer..."
-                autocomplete="off"
-            >
-            <div class="compact-button-bar" id="compactButtonBar">
-                <button class="bubble-btn" id="prevBtn" onclick="previousRiddle()" title="Previous Riddle" aria-label="Previous Riddle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <button class="bubble-btn submit-bubble" onclick="checkAnswer()" title="Submit Guess" aria-label="Submit Guess">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                </button>
-                <button class="bubble-btn" onclick="showRiddleSelector()" title="Select Riddle" aria-label="Select Riddle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                    </svg>
-                </button>
-                <div class="bubble-dropdown">
-                    <button class="bubble-btn" onclick="toggleMoreMenu()" title="More Options" aria-label="More Options">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="12" cy="5" r="1"></circle>
-                            <circle cx="12" cy="19" r="1"></circle>
-                        </svg>
-                    </button>
-                    <div class="bubble-dropdown-menu" id="moreMenu">
-                        <button onclick="try { giveUp(); } finally { toggleMoreMenu(); }" aria-label="Give up and reveal the answer">Give Up</button>
-                        <button onclick="showRequestRiddleMenu()" aria-label="Request a new riddle">Request Riddle</button>
-                        <button onclick="try { refreshApp(); } finally { toggleMoreMenu(); }" aria-label="Clear cache and refresh the application">Refresh App</button>
-                    </div>
-                </div>
-                <button class="bubble-btn" id="nextBtn" onclick="nextRiddle()" title="Next Riddle" aria-label="Next Riddle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-            </div>
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="system/storage/icon.logo.png" alt="The Gatekeeper's Riddle Logo" class="logo">
         </div>
         
-        <div class="feedback" id="feedback"></div>
-    </div>
+        <h1>The Gatekeeper's Riddle</h1>
+        <p class="subtitle">Enter to unlock the mysteries within</p>
+        
+        <div class="info-box">
+            <h3>🔐 GitHub Token Required</h3>
+            <p style="margin-bottom: 15px;">To request AI-curated riddles, you need a GitHub Personal Access Token:</p>
+            <ol>
+                <li>Go to <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a></li>
+                <li>Click "Generate new token (classic)"</li>
+                <li>Name it "Gatekeeper Riddle App"</li>
+                <li>Select scope: <code>public_repo</code></li>
+                <li>Generate and copy the token</li>
+                <li>Paste it below</li>
+            </ol>
+        </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                <a href="https://github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive" target="_blank" rel="noopener noreferrer">GitHub Repository</a> | © 2025 <a href="https://github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">StatikFinTech, LLC</a>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="tokenInput">GitHub Personal Access Token</label>
+                <input 
+                    type="password" 
+                    id="tokenInput" 
+                    placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                    autocomplete="off"
+                    required
+                >
             </div>
-            <div class="social-links">
-                <a href="https://github.com/statikfintechllc" target="_blank" rel="noopener noreferrer" aria-label="Visit our GitHub profile">
-                    <img src="https://img.shields.io/badge/-000000?logo=github&logoColor=white&style=flat-square" alt="GitHub">
-                </a>
-                <a href="https://www.linkedin.com/in/daniel-morris-780804368" target="_blank" rel="noopener noreferrer" aria-label="Visit our LinkedIn profile">
-                    <img src="https://img.shields.io/badge/In-e11d48?logo=linkedin&logoColor=white&style=flat-square" alt="LinkedIn">
-                </a>
-                <a href="mailto:ascend.gremlin@gmail.com" aria-label="Send us an email">
-                    <img src="https://img.shields.io/badge/-D14836?logo=gmail&logoColor=white&style=flat-square" alt="Email">
-                </a>
-                <a href="https://www.youtube.com/@Gremlins_Forge" target="_blank" rel="noopener noreferrer" aria-label="Visit our YouTube channel">
-                    <img src="https://img.shields.io/badge/-FF0000?logo=youtube&logoColor=white&style=flat-square" alt="YouTube">
-                </a>
-                <a href="https://x.com/GremlinsForge" target="_blank" rel="noopener noreferrer" aria-label="Visit our X (Twitter) profile">
-                    <img src="https://img.shields.io/badge/-000000?logo=x&logoColor=white&style=flat-square" alt="X">
-                </a>
-                <a href="https://medium.com/@ascend.gremlin" target="_blank" rel="noopener noreferrer" aria-label="Visit our Medium blog">
-                    <img src="https://img.shields.io/badge/-000000?logo=medium&logoColor=white&style=flat-square" alt="Medium">
-                </a>
+
+            <div class="button-container">
+                <button type="submit" id="loginButton">Enter the Riddle</button>
             </div>
+        </form>
+
+        <div class="skip-link">
+            <a href="system/riddle.html">Continue without login (limited features)</a>
         </div>
-    </footer>
 
-    <!-- Modal -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <img src="system/storage/icon.logo.png" alt="Gatekeeper Logo" class="modal-icon">
-        <h2 id="modalTitle">The Answer</h2>
-        <p id="modalMessage"></p>
-        <p class="answer-text"></p>
-        <p class="explanation-text" style="font-size: 0.9rem; color: #888; font-style: italic;"></p>
-        <button class="close-modal" onclick="closeModal()">Close</button>
-    </div>
-</div>
-
-<!-- Riddle Selector Modal -->
-<div class="modal" id="riddleSelectorModal">
-    <div class="modal-content riddle-selector">
-        <h2>📚 Select a Riddle</h2>
-        <div class="riddle-grid" id="riddleGrid">
-            <!-- Riddles will be populated here dynamically -->
+        <div class="privacy-note">
+            <p>🔒 Your token is stored locally and never sent to any server except GitHub's API. <a href="https://github.com/statikfintechllc/The_GateKeepers_Riddle.Interactive" target="_blank" rel="noopener noreferrer">Learn more</a></p>
         </div>
-        <button class="close-modal" onclick="closeRiddleSelector()">Close</button>
     </div>
-</div>
 
-<!-- Help Modal -->
-<div class="modal" id="helpModal">
-    <div class="modal-content">
-        <h2>📖 How to Play</h2>
-        <div class="help-content">
-            <p>1. Read the riddle carefully</p>
-            <p>2. Enter your answer in the input field</p>
-            <p>3. Click "Submit Guess" or press Enter</p>
-            <p>4. Keep trying or click "Give Up" to reveal the answer</p>
-            <br>
-            <p><strong>Tip:</strong> The riddle explores themes of reflection, inheritance, and what it means to build with tools that mirror ourselves.</p>
-        </div>
-        <button class="close-modal" onclick="closeHelpModal()">Close</button>
-    </div>
-</div>
+    <script type="module">
+        import { saveGitHubToken, isValidTokenFormat, verifyToken, redirectToApp } from './system/js/auth.js';
 
-<!-- Hint Modal -->
-<div class="modal" id="hintModal">
-    <div class="modal-content">
-        <h2>💡 Hints</h2>
-        <div class="hint-content">
-            <!-- Hints will be populated dynamically based on current riddle -->
-        </div>
-        <button class="close-modal" onclick="closeHintModal()">Close</button>
-    </div>
-</div>
+        const form = document.getElementById('loginForm');
+        const tokenInput = document.getElementById('tokenInput');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
 
-<!-- Request Riddle Sub-Popup Modal -->
-<div class="modal" id="requestRiddleModal">
-    <div class="modal-content">
-        <h2>🎯 Request a Riddle</h2>
-        <div class="request-options">
-            <button class="request-option-btn" onclick="requestViaEmail()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>Email Request</span>
-                <p class="option-description">Send your riddle idea via email</p>
-            </button>
-            <button class="request-option-btn" onclick="requestAICurated()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                </svg>
-                <span>AI Curated</span>
-                <p class="option-description">Request AI to find a challenging riddle</p>
-            </button>
-        </div>
-        <button class="close-modal" onclick="closeRequestRiddleModal()">Close</button>
-    </div>
-</div>
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
 
-    <script src="system/js/game.js" type="module"></script>
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+
+            const token = tokenInput.value.trim();
+
+            // Basic validation
+            if (!token) {
+                showError('Please enter your GitHub token');
+                return;
+            }
+
+            if (!isValidTokenFormat(token)) {
+                showError('Invalid token format. Token should start with "ghp_" or "github_pat_"');
+                return;
+            }
+
+            // Disable button while verifying
+            loginButton.disabled = true;
+            loginButton.textContent = 'Verifying...';
+
+            try {
+                // Verify token with GitHub API
+                const isValid = await verifyToken(token);
+
+                if (!isValid) {
+                    showError('Invalid token or insufficient permissions. Please check your token and try again.');
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'Enter the Riddle';
+                    return;
+                }
+
+                // Save token
+                saveGitHubToken(token);
+                showSuccess('Authentication successful! Redirecting...');
+
+                // Redirect to app
+                setTimeout(() => {
+                    redirectToApp();
+                }, 1500);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('An error occurred. Please try again.');
+                loginButton.disabled = false;
+                loginButton.textContent = 'Enter the Riddle';
+            }
+        });
+
+        // Clear token input on page load for security
+        tokenInput.value = '';
+
+        // Register Service Worker for PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/system/js/sw.js', { 
+                    scope: '/' 
+                })
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
+

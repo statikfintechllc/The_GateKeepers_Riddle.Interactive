@@ -1,5 +1,6 @@
 // Import riddle data
 import { riddles, getRiddleByIndex, getRiddleCount, getRiddleIndex } from '../riddles/riddles.js';
+import { isAuthenticated, createRiddleRequestIssue, openGitHubIssueTemplate, redirectToLogin, clearGitHubToken } from './auth.js';
 
 // Game state
 let currentRiddleIndex = 0;
@@ -42,6 +43,7 @@ function initGame() {
     currentRiddleIndex = loadCurrentRiddleIndex();
     loadRiddle(currentRiddleIndex);
     updateNavigationButtons();
+    updateAuthButton();
 }
 
 // Load a riddle by index
@@ -186,30 +188,62 @@ Thank you!`);
 async function requestAICurated() {
     closeRequestRiddleModal();
     
-    // Show notification
     const feedback = document.querySelector('.feedback');
+    
+    // Check if user is authenticated
+    if (!isAuthenticated()) {
+        if (feedback) {
+            feedback.textContent = '🔐 Please login to request AI-curated riddles';
+            feedback.className = 'feedback';
+            feedback.style.display = 'flex';
+            feedback.style.color = '#ff4d4d';
+            
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 5000);
+        }
+        return;
+    }
+    
+    // Show loading notification
     if (feedback) {
-        feedback.textContent = '🤖 AI riddle request submitted! Use "Refresh App" in 2-5 minutes to see the new riddle.';
+        feedback.textContent = '🤖 Creating GitHub issue for AI riddle request...';
         feedback.className = 'feedback';
         feedback.style.display = 'flex';
         feedback.style.color = '#64ffda';
-        
-        // Hide after 8 seconds
-        setTimeout(() => {
-            feedback.style.display = 'none';
-        }, 8000);
     }
     
-    // Trigger the riddle finder agent workflow
     try {
-        // In a real implementation, this would call a GitHub API endpoint
-        // For now, we'll just log and show the message
-        console.log('AI Curated Riddle Request: Triggering riddle-finder-agent workflow');
+        // Create GitHub issue
+        const issue = await createRiddleRequestIssue();
         
-        // Note: The actual workflow trigger would require backend API or GitHub Actions API
-        // This is a placeholder for the frontend interaction
+        if (feedback) {
+            feedback.textContent = `✅ AI riddle request submitted! Issue #${issue.number} created. Use "Refresh App" in 2-5 minutes to see the new riddle.`;
+            feedback.style.color = '#64ffda';
+            
+            // Hide after 10 seconds
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 10000);
+        }
+        
+        console.log('AI Curated Riddle Request: GitHub issue created:', issue.html_url);
     } catch (error) {
         console.error('Error requesting AI curated riddle:', error);
+        
+        if (feedback) {
+            feedback.textContent = '⚠️ Failed to create issue via API. Opening GitHub issue form...';
+            feedback.style.color = '#ff8800';
+            
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Fallback to opening GitHub issue template
+        setTimeout(() => {
+            openGitHubIssueTemplate();
+        }, 1000);
     }
 }
 
@@ -254,8 +288,8 @@ async function refreshApp() {
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { 
-            scope: './' 
+        navigator.serviceWorker.register('/system/js/sw.js', { 
+            scope: '/' 
         })
             .then((registration) => {
                 console.log('Service Worker registered successfully:', registration.scope);
@@ -481,3 +515,33 @@ document.addEventListener('keydown', function(e) {
         closeRequestRiddleModal();
     }
 });
+
+// Authentication-related functions
+function updateAuthButton() {
+    const authButton = document.getElementById('authButton');
+    if (authButton) {
+        if (isAuthenticated()) {
+            authButton.textContent = 'Logout';
+            authButton.setAttribute('aria-label', 'Logout from GitHub');
+        } else {
+            authButton.textContent = 'Login';
+            authButton.setAttribute('aria-label', 'Login with GitHub');
+        }
+    }
+}
+
+function handleAuthAction() {
+    if (isAuthenticated()) {
+        // User is logged in, show confirmation dialog
+        if (confirm('Are you sure you want to logout? You will need to login again to request AI-curated riddles.')) {
+            clearGitHubToken();
+            redirectToLogin();
+        }
+    } else {
+        // User is not logged in, redirect to login page
+        redirectToLogin();
+    }
+}
+
+// Make functions globally available
+window.handleAuthAction = handleAuthAction;
