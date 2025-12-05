@@ -30,14 +30,19 @@ export function clearGitHubToken() {
 }
 
 // Validate token format (basic check)
+// Supports: 'ghp_' (classic PAT), 'github_pat_' (fine-grained PAT), 'gho_' (OAuth), 'ghs_' (App token)
 export function isValidTokenFormat(token) {
     if (!token || typeof token !== 'string') {
         return false;
     }
     
-    // GitHub tokens start with 'ghp_' for classic PATs or 'github_pat_' for fine-grained
     const trimmedToken = token.trim();
-    return trimmedToken.startsWith('ghp_') || trimmedToken.startsWith('github_pat_');
+    return (
+        trimmedToken.startsWith('ghp_') ||         // Classic PAT
+        trimmedToken.startsWith('github_pat_') ||  // Fine-grained PAT
+        trimmedToken.startsWith('gho_') ||         // OAuth token
+        trimmedToken.startsWith('ghs_')            // GitHub App token
+    );
 }
 
 // Verify token by making a test API call
