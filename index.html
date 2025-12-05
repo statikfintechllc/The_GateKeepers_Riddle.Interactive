@@ -358,7 +358,12 @@
     </div>
 
     <script type="module">
-        import { saveGitHubToken, isValidTokenFormat, verifyToken, redirectToApp } from './system/js/auth.js';
+        import { saveGitHubToken, isValidTokenFormat, verifyToken, redirectToApp, isAuthenticated } from './system/js/auth.js';
+
+        // Check if user is already authenticated, redirect to app
+        if (isAuthenticated()) {
+            redirectToApp();
+        }
 
         const form = document.getElementById('loginForm');
         const tokenInput = document.getElementById('tokenInput');

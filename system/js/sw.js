@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gatekeeper-riddle-v4';
+const CACHE_NAME = 'gatekeeper-riddle-v5';
 // Cache all local assets for offline support
 // Note: External resources (badge images, etc.) are intentionally excluded
 // to avoid caching third-party content and to keep cache size minimal
