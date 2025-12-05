@@ -48,9 +48,9 @@ export function isValidTokenFormat(token) {
 // Verify token by making a test API call
 export async function verifyToken(token) {
     try {
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}`, {
+        const response = await fetch('https://api.github.com/user', {
             headers: {
-                'Authorization': `token ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
@@ -73,7 +73,7 @@ export async function createRiddleRequestIssue() {
         const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/issues`, {
             method: 'POST',
             headers: {
-                'Authorization': `token ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
             },
@@ -85,11 +85,26 @@ export async function createRiddleRequestIssue() {
         });
         
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to create issue');
+            let errorMessage = 'Failed to create issue';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.message || errorMessage;
+            } catch (e) {
+                // JSON parsing failed, use default message
+            }
+            throw new Error(errorMessage);
         }
         
         const issue = await response.json();
+        
+        // Check rate limit from headers
+        const remaining = response.headers.get('X-RateLimit-Remaining');
+        const reset = response.headers.get('X-RateLimit-Reset');
+        if (remaining !== null && parseInt(remaining) < 10) {
+            const resetDate = new Date(parseInt(reset) * 1000);
+            console.warn(`GitHub API rate limit warning: ${remaining} requests remaining until ${resetDate.toLocaleTimeString()}`);
+        }
+        
         return issue;
     } catch (error) {
         console.error('Error creating riddle request issue:', error);

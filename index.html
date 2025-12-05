@@ -7,6 +7,9 @@
     <meta name="description" content="Enter to unlock the mysteries within">
     <meta name="theme-color" content="#64ffda">
     
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="system/storage/icon.logo.png">
     <link rel="apple-touch-icon" href="system/storage/icon.logo.png">
@@ -140,6 +143,8 @@
         
         .info-box p {
             font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
             margin-bottom: 10px;
         }
 
@@ -312,7 +317,7 @@
         
         <div class="info-box">
             <h3>🔐 GitHub Token Required</h3>
-            <p style="margin-bottom: 15px;">To request AI-curated riddles, you need a GitHub Personal Access Token:</p>
+            <p>To request AI-curated riddles, you need a GitHub Personal Access Token:</p>
             <ol>
                 <li>Go to <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener noreferrer">GitHub Token Settings</a></li>
                 <li>Click "Generate new token (classic)"</li>
@@ -323,8 +328,8 @@
             </ol>
         </div>
 
-        <div id="errorMessage" class="error-message"></div>
-        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message" aria-live="assertive"></div>
+        <div id="successMessage" class="success-message" aria-live="polite"></div>
 
         <form id="loginForm">
             <div class="form-group">
@@ -411,7 +416,15 @@
                 }
 
                 // Save token
-                saveGitHubToken(token);
+                try {
+                    saveGitHubToken(token);
+                } catch (saveError) {
+                    showError('Failed to save token locally. Please check your browser settings.');
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'Enter the Riddle';
+                    return;
+                }
+                
                 showSuccess('Authentication successful! Redirecting...');
 
                 // Redirect to app

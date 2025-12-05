@@ -218,7 +218,7 @@ async function requestAICurated() {
         const issue = await createRiddleRequestIssue();
         
         if (feedback) {
-            feedback.textContent = `✅ AI riddle request submitted! Issue #${issue.number} created. Use "Refresh App" in 2-5 minutes to see the new riddle.`;
+            feedback.textContent = `✅ AI riddle request submitted! Issue #${issue.number} created. Use "Refresh App" shortly to see the new riddle.`;
             feedback.style.color = '#64ffda';
             
             // Hide after 10 seconds
@@ -232,7 +232,7 @@ async function requestAICurated() {
         console.error('Error requesting AI curated riddle:', error);
         
         if (feedback) {
-            feedback.textContent = '⚠️ Failed to create issue via API. Opening GitHub issue form...';
+            feedback.textContent = `⚠️ Could not create issue automatically${error && error.message ? ` (${error.message})` : ''}. Opening GitHub issue form...`;
             feedback.style.color = '#ff8800';
             
             setTimeout(() => {
