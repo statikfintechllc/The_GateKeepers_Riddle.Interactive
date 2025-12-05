@@ -172,7 +172,8 @@ We welcome contributions! Here are some ways to help:
 
 ## Automated Systems
 
-This repository includes two intelligent agent systems:
+This repository includes three intelligent automation systems:
+- **Issue Riddle Request Handler**: Automatically detects riddle requests from GitHub issues and triggers the Riddle Finder Agent. New riddles are automatically created and merged. See [documentation](ISSUE_RIDDLE_REQUESTS.md) and [workflow](.github/workflows/issue-riddle-request.yml).
 - **Riddle Finder Agent**: Automatically searches for and submits new riddles daily. See [agent instructions](.github/agents/riddle-finder.md) and [workflow](.github/workflows/riddle-finder-agent.yml).
 - **Repository Mapper Agent**: Maintains comprehensive repository documentation and code maps. See [agent instructions](.github/agents/repo-mapper.md) and [workflow](.github/workflows/repo-mapper-agent.yml).
 

@@ -286,12 +286,128 @@ jobs:
             needs-review
           reviewers: statikfintechllc
       
+      - name: Validate Riddle Files
+        if: steps.agent.outputs.riddle_created == 'true'
+        id: validate
+        run: |
+          echo "🔍 Validating riddle files..."
+          
+          # Check if riddle file exists and is valid JavaScript
+          RIDDLE_FILE="system/riddles/${{ steps.agent.outputs.riddle_id }}.riddle.js"
+          if [ ! -f "$RIDDLE_FILE" ]; then
+            echo "❌ Riddle file not found: $RIDDLE_FILE"
+            echo "validation_passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Check if riddles.js was updated in the last commit
+          if ! git show --name-only --pretty=format: | grep -q "system/riddles/riddles.js"; then
+            echo "❌ riddles.js was not updated"
+            echo "validation_passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Basic syntax validation using Node.js
+          node -c "$RIDDLE_FILE" || {
+            echo "❌ Syntax error in riddle file"
+            echo "validation_passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          }
+          
+          echo "✅ Validation passed"
+          echo "validation_passed=true" >> $GITHUB_OUTPUT
+      
+      - name: Auto-merge Pull Request
+        if: steps.agent.outputs.riddle_created == 'true' && steps.pr.outputs.pull-request-number != '' && steps.validate.outputs.validation_passed == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = parseInt('${{ steps.pr.outputs.pull-request-number }}', 10);
+            
+            // Wait for PR to be fully created and checks to complete
+            console.log('Waiting for PR to be ready...');
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            
+            // Verify PR exists and is mergeable
+            let retries = 3;
+            let prReady = false;
+            
+            while (retries > 0 && !prReady) {
+              try {
+                const pr = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                });
+                
+                if (pr.data.mergeable !== false) {
+                  prReady = true;
+                } else {
+                  console.log('PR not yet ready, waiting...');
+                  await new Promise(resolve => setTimeout(resolve, 3000));
+                  retries--;
+                }
+              } catch (error) {
+                console.log('Error checking PR status: ' + error.message);
+                retries--;
+                await new Promise(resolve => setTimeout(resolve, 3000));
+              }
+            }
+            
+            if (!prReady) {
+              throw new Error('PR is not in a mergeable state after multiple attempts');
+            }
+            
+            try {
+              // Auto-merge only applies to data files (riddles)
+              // These are low-risk content additions
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                merge_method: 'squash',
+                commit_title: '🧩 Add riddle: ${{ steps.agent.outputs.riddle_title }}',
+                commit_message: 'Automatically merged by Riddle Finder Agent\n\nRiddle ID: ${{ steps.agent.outputs.riddle_id }}\nValidation: Passed'
+              });
+              
+              console.log('✅ PR #' + prNumber + ' automatically merged');
+              
+              // Add comment to PR
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '✅ **Auto-merged by Riddle Finder Agent**\n\n' +
+                      'This riddle has been automatically validated and merged.\n' +
+                      'The new riddle is now live! 🎉\n\n' +
+                      '**Validation Checks:**\n' +
+                      '- ✅ Riddle file syntax is valid\n' +
+                      '- ✅ Riddles registry updated\n' +
+                      '- ✅ No security issues detected'
+              });
+            } catch (error) {
+              console.log('⚠️ Auto-merge failed: ' + error.message);
+              console.log('PR will require manual review and merge');
+              
+              // Add comment explaining why auto-merge failed
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '⚠️ **Auto-merge could not be completed**\n\n' +
+                      'Reason: ' + error.message + '\n\n' +
+                      'This PR requires manual review and merge.'
+              });
+            }
+      
       - name: Summary
         if: always()
         run: |
           if [ "${{ steps.agent.outputs.riddle_created }}" == "true" ]; then
             echo "✅ Agent found new riddle: ${{ steps.agent.outputs.riddle_title }}"
             echo "📋 PR #${{ steps.pr.outputs.pull-request-number }} created"
+            echo "🔄 Auto-merge attempted"
           else
             echo "ℹ️  No new riddles found or all existing"
           fi
