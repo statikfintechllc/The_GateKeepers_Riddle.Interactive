@@ -12,14 +12,12 @@ permissions:
 jobs:
   handle-riddle-request:
     runs-on: ubuntu-latest
-    # Only run if issue is labeled with 'enhancement' or 'documentation' or title contains 'riddle'
+    # Only run if issue title contains riddle/poem (case-insensitive) or has specific labels
     if: |
       (contains(github.event.issue.labels.*.name, 'enhancement') || 
        contains(github.event.issue.labels.*.name, 'documentation') ||
-       contains(github.event.issue.title, 'Riddle') ||
-       contains(github.event.issue.title, 'riddle') ||
-       contains(github.event.issue.title, 'poem') ||
-       contains(github.event.issue.title, 'Poem'))
+       contains(toLower(github.event.issue.title), 'riddle') ||
+       contains(toLower(github.event.issue.title), 'poem'))
     
     steps:
       - name: Checkout repository
@@ -45,7 +43,8 @@ jobs:
                     '2. ✅ Creates the riddle file\n' +
                     '3. ✅ Opens a pull request\n' +
                     '4. ✅ Auto-merges the riddle\n\n' +
-                    'This may take a few minutes...'
+                    '**Estimated time:** 2-5 minutes\n\n' +
+                    'You will receive updates as the process completes.'
             });
             
             console.log('✅ Added comment to issue #' + context.issue.number);

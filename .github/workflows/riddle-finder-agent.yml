@@ -300,8 +300,8 @@ jobs:
             exit 1
           fi
           
-          # Check if riddles.js was updated
-          if ! git diff --name-only | grep -q "system/riddles/riddles.js"; then
+          # Check if riddles.js was updated in the last commit
+          if ! git show --name-only --pretty=format: | grep -q "system/riddles/riddles.js"; then
             echo "❌ riddles.js was not updated"
             echo "validation_passed=false" >> $GITHUB_OUTPUT
             exit 1
@@ -323,10 +323,41 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = ${{ steps.pr.outputs.pull-request-number }};
+            const prNumber = parseInt('${{ steps.pr.outputs.pull-request-number }}', 10);
             
-            // Wait a moment for PR to be fully created
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Wait for PR to be fully created and checks to complete
+            console.log('Waiting for PR to be ready...');
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            
+            // Verify PR exists and is mergeable
+            let retries = 3;
+            let prReady = false;
+            
+            while (retries > 0 && !prReady) {
+              try {
+                const pr = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                });
+                
+                if (pr.data.mergeable !== false) {
+                  prReady = true;
+                } else {
+                  console.log('PR not yet ready, waiting...');
+                  await new Promise(resolve => setTimeout(resolve, 3000));
+                  retries--;
+                }
+              } catch (error) {
+                console.log('Error checking PR status: ' + error.message);
+                retries--;
+                await new Promise(resolve => setTimeout(resolve, 3000));
+              }
+            }
+            
+            if (!prReady) {
+              throw new Error('PR is not in a mergeable state after multiple attempts');
+            }
             
             try {
               // Auto-merge only applies to data files (riddles)
