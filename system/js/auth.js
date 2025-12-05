@@ -98,12 +98,28 @@ export function openGitHubIssueTemplate() {
     window.open(issueUrl, '_blank');
 }
 
-// Redirect to login page
+// Navigate to login page
 export function redirectToLogin() {
-    window.location.href = '/index.html';
+    // Determine if we're in root or system directory
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/system/')) {
+        // We're in system directory, go up one level
+        window.location.href = '../index.html';
+    } else {
+        // We're in root, just refresh to index.html
+        window.location.href = 'index.html';
+    }
 }
 
-// Redirect to app (riddle page)
+// Navigate to app (riddle page)
 export function redirectToApp() {
-    window.location.href = '/system/riddle.html';
+    // Determine if we're in root or system directory
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/system/')) {
+        // We're already in system, just go to riddle.html
+        window.location.href = 'riddle.html';
+    } else {
+        // We're in root, navigate to system/riddle.html
+        window.location.href = 'system/riddle.html';
+    }
 }
