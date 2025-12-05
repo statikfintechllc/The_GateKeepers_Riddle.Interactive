@@ -1,5 +1,45 @@
 {
   "functions": {
+    "isAuthenticated": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "getGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "saveGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "clearGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "isValidTokenFormat": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "verifyToken": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "createRiddleRequestIssue": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "openGitHubIssueTemplate": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "redirectToLogin": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
+    "redirectToApp": {
+      "file": "system/js/auth.js",
+      "type": "function"
+    },
     "loadProgress": {
       "file": "system/js/game.js",
       "type": "function"
@@ -100,6 +140,14 @@
       "file": "system/js/game.js",
       "type": "function"
     },
+    "updateAuthButton": {
+      "file": "system/js/game.js",
+      "type": "function"
+    },
+    "handleAuthAction": {
+      "file": "system/js/game.js",
+      "type": "function"
+    },
     "getRiddleById": {
       "file": "system/riddles/riddles.js",
       "type": "function"
@@ -118,6 +166,38 @@
     }
   },
   "exports": {
+    "isAuthenticated": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "getGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "saveGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "clearGitHubToken": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "isValidTokenFormat": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "openGitHubIssueTemplate": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "redirectToLogin": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
+    "redirectToApp": {
+      "file": "system/js/auth.js",
+      "type": "export"
+    },
     "riddle": {
       "file": "system/riddles/the-paradox-of-progress.riddle.js",
       "type": "export"
@@ -143,5 +223,5 @@
       "type": "export"
     }
   },
-  "lastUpdated": "2025-12-05T15:16:41.865Z"
+  "lastUpdated": "2025-12-05T18:39:23.323Z"
 }
