@@ -288,8 +288,14 @@ async function refreshApp() {
 // Register Service Worker for PWA offline support
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/system/js/sw.js', { 
-            scope: '/'
+        // Get the base path for proper service worker registration
+        // When in /system/riddle.html, we need to go up one level
+        const basePath = window.location.pathname.replace(/\/system\/.*$/, '').replace(/\/$/, '');
+        const swPath = `${basePath}/system/js/sw.js`;
+        const scope = `${basePath}/`;
+        
+        navigator.serviceWorker.register(swPath, { 
+            scope: scope
         })
             .then((registration) => {
                 console.log('Service Worker registered successfully:', registration.scope);
