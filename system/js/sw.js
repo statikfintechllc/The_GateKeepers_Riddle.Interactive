@@ -3,17 +3,17 @@ const CACHE_NAME = 'gatekeeper-riddle-v4';
 // Note: External resources (badge images, etc.) are intentionally excluded
 // to avoid caching third-party content and to keep cache size minimal
 const urlsToCache = [
-  '../../',
-  '../../index.html',
-  '../riddle.html',
-  './auth.js',
-  '../storage/manifest.json',
-  '../css/game.css',
-  './game.js',
-  '../storage/icon.logo.png',
-  '../riddles/riddles.js',
-  '../riddles/gatekeeper.riddle.js',
-  '../riddles/mirror.riddle.js'
+  '/',
+  '/index.html',
+  '/system/riddle.html',
+  '/system/js/auth.js',
+  '/system/storage/manifest.json',
+  '/system/css/game.css',
+  '/system/js/game.js',
+  '/system/storage/icon.logo.png',
+  '/system/riddles/riddles.js',
+  '/system/riddles/gatekeeper.riddle.js',
+  '/system/riddles/mirror.riddle.js'
 ];
 
 // Install event - cache all assets
