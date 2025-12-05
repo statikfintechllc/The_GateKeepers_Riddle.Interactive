@@ -10,7 +10,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./system/storage/icon.logo.png",
+      "src": "/system/storage/icon.logo.png",
       "sizes": "860x844",
       "type": "image/png",
       "purpose": "any maskable"
