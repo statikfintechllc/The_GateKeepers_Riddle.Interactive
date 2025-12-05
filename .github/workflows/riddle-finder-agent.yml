@@ -286,12 +286,61 @@ jobs:
             needs-review
           reviewers: statikfintechllc
       
+      - name: Auto-merge Pull Request
+        if: steps.agent.outputs.riddle_created == 'true' && steps.pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = ${{ steps.pr.outputs.pull-request-number }};
+            
+            // Wait a moment for PR to be fully created
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            try {
+              // Enable auto-merge on the PR
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                merge_method: 'squash',
+                commit_title: '🧩 Add riddle: ${{ steps.agent.outputs.riddle_title }}',
+                commit_message: 'Automatically merged by Riddle Finder Agent\n\nRiddle ID: ${{ steps.agent.outputs.riddle_id }}'
+              });
+              
+              console.log('✅ PR #' + prNumber + ' automatically merged');
+              
+              // Add comment to PR
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '✅ **Auto-merged by Riddle Finder Agent**\n\n' +
+                      'This riddle has been automatically approved and merged.\n' +
+                      'The new riddle is now live! 🎉'
+              });
+            } catch (error) {
+              console.log('⚠️ Auto-merge failed: ' + error.message);
+              console.log('PR will require manual review and merge');
+              
+              // Add comment explaining why auto-merge failed
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '⚠️ **Auto-merge could not be completed**\n\n' +
+                      'Reason: ' + error.message + '\n\n' +
+                      'This PR requires manual review and merge.'
+              });
+            }
+      
       - name: Summary
         if: always()
         run: |
           if [ "${{ steps.agent.outputs.riddle_created }}" == "true" ]; then
             echo "✅ Agent found new riddle: ${{ steps.agent.outputs.riddle_title }}"
             echo "📋 PR #${{ steps.pr.outputs.pull-request-number }} created"
+            echo "🔄 Auto-merge attempted"
           else
             echo "ℹ️  No new riddles found or all existing"
           fi
