@@ -45,22 +45,52 @@ Can you solve all the riddles? Test your logic, lateral thinking, and understand
 - **ES6 Modules**: Clean, maintainable code structure
 
 ## Project Structure
-
-```
+```txt
 The_GateKeepers_Riddle.Interactive/
-├── index.html              # Main HTML file
-├── manifest.json           # PWA manifest
-├── sw.js                   # Service worker for offline support
-├── system/
-│   ├── game.css           # Main stylesheet
-│   ├── game.js            # Game logic and UI controls
-│   ├── icon.logo.png      # App icon
-│   └── riddles/
-│       ├── riddles.js             # Riddle registry and loader
-│       ├── gatekeeper.riddle.js   # The Gatekeeper's Riddle
-│       ├── mirror.riddle.js       # The Mirror's Paradox
-│       └── riddle.template.js     # Template for new riddles
-└── README.md
+ ├── LICENSE
+ ├── _config.yml
+ ├── index.html  # Login HTML file
+ └── system
+    ├── css
+    │   └── game.css  # Main stylesheet
+    ├── data
+    │   ├── ARCHITECTURE.md
+    │   ├── code-index.json
+    │   └── repo-map.json
+    ├── js
+    │   ├── auth.js  # App Auth for AI features
+    │   ├── game.js  # Game logic and UI controls
+    │   └── sw.js  # Service worker for offline support
+    ├── riddle.html  # Main HTML file
+    ├── riddles
+    │   ├── gatekeeper.riddle.js  # The Gatekeeper's Riddle
+    │   ├── mirror.riddle.js
+    │   ├── riddle.template.js  # Template for new riddles
+    │   ├── riddles.js  # Riddle registry and loader
+    │   └── the-paradox-of-progress.riddle.js
+    ├── scripts
+    │   └── l.h.s.script
+    └── storage
+        ├── icon.logo.png  # App Logo
+        └── manifest.json  # PWA manifest
+
+7 directories, 19 files
+.github
+├── AUTOMATED_RIDDLES.md
+├── BreakDown.md
+├── ISSUE_RIDDLE_REQUESTS.md
+├── ISSUE_TEMPLATE
+│   └── riddle_request.md
+├── README.md
+├── agents
+│   ├── repo-mapper.agents.agent.md
+│   └── riddle-finder.agent.md
+└── workflows
+    ├── issue-riddle-request.yml
+    ├── repo-mapper-agent.yml
+    └── riddle-finder-agent.yml
+
+3 directories, 10 files
 ```
 
 ## How to Play
