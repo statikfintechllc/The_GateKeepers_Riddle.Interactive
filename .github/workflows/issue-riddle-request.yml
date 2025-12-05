@@ -55,12 +55,19 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            // Get the default branch
+            const repo = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const defaultBranch = repo.data.default_branch;
+            
             // Trigger the riddle-finder-agent workflow
             const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'riddle-finder-agent.yml',
-              ref: 'master',
+              ref: defaultBranch,
               inputs: {
                 source_type: 'mixed',
                 difficulty: 'hard'
@@ -69,7 +76,7 @@ jobs:
             
             console.log('✅ Triggered Riddle Finder Agent workflow');
             console.log('   Workflow: riddle-finder-agent.yml');
-            console.log('   Ref: master');
+            console.log('   Ref: ' + defaultBranch);
       
       - name: Update issue status
         uses: actions/github-script@v7
