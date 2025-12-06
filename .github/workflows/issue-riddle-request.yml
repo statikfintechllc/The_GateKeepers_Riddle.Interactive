@@ -36,7 +36,7 @@ jobs:
               console.log('✅ Assigned copilot to issue #' + context.issue.number);
             } catch (error) {
               console.log('⚠️ Could not assign copilot: ' + error.message);
-              console.log('This is expected if copilot is not a collaborator on the repository');
+              console.log('Note: This may occur if copilot is not a repository collaborator or if there are permission/network issues');
             }
       
       - name: Acknowledge riddle request
