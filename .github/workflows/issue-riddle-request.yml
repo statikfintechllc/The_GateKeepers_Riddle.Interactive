@@ -1,6 +1,6 @@
 name: Issue Riddle Request Handler
 
-on:
+'on':
   issues:
     types: [opened, labeled]
 

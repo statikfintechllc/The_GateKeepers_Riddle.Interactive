@@ -1,6 +1,6 @@
 name: Repository Mapper Agent
 
-on:
+'on':
   schedule:
     # Run weekly on Sunday at midnight
     - cron: '0 0 * * 0'
