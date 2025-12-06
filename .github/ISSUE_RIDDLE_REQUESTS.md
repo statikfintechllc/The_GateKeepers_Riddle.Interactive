@@ -26,8 +26,8 @@ The workflow triggers when:
 ### 2. Copilot Assignment
 
 When a riddle request is detected:
+- GitHub Copilot is automatically assigned to the issue
 - A comment is automatically added to the issue confirming the request
-- GitHub Copilot is conceptually assigned (via the workflow automation)
 - The workflow provides status updates as comments
 
 ### 3. Riddle Finder Activation
